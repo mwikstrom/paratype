@@ -30,7 +30,7 @@ export type JsonArray = Array<JsonValue>;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface JsonObject extends Record<string, JsonValue> { }
 
-const error: TypeOptions["error"] = (value, path = []) => {
+const error: TypeOptions["error"] = (value, path, shallow) => {
     if (value === null || typeof value === "string" || typeof value === "boolean") {
         return void(0);
     }
@@ -40,11 +40,11 @@ const error: TypeOptions["error"] = (value, path = []) => {
     }
 
     if (Array.isArray(value)) {
-        return _checkArray(value, path, error);
+        return shallow ? void(0) : _checkArray(value, path, error);
     }
 
     if (_isRecord(value)) {
-        return _checkRecord(value, path, error);
+        return _checkRecord(value, path, shallow, error);
     }
 
     return _formatError("Must be a JSON value", path);

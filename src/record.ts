@@ -17,7 +17,7 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
 ): Type<RecordProperties<T, O>> {
     const props = new Map(Object.entries(properties));
     const optional = new Set(options?.optional || []);
-    const error: Type["error"] = (value, path) => {
+    const error: Type["error"] = (value, path, shallow) => {
         if (!_isRecord(value)) {
             return _formatError("Must be a record object", path);
         }
@@ -28,7 +28,7 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
             }
         }        
 
-        return _checkRecord(value, path, (propValue, propPath) => {
+        return _checkRecord(value, path, shallow, (propValue, propPath) => {
             const propName = propPath.slice(-1)[0] as string;
             const propType = props.get(propName);
             return propType ?

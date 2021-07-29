@@ -20,8 +20,9 @@ export interface Type<T = unknown> {
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be checked
      * @param path - <i>(Optional)</i> Path to the value
+     * @param shallow - <i>(Optiona)</i> When `true` errors from array items or record properties are ignored
      */
-    error(this: void, value: unknown, path?: Array<string | number>): string | undefined;
+    error(this: void, value: unknown, path?: Array<string | number>, shallow?: boolean): string | undefined;
 
     /**
      * Constructs a new {@link Type} that represents a restriction of the current run-time type.

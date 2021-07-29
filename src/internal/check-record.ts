@@ -5,10 +5,13 @@ import { _formatError } from "./format-error";
 export const _checkRecord = (
     record: Record<string, unknown>,
     path: Array<string | number> | undefined,
+    shallow: boolean | undefined,
     error: (this: void, value: unknown, path: Array<string | number>) => string | undefined,
 ): string | undefined => {
     if (Object.getOwnPropertySymbols(record).length) {
         return _formatError("Record cannot have symbol properties", path);
+    } else if (shallow) {
+        return void(0);
     }
 
     const depth = (path = path || []).length;

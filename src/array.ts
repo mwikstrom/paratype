@@ -9,9 +9,9 @@ import { Type } from "./type";
  * @public
  **/
 export function arrayType<T>(itemType: Type<T>): Type<T[]> {
-    const error: Type["error"] = (value, path) => (
+    const error: Type["error"] = (value, path, shallow) => (
         Array.isArray(value) ? 
-            _checkArray(value, path, itemType.error) :
+            shallow ? void(0) : _checkArray(value, path, itemType.error) :
             _formatError("Must be an array", path)
     );
     return _makeType({ error });

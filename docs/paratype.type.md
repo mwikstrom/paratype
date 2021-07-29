@@ -17,7 +17,7 @@ export interface Type<T = unknown>
 |  Method | Description |
 |  --- | --- |
 |  [assert(this, value, path)](./paratype.type.assert.md) | Asserts that the specified value matches the current run-time type. A <code>TypeError</code> is thrown in case the value doesn't match. |
-|  [error(this, value, path)](./paratype.type.error.md) | Returns an error message when the specified value doesn't match the current run-time type, and otherwise <code>undefined</code>. |
+|  [error(this, value, path, shallow)](./paratype.type.error.md) | Returns an error message when the specified value doesn't match the current run-time type, and otherwise <code>undefined</code>. |
 |  [restrict(this, message, predicate)](./paratype.type.restrict.md) | Constructs a new [Type](./paratype.type.md) that represents a restriction of the current run-time type. |
 |  [test(this, value, path)](./paratype.type.test.md) | Determines whether the specified value matches the current run-time type. |
 

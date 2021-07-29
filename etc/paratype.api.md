@@ -71,7 +71,7 @@ export const stringType: Type<string>;
 // @public
 export interface Type<T = unknown> {
     assert(this: void, value: unknown, path?: Array<string | number>): asserts value is T;
-    error(this: void, value: unknown, path?: Array<string | number>): string | undefined;
+    error(this: void, value: unknown, path?: Array<string | number>, shallow?: boolean): string | undefined;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: Array<string | number>): value is T;
 }

@@ -1,8 +1,15 @@
 import { Predicate, Type } from "../type";
 import { _makeType } from "./make";
+import { _formatError } from "./utils";
 
 /** @internal */
-export const _restrictType = <T>(inner: Type<T>, predicate: Predicate<T>): Type<T> => {
-    const test = (value: unknown) => inner.test(value) && predicate(value);
-    return _makeType({ test });
+export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Predicate<T>): Type<T> => {
+    const error: Type["error"] = (value, path) => {
+        let result = inner.error(value, path);
+        if (result === void(0) && !predicate(value as T)) {
+            result = _formatError(message, path);
+        }
+        return result;
+    };
+    return _makeType({ error });
 };

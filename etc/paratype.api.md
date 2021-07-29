@@ -70,9 +70,10 @@ export const stringType: Type<string>;
 
 // @public
 export interface Type<T = unknown> {
-    assert(this: void, value: unknown): asserts value is T;
-    restrict(this: void, predicate: Predicate<T>): Type<T>;
-    test(this: void, value: unknown): value is T;
+    assert(this: void, value: unknown, path?: Array<string | number>): asserts value is T;
+    error(this: void, value: unknown, path?: Array<string | number>): string | undefined;
+    restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
+    test(this: void, value: unknown, path?: Array<string | number>): value is T;
 }
 
 // @public

@@ -9,7 +9,7 @@ Constructs a new [Type](./paratype.type.md) that represents a restriction of the
 <b>Signature:</b>
 
 ```typescript
-restrict(this: void, predicate: Predicate<T>): Type<T>;
+restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ restrict(this: void, predicate: Predicate<T>): Type<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
+|  message | string | The error message to show when predicate doesn't match |
 |  predicate | [Predicate](./paratype.predicate.md)<!-- -->&lt;T&gt; | A predicate that represents the restriction |
 
 <b>Returns:</b>

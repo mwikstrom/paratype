@@ -7,7 +7,7 @@ import { _simpleType } from "./internal/simple";
  * @public
  */
 export const anyType = _makeType<unknown>({
-    test: () => true,
+    error: () => void(0)
 });
 
 /** 
@@ -32,32 +32,41 @@ export const stringType = _simpleType<string>("string");
  * Represents a type that only matches `undefined` values
  * @public
  */
-export const voidType = _constType<void>(void(0));
+export const voidType = _constType<void>(void(0), "Must be undefined");
 
 /** 
  * Represents a type that only matches `null` values
  * @public
  */
-export const nullType = _constType<null>(null);
+export const nullType = _constType<null>(null, "Must be null");
 
 /** 
  * Matches safe integer values
  * @public
  */
-export const integerType = numberType.restrict(value => (
-    value >= Number.MIN_SAFE_INTEGER && 
-    value <= Number.MAX_SAFE_INTEGER &&
-    value % 1 !== 0
-));
+export const integerType = numberType.restrict(
+    "Must be a safe integer",
+    value => (
+        value >= Number.MIN_SAFE_INTEGER && 
+        value <= Number.MAX_SAFE_INTEGER &&
+        value % 1 !== 0
+    ),
+);
 
 /** 
  * Matches safe integer values that are greater than or equal to zero
  * @public
  */
-export const nonNegativeIntegerType = integerType.restrict(value => value >= 0);
+export const nonNegativeIntegerType = integerType.restrict(
+    "Must be greater or equal to zero",
+    value => value >= 0,
+);
 
 /** 
  * Matches safe integer values that are greater than zero
  * @public
  */
-export const positiveIntegerType = integerType.restrict(value => value > 0);
+export const positiveIntegerType = integerType.restrict(
+    "Must be greater than zero",
+    value => value > 0,
+);

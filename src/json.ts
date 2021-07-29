@@ -1,5 +1,5 @@
-import { _makeType } from "./internal/make";
-import { Predicate } from "./type";
+import { TypeOptions, _makeType } from "./internal/make";
+import { _isObject, _checkArray, _checkRecord, _formatError } from "./internal/utils";
 
 /**
  * A JSON value
@@ -27,52 +27,28 @@ export type JsonArray = Array<JsonValue>;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface JsonObject extends Record<string, JsonValue> { }
 
-const testPrimitive: Predicate<unknown> = (value: unknown) => (
-    typeof value === "string" ||
-    typeof value === "boolean" ||
-    value === null ||
-    (
-        typeof value === "number" &&
-        isFinite(value)
-    )
-);
-
-const test = (value: unknown, stack?: Set<unknown>) => {
-    if (testPrimitive(value)) {
-        return true;
+const error: TypeOptions["error"] = (value, path = []) => {
+    if (value === null || typeof value === "string" || typeof value === "boolean") {
+        return void(0);
     }
 
-    if (!stack) {
-        stack = new Set();
-    } else if (stack.has(value)) {
-        return true;
+    if (typeof value === "number") {
+        return isFinite(value) ? void(0) : _formatError("Number must be finite", path);
     }
 
-    stack.add(value);
-    
-    const nested: Predicate<unknown> = child => test(child, stack);
-    const result = (
-        (
-            Array.isArray(value) && 
-            value.every(nested)
-        ) ||
-        (
-            typeof value === "object" &&
-            Object.getOwnPropertySymbols(value).length === 0 &&
-            // implicit null assertion because null would have matched as primitive (tested above)
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            Object.values(value!).every(nested)
-        )
-    );
+    if (Array.isArray(value)) {
+        return _checkArray(value, path, error);
+    }
 
-    stack.delete(value);
-    return result;
+    if (_isObject(value)) {
+        return _checkRecord(value, path, error);
+    }
+
+    return _formatError("Must be a JSON value", path);
 };
 
 /**
  * Matches JSON values
  * @public
  */
-export const jsonValueType = _makeType<JsonValue>({
-    test,
-});
+export const jsonValueType = _makeType<JsonValue>({ error });

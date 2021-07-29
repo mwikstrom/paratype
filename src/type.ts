@@ -1,4 +1,4 @@
-import { isObject } from "./internal/utils";
+import { _isObject } from "./internal/utils";
 
 /**
  * A run-time type
@@ -11,7 +11,23 @@ export interface Type<T = unknown> {
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be checked
      */
-    assert(this: void, value: unknown): asserts value is T;
+    assert(this: void, value: unknown, path?: Array<string | number>): asserts value is T;
+
+    /**
+     * Returns an error message when the specified value doesn't match the current run-time type,
+     * and otherwise `undefined`.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param value - The value to be checked
+     */
+    error(this: void, value: unknown, path?: Array<string | number>): string | undefined;
+
+    /**
+     * Constructs a new {@link Type} that represents a restriction of the current run-time type.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param message - The error message to show when predicate doesn't match
+     * @param predicate - A predicate that represents the restriction
+     */
+    restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
 
     /**
      * Determines whether the specified value matches the current run-time type.
@@ -19,14 +35,7 @@ export interface Type<T = unknown> {
      * @param value - The value to be checked
      * @returns `true` if the value matches; otherwise, `false`
      */
-    test(this: void, value: unknown): value is T;
-
-    /**
-     * Constructs a new {@link Type} that represents a restriction of the current run-time type.
-     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
-     * @param predicate - A predicate that represents the restriction
-     */
-    restrict(this: void, predicate: Predicate<T>): Type<T>;
+     test(this: void, value: unknown, path?: Array<string | number>): value is T;
 }
 
 /**
@@ -55,7 +64,7 @@ const funcs: (keyof Type)[] = [
  */
 export function isType(value: unknown): value is Type {
     return (
-        isObject(value) &&
+        _isObject(value) &&
         funcs.every(key => key in value && typeof value[key] === "function")
     );
 }

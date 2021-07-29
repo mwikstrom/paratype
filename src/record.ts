@@ -1,5 +1,5 @@
 import { _makeType } from "./internal/make";
-import { isObject } from "./internal/utils";
+import { _checkRecord, _formatError, _isObject as _isRecord } from "./internal/utils";
 import { Type, TypeOf } from "./type";
 
 /**
@@ -15,27 +15,26 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
 ): Type<RecordProperties<T, O>> {
     const props = new Map(Object.entries(properties));
     const optional = new Set(options?.optional || []);
-    const test = (value: unknown) => {
-        if (!isObject(value)) {
-            return false;
+    const error: Type["error"] = (value, path) => {
+        if (!_isRecord(value)) {
+            return _formatError("Must be a record object", path);
         }
 
         for (const key of props.keys()) {
             if (!optional.has(key) && !(key in value)) {
-                return false;
+                return _formatError(`Missing required property: ${key}`, path);
             }
-        }
+        }        
 
-        for (const [key, item] of Object.entries(value)) {
-            const type = props.get(key);
-            if (!type || !type.test(item)) {
-                return false;
-            }
-        }
-
-        return true;
+        return _checkRecord(value, path, (propValue, propPath) => {
+            const propName = propPath.slice(-1)[0] as string;
+            const propType = props.get(propName);
+            return propType ?
+                propType.error(propValue, propPath) :
+                _formatError("Invalid property name", path);
+        });
     };
-    return _makeType({ test });
+    return _makeType({ error });
 }
 
 /** 

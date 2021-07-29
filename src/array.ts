@@ -1,4 +1,5 @@
 import { _makeType } from "./internal/make";
+import { _checkArray, _formatError } from "./internal/utils";
 import { Type } from "./type";
 
 /**
@@ -7,6 +8,10 @@ import { Type } from "./type";
  * @public
  **/
 export function arrayType<T>(itemType: Type<T>): Type<T[]> {
-    const test = (value: unknown) => Array.isArray(value) && value.every(itemType.test);
-    return _makeType({ test });
+    const error: Type["error"] = (value, path) => (
+        Array.isArray(value) ? 
+            _checkArray(value, path, itemType.error) :
+            _formatError("Must be an array", path)
+    );
+    return _makeType({ error });
 }

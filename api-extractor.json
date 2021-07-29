@@ -6,7 +6,7 @@
   },
   "dtsRollup": {
     "enabled": true,
-    "publicTrimmedFilePath": "<projectFolder>/lib/index.d.ts"
+    "untrimmedFilePath": "<projectFolder>/lib/index.d.ts"
   },
   "docModel": {
     "enabled": true

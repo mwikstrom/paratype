@@ -3,7 +3,7 @@ import { _formatError } from "./internal/format-error";
 import { _isRecord } from "./internal/is-record";
 import { _makeType } from "./internal/make-type";
 import { JsonObject } from "./json";
-import { Type, TypeOf } from "./type";
+import { Type } from "./type";
 
 /**
  * Constructs a {@link Type} that represents a record with the specified properties

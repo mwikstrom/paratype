@@ -39,7 +39,7 @@ export interface Type<T = unknown> {
      * @param path - <i>(Optional)</i> Path to the value
      * @returns `true` if the value matches; otherwise, `false`
      */
-     test(this: void, value: unknown, path?: Array<string | number>): value is T;
+    test(this: void, value: unknown, path?: Array<string | number>): value is T;
 }
 
 /**

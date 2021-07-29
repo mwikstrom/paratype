@@ -4,7 +4,7 @@
 
 ## stringType variable
 
-Represents a type that matches string values
+Matches string values
 
 <b>Signature:</b>
 

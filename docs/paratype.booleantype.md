@@ -4,7 +4,7 @@
 
 ## booleanType variable
 
-Represents a type that matches boolean values
+Matches boolean values
 
 <b>Signature:</b>
 

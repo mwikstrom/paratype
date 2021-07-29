@@ -25,14 +25,14 @@ Basic run-time type information for typescript and javascript.
 
 |  Variable | Description |
 |  --- | --- |
-|  [anyType](./paratype.anytype.md) | Represents a type that matches any value |
-|  [booleanType](./paratype.booleantype.md) | Represents a type that matches boolean values |
-|  [integerType](./paratype.integertype.md) | Represents a type that matches safe integer values |
-|  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) | Represents a type that matches safe integer values that are greater than or equal to zero |
+|  [anyType](./paratype.anytype.md) | Matches any value |
+|  [booleanType](./paratype.booleantype.md) | Matches boolean values |
+|  [integerType](./paratype.integertype.md) | Matches safe integer values |
+|  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) | Matches safe integer values that are greater than or equal to zero |
 |  [nullType](./paratype.nulltype.md) | Represents a type that only matches <code>null</code> values |
-|  [numberType](./paratype.numbertype.md) | Represents a type that matches number values |
-|  [positiveIntegerType](./paratype.positiveintegertype.md) | Represents a type that matches safe integer values that are greater than zero |
-|  [stringType](./paratype.stringtype.md) | Represents a type that matches string values |
+|  [numberType](./paratype.numbertype.md) | Matches number values |
+|  [positiveIntegerType](./paratype.positiveintegertype.md) | Matches safe integer values that are greater than zero |
+|  [stringType](./paratype.stringtype.md) | Matches string values |
 |  [voidType](./paratype.voidtype.md) | Represents a type that only matches <code>undefined</code> values |
 
 ## Type Aliases

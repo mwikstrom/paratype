@@ -4,7 +4,7 @@
 
 ## anyType variable
 
-Represents a type that matches any value
+Matches any value
 
 <b>Signature:</b>
 

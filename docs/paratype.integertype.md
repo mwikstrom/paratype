@@ -4,7 +4,7 @@
 
 ## integerType variable
 
-Represents a type that matches safe integer values
+Matches safe integer values
 
 <b>Signature:</b>
 

@@ -3,7 +3,7 @@ import { _makeType } from "./internal/make";
 import { _simpleType } from "./internal/simple";
 
 /** 
- * Represents a type that matches any value
+ * Matches any value
  * @public
  */
 export const anyType = _makeType<unknown>({
@@ -11,19 +11,19 @@ export const anyType = _makeType<unknown>({
 });
 
 /** 
- * Represents a type that matches boolean values
+ * Matches boolean values
  * @public
  */
 export const booleanType = _simpleType<boolean>("boolean");
 
 /** 
- * Represents a type that matches number values
+ * Matches number values
  * @public
  */
 export const numberType = _simpleType<number>("number");
 
 /** 
- * Represents a type that matches string values
+ * Matches string values
  * @public
  */
 export const stringType = _simpleType<string>("string");
@@ -41,7 +41,7 @@ export const voidType = _constType<void>(void(0));
 export const nullType = _constType<null>(null);
 
 /** 
- * Represents a type that matches safe integer values
+ * Matches safe integer values
  * @public
  */
 export const integerType = numberType.restrict(value => (
@@ -51,13 +51,13 @@ export const integerType = numberType.restrict(value => (
 ));
 
 /** 
- * Represents a type that matches safe integer values that are greater than or equal to zero
+ * Matches safe integer values that are greater than or equal to zero
  * @public
  */
 export const nonNegativeIntegerType = integerType.restrict(value => value >= 0);
 
 /** 
- * Represents a type that matches safe integer values that are greater than zero
+ * Matches safe integer values that are greater than zero
  * @public
  */
 export const positiveIntegerType = integerType.restrict(value => value > 0);

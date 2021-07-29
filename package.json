@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "rimraf temp lib docs",
     "build": "tsc",
-    "postbuild": "api-extractor run && api-documenter markdown --input temp --output docs",
+    "postbuild": "api-extractor run --local && api-documenter markdown --input temp --output docs",
     "test": "jest"
   },
   "repository": {

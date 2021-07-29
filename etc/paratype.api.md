@@ -67,6 +67,4 @@ export type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? 
 // @public (undocumented)
 export const voidType: Type<unknown>;
 
-// (No @packageDocumentation comment for this package)
-
 ```

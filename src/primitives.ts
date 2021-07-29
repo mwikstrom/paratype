@@ -51,13 +51,13 @@ export const anyType = _makeType<any>({
 ));
 
 /** 
- * Represents a type that matches safer integer values that are greater than or equal to zero
+ * Represents a type that matches safe integer values that are greater than or equal to zero
  * @public
  */
  export const nonNegativeIntegerType = integerType.restrict(value => value >= 0);
 
 /** 
- * Represents a type that matches safer integer values that are greater than zero
+ * Represents a type that matches safe integer values that are greater than zero
  * @public
  */
  export const positiveIntegerType = integerType.restrict(value => value > 0);

@@ -4,7 +4,7 @@
 
 ## positiveIntegerType variable
 
-Represents a type that matches safer integer values that are greater than zero
+Represents a type that matches safe integer values that are greater than zero
 
 <b>Signature:</b>
 

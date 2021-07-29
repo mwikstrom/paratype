@@ -18,7 +18,7 @@ test(this: void, value: unknown, path?: Array<string | number>): value is T;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
-|  path | Array&lt;string \| number&gt; |  |
+|  path | Array&lt;string \| number&gt; | <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>
 

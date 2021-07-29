@@ -10,6 +10,7 @@ export interface Type<T = unknown> {
      * A `TypeError` is thrown in case the value doesn't match.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be checked
+     * @param path - <i>(Optional)</i> Path to the value
      */
     assert(this: void, value: unknown, path?: Array<string | number>): asserts value is T;
 
@@ -18,6 +19,7 @@ export interface Type<T = unknown> {
      * and otherwise `undefined`.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be checked
+     * @param path - <i>(Optional)</i> Path to the value
      */
     error(this: void, value: unknown, path?: Array<string | number>): string | undefined;
 
@@ -33,6 +35,7 @@ export interface Type<T = unknown> {
      * Determines whether the specified value matches the current run-time type.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be checked
+     * @param path - <i>(Optional)</i> Path to the value
      * @returns `true` if the value matches; otherwise, `false`
      */
      test(this: void, value: unknown, path?: Array<string | number>): value is T;

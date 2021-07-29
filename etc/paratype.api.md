@@ -76,9 +76,10 @@ export const stringType: Type<string>;
 export interface Type<T = unknown> {
     assert(this: void, value: unknown, path?: PathArray): asserts value is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
+    fromJsonValue(this: void, value: JsonValue, path?: PathArray): T;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
-    toJsonValue(this: void, value: T): JsonValue | undefined;
+    toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;
 }
 
 // @public

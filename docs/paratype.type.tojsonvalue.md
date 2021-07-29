@@ -9,7 +9,7 @@ Converts the specified value, which is assumed to match the current run-time typ
 <b>Signature:</b>
 
 ```typescript
-toJsonValue(this: void, value: T): JsonValue | undefined;
+toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ toJsonValue(this: void, value: T): JsonValue | undefined;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | T | The value to be converted |
+|  depth | number | <i>(Optional)</i> Path depth of the value |
 
 <b>Returns:</b>
 

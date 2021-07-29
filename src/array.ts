@@ -1,4 +1,5 @@
 import { _checkArray } from "./internal/check-array";
+import { _assertDepth, _assertPath } from "./internal/check-path";
 import { _formatError } from "./internal/format-error";
 import { _makeType } from "./internal/make-type";
 import { JsonValue } from "./json";
@@ -15,12 +16,32 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
             shallow ? void(0) : _checkArray(value, path, itemType.error) :
             _formatError("Must be an array", path)
     );
-    
-    const toJsonValue: Type<T[]>["toJsonValue"] = value => {
-        const result = new Array<JsonValue>();
+
+    const fromJsonValue: Type<T[]>["fromJsonValue"] = (value, path) => {
+        if (!Array.isArray(value)) {
+            throw new TypeError(_formatError("Must a JSON array", path));
+        }
+
+        const depth = (path = _assertPath(path)).length;
+        const result = new Array<T>();
+        let index = 0;        
+        path.push(index);
 
         for (const item of value) {
-            const mapped = itemType.toJsonValue(item);
+            result.push(itemType.fromJsonValue(item, path));
+            path[depth] = ++index;
+        }
+
+        path.pop();
+        return result;
+    };
+    
+    const toJsonValue: Type<T[]>["toJsonValue"] = (value, depth = 0) => {
+        const result = new Array<JsonValue>();
+        _assertDepth(++depth);
+
+        for (const item of value) {
+            const mapped = itemType.toJsonValue(item, depth);
             if (mapped === void(0)) {
                 return void(0);
             }
@@ -30,5 +51,5 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
         return result;
     };
 
-    return _makeType({ error, toJsonValue });
+    return _makeType({ error, fromJsonValue, toJsonValue });
 }

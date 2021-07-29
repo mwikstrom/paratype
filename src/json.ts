@@ -57,5 +57,6 @@ const error: Type["error"] = (value, path, shallow) => {
  */
 export const jsonValueType = _makeType<JsonValue>({
     error, 
+    fromJsonValue: value => value,
     toJsonValue: value => value,
 });

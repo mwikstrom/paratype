@@ -8,4 +8,24 @@ export const _checkPath = (path: PathArray): string | undefined => {
     }
 };
 
+/** @internal */
+export const _assertDepth = (depth: number): void => {
+    if (depth >= MAX_PATH_DEPTH) {
+        throw new RangeError("Maximum path depth exceeded");
+    }
+};
+
+/** @internal */
+export const _assertPath = (path: PathArray | undefined): PathArray => {
+    if (!path) {
+        path = [];
+    } else {
+        const message = _checkPath(path);
+        if (message !== void(0)) {
+            throw new RangeError(message);
+        }
+    }
+    return path;
+};
+
 const MAX_PATH_DEPTH = 100;

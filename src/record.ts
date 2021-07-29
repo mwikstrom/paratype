@@ -1,8 +1,10 @@
+import { _assertDepth, _assertPath } from "./internal/check-path";
 import { _checkRecord } from "./internal/check-record";
 import { _formatError } from "./internal/format-error";
 import { _isRecord } from "./internal/is-record";
 import { _makeType } from "./internal/make-type";
 import { JsonObject } from "./json";
+import { PathArray } from "./path";
 import { Type } from "./type";
 
 /**
@@ -16,19 +18,26 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
     properties: PropertyTypes<T, O>,
     options?: RecordOptions<O>,
 ): Type<T> {
-    const props = new Map(Object.entries(properties));
+    const props = new Map<string, Type<unknown>>(Object.entries(properties));
     const optional = new Set<string>(options?.optional || []);
+
+    const checkMissing = (value: Record<string, unknown>, path?: PathArray): string | undefined => {
+        for (const key of props.keys()) {
+            if (!optional.has(key) && !(key in value)) {
+                return _formatError(`Missing required property: ${key}`, path);
+            }
+        }
+    };
 
     const error: Type["error"] = (value, path, shallow) => {
         if (!_isRecord(value)) {
             return _formatError("Must be a record object", path);
         }
 
-        for (const key of props.keys()) {
-            if (!optional.has(key) && !(key in value)) {
-                return _formatError(`Missing required property: ${key}`, path);
-            }
-        }        
+        const missing = checkMissing(value, path);
+        if (missing !== void(0)) {
+            return missing;
+        }
 
         return _checkRecord(value, path, shallow, (propValue, propPath) => {
             const propName = propPath.slice(-1)[0] as string;
@@ -39,11 +48,40 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         });
     };
 
-    const toJsonValue: Type<T>["toJsonValue"] = value => {
-        const result: JsonObject = {};
+    const fromJsonValue: Type<T>["fromJsonValue"] = (value, path) => {
+        if (!_isRecord(value)) {
+            throw new TypeError(_formatError("Must be a JSON object", path));
+        }
+
+        const missing = checkMissing(value, path);
+        const result: Record<string, unknown> = {};
+        if (missing !== void(0)) {
+            throw new TypeError(missing);
+        }
+
+        const depth = (path = _assertPath(path)).length;
+        path.push("");
 
         for (const [key, item] of Object.entries(value)) {
-            const mapped = props.get(key)?.toJsonValue(item);
+            const propType = props.get(key);
+            path[depth] = key;
+            if (!propType) {
+                throw new TypeError(_formatError("Invalid property name", path));
+            }
+            const converted = propType.fromJsonValue(item, path);
+            result[key] = converted;
+        }
+
+        path.pop();
+        return result as T;
+    };
+
+    const toJsonValue: Type<T>["toJsonValue"] = (value, depth = 0) => {
+        const result: JsonObject = {};
+        _assertDepth(++depth);
+
+        for (const [key, item] of Object.entries(value)) {
+            const mapped = props.get(key)?.toJsonValue(item, depth);
             if (mapped === void(0)) {
                 return void(0);
             }
@@ -53,7 +91,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         return result;
     };
 
-    return _makeType({ error, toJsonValue });
+    return _makeType({ error, fromJsonValue, toJsonValue });
 }
 
 /**

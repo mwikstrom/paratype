@@ -45,7 +45,7 @@ Basic run-time type information for typescript and javascript.
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
-|  [PathArray](./paratype.patharray.md) | An array of string or numbers that represents the path of a value |
+|  [PathArray](./paratype.patharray.md) | An array of string and/or numbers that represents the path of a value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [RecordProperties](./paratype.recordproperties.md) | Extracts the underlying types from properties supplied to [recordType()](./paratype.recordtype.md) |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |

@@ -1,5 +1,5 @@
 /** 
- * An array of string or numbers that represents the path of a value
+ * An array of string and/or numbers that represents the path of a value
  * @public
  */
 export type PathArray = Array<string | number>;

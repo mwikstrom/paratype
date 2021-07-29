@@ -11,6 +11,7 @@ Basic run-time type information for typescript and javascript.
 |  Function | Description |
 |  --- | --- |
 |  [arrayType(items)](./paratype.arraytype.md) |  |
+|  [isType(this, thing)](./paratype.istype.md) |  |
 |  [recordType(properties, options)](./paratype.recordtype.md) |  |
 
 ## Interfaces

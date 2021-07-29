@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface Type<T> 
+export interface Type<T = any> 
 ```
 
 ## Methods

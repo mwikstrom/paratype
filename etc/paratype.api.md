@@ -17,6 +17,9 @@ export const booleanType: Type<boolean>;
 export const integerType: Type<number>;
 
 // @public (undocumented)
+export function isType(this: void, thing: any): thing is Type;
+
+// @public (undocumented)
 export const nonNegativeIntegerType: Type<number>;
 
 // @public (undocumented)
@@ -51,7 +54,7 @@ export function recordType<P extends Record<string, Type<any>>, O extends (keyof
 export const stringType: Type<string>;
 
 // @public (undocumented)
-export interface Type<T> {
+export interface Type<T = any> {
     // (undocumented)
     assert(this: void, value: any): asserts value is T;
     // (undocumented)

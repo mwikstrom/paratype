@@ -9,6 +9,6 @@
     "publicTrimmedFilePath": "<projectFolder>/lib/index.d.ts"
   },
   "docModel": {
-    "enabled": false
+    "enabled": true
   }
 }

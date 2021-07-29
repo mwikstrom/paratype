@@ -5,9 +5,9 @@
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "prebuild": "rimraf lib",
+    "prebuild": "rimraf temp lib docs",
     "build": "tsc",
-    "postbuild": "api-extractor run",
+    "postbuild": "api-extractor run && api-documenter markdown --input temp --output docs",
     "test": "jest"
   },
   "repository": {
@@ -17,6 +17,7 @@
   "author": "Mårten Wikström",
   "license": "ISC",
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.13.33",
     "@microsoft/api-extractor": "^7.18.4",
     "@types/jest": "^26.0.24",
     "jest": "^27.0.6",

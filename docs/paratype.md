@@ -36,6 +36,7 @@ Basic run-time type information for typescript and javascript.
 |  [numberType](./paratype.numbertype.md) | Matches number values |
 |  [positiveIntegerType](./paratype.positiveintegertype.md) | Matches safe integer values that are greater than zero |
 |  [stringType](./paratype.stringtype.md) | Matches string values |
+|  [timestampType](./paratype.timestamptype.md) | Matches timestamp values |
 |  [voidType](./paratype.voidtype.md) | Represents a type that only matches <code>undefined</code> values |
 
 ## Type Aliases

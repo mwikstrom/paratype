@@ -10,8 +10,8 @@ export * from "./array";
 export * from "./path";
 export * from "./primitives";
 export * from "./record";
+export * from "./timestamp";
 export * from "./type";
 
-// TODO: datetime (requires json conversion!)
 // TODO: enum
 

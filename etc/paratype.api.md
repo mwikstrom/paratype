@@ -73,6 +73,9 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
 export const stringType: Type<string>;
 
 // @public
+export const timestampType: Type<Date>;
+
+// @public
 export interface Type<T = unknown> {
     assert(this: void, value: unknown, path?: PathArray): asserts value is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;

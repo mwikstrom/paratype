@@ -4,6 +4,7 @@
 
 ## RecordOptions interface
 
+Specifies behavior for a record type
 
 <b>Signature:</b>
 
@@ -15,5 +16,5 @@ export interface RecordOptions<O>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [optional?](./paratype.recordoptions.optional.md) | O | <i>(Optional)</i> |
+|  [optional?](./paratype.recordoptions.optional.md) | O | <i>(Optional)</i> An array of property names that shall be optional (not required) in the record type |
 

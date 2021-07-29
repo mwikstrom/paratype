@@ -4,6 +4,8 @@
 
 ## RecordOptions.optional property
 
+An array of property names that shall be optional (not required) in the record type
+
 <b>Signature:</b>
 
 ```typescript

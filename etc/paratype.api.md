@@ -34,9 +34,8 @@ export const positiveIntegerType: Type<number>;
 // @public (undocumented)
 export type Predicate<T> = (value: T) => boolean;
 
-// @public (undocumented)
+// @public
 export interface RecordOptions<O> {
-    // (undocumented)
     optional?: O;
 }
 

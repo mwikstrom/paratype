@@ -17,7 +17,7 @@ export declare function recordType<T extends Record<string, Type<any>>, O extend
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  properties | T | Properties of the record. Must be an object where keys provide property names, and values their [Type](./paratype.type.md) |
-|  options | [RecordOptions](./paratype.recordoptions.md)<!-- -->&lt;O&gt; | Options for how the record type shall be constructed |
+|  options | [RecordOptions](./paratype.recordoptions.md)<!-- -->&lt;O&gt; | \*(Optional)\* Provides record type behavior |
 
 <b>Returns:</b>
 

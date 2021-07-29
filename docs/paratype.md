@@ -18,7 +18,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Interface | Description |
 |  --- | --- |
-|  [RecordOptions](./paratype.recordoptions.md) |  |
+|  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [Type](./paratype.type.md) |  |
 
 ## Variables

@@ -4,7 +4,7 @@ import { Type, TypeOf } from "./type";
 /**
  * Constructs a {@link Type} that represents a record with the specified properties
  * @param properties - Properties of the record. Must be an object where keys provide property names, and values their {@link Type}
- * @param options - Options for how the record type shall be constructed
+ * @param options - *(Optional)* Provides record type behavior
  * @public
  */
 export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(
@@ -42,8 +42,12 @@ export type RecordProperties<T extends Record<string, Type<any>>, O extends (key
     {[P in O[number]]?: TypeOf<T[P]>}
 );
 
-/** @public */
+/**
+ * Specifies behavior for a record type
+ * @public
+ */
 export interface RecordOptions<O> {
+    /** An array of property names that shall be optional (not required) in the record type */
     optional?: O;
     // TODO: Additional props
 }

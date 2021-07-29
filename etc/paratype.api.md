@@ -20,6 +20,22 @@ export const integerType: Type<number>;
 export function isType(value: unknown): value is Type;
 
 // @public
+export type JsonArray = Array<JsonValue>;
+
+// @public
+export interface JsonObject extends Record<string, JsonValue> {
+}
+
+// @public
+export type JsonPrimitive = string | number | boolean | null;
+
+// @public
+export type JsonValue = JsonPrimitive | JsonArray | JsonObject;
+
+// @public
+export const jsonValueType: Type<JsonValue>;
+
+// @public
 export const nonNegativeIntegerType: Type<number>;
 
 // @public

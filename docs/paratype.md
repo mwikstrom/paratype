@@ -18,6 +18,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Interface | Description |
 |  --- | --- |
+|  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [Type](./paratype.type.md) | A run-time type |
 
@@ -28,6 +29,7 @@ Basic run-time type information for typescript and javascript.
 |  [anyType](./paratype.anytype.md) | Matches any value |
 |  [booleanType](./paratype.booleantype.md) | Matches boolean values |
 |  [integerType](./paratype.integertype.md) | Matches safe integer values |
+|  [jsonValueType](./paratype.jsonvaluetype.md) | Matches JSON values |
 |  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) | Matches safe integer values that are greater than or equal to zero |
 |  [nullType](./paratype.nulltype.md) | Represents a type that only matches <code>null</code> values |
 |  [numberType](./paratype.numbertype.md) | Matches number values |
@@ -39,6 +41,9 @@ Basic run-time type information for typescript and javascript.
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
+|  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
+|  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [RecordProperties](./paratype.recordproperties.md) | Extracts the underlying types from properties supplied to [recordType()](./paratype.recordtype.md) |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |

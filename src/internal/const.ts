@@ -1,6 +1,6 @@
-import { makeType } from "./make";
+import { _makeType } from "./make";
 
 /** @internal */
-export const constType = <T>(fixed: T) => makeType({
+export const _constType = <T>(fixed: T) => _makeType({
     test: value => value === fixed,
 });

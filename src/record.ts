@@ -1,4 +1,4 @@
-import { makeType } from "./internal/make";
+import { _makeType } from "./internal/make";
 import { Type, TypeOf } from "./type";
 
 /** @public */
@@ -28,7 +28,7 @@ export function recordType<P extends Record<string, Type<any>>, O extends (keyof
 
         return true;
     };
-    return makeType({ test });
+    return _makeType({ test });
 };
 
 /** @public */

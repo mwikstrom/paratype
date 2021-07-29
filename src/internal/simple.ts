@@ -1,6 +1,6 @@
-import { makeType } from "./make";
+import { _makeType } from "./make";
 
 /** @internal */
-export const simpleType = <T>(typename: string) => makeType<T>({
+export const _simpleType = <T>(typename: string) => _makeType<T>({
     test: value => typeof value === typename,
 });

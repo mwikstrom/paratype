@@ -29,6 +29,9 @@ export const numberType: Type<number>;
 export const positiveIntegerType: Type<number>;
 
 // @public (undocumented)
+export type Predicate<T> = (value: T) => boolean;
+
+// @public (undocumented)
 export interface RecordOptions<O> {
     // (undocumented)
     optional?: O;
@@ -50,13 +53,9 @@ export const stringType: Type<string>;
 // @public (undocumented)
 export interface Type<T> {
     // (undocumented)
-    and<U>(this: void, other: Type<U>): Type<T & U>;
-    // (undocumented)
     assert(this: void, value: any): asserts value is T;
     // (undocumented)
-    or<U>(this: void, other: Type<U>): Type<T | U>;
-    // (undocumented)
-    restrict(this: void, predicate: (value: T) => boolean): Type<T>;
+    restrict(this: void, predicate: Predicate<T>): Type<T>;
     // (undocumented)
     test(this: void, value: any): value is T;
 }

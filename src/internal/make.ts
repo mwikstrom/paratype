@@ -1,33 +1,28 @@
-import { Type } from "../type";
+import { Predicate, Type } from "../type";
+import { _restrictType } from "./restrict";
 
 /** @internal */
-export const makeType = <T>(options: TypeOptions): Type<T> => {
-    const { test } = options;
-    const type: Type<T> = Object.freeze({
-        test(value: any): value is T {
-            return true;
-        },
-        assert: value => {
-            if (!test(value)) {
-                throw new TypeError();
-            }
-        },
-        restrict: predicate => makeType<T>({
-            test: value => test(value) && predicate(value),
-        }),
-        or: <U>(other: Type<U>) => makeType<T | U>({
-            // TODO: Special handling is required for union of record types
-            test: value => test(value) || other.test(value),
-        }),
-        and: <U>(other: Type<U>) => makeType<T & U>({
-            // TODO: Special handling is required for intersection of record types
-            test: value => test(value) && other.test(value),
-        }),
+export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
+    const { test: _test } = options;
+    const test = _test as TypeGuard<T>;
+    const assert = (value: any) => {
+        if (!test(value)) {
+            throw new TypeError();
+        }
+    };
+    const restrict = (predicate: Predicate<T>) => _restrictType(type, predicate);
+    const type: Type<T> = Object.freeze({ 
+        test, 
+        assert,
+        restrict,
     });
     return type;
 }
 
 /** @internal */
-export interface TypeOptions {
+export type TypeGuard<T> = (this: void, value: any) => value is T;
+
+/** @internal */
+export interface TypeOptions<T> {
     test(this: void, value: any): boolean;
 }

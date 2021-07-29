@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-restrict(this: void, predicate: (value: T) => boolean): Type<T>;
+restrict(this: void, predicate: Predicate<T>): Type<T>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ restrict(this: void, predicate: (value: T) => boolean): Type<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | void |  |
-|  predicate | (value: T) =&gt; boolean |  |
+|  predicate | [Predicate](./paratype.predicate.md)<!-- -->&lt;T&gt; |  |
 
 <b>Returns:</b>
 

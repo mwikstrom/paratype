@@ -15,9 +15,7 @@ export interface Type<T>
 
 |  Method | Description |
 |  --- | --- |
-|  [and(this, other)](./paratype.type.and.md) |  |
 |  [assert(this, value)](./paratype.type.assert.md) |  |
-|  [or(this, other)](./paratype.type.or.md) |  |
 |  [restrict(this, predicate)](./paratype.type.restrict.md) |  |
 |  [test(this, value)](./paratype.type.test.md) |  |
 

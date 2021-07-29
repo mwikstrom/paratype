@@ -1,26 +1,26 @@
-import { constType } from "./internal/const";
-import { makeType } from "./internal/make";
-import { simpleType } from "./internal/simple";
+import { _constType } from "./internal/const";
+import { _makeType } from "./internal/make";
+import { _simpleType } from "./internal/simple";
 
 /** @public */
-export const anyType = makeType<any>({
+export const anyType = _makeType<any>({
     test: () => true,
 });
 
 /** @public */
-export const booleanType = simpleType<boolean>("boolean");
+export const booleanType = _simpleType<boolean>("boolean");
 
 /** @public */
-export const numberType = simpleType<number>("number");
+export const numberType = _simpleType<number>("number");
 
 /** @public */
-export const stringType = simpleType<string>("string");
+export const stringType = _simpleType<string>("string");
 
 /** @public */
-export const voidType = constType<void>(void(0));
+export const voidType = _constType<void>(void(0));
 
 /** @public */
-export const nullType = constType<null>(null);
+export const nullType = _constType<null>(null);
 
 /** @public */
 export const integerType = numberType.restrict(value => (

@@ -38,6 +38,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Predicate](./paratype.predicate.md) |  |
 |  [RecordProperties](./paratype.recordproperties.md) |  |
 |  [TypeOf](./paratype.typeof.md) |  |
 

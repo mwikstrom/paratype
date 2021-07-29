@@ -7,6 +7,7 @@
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "tsc",
+    "postbuild": "api-extractor run",
     "test": "jest"
   },
   "repository": {
@@ -16,6 +17,7 @@
   "author": "Mårten Wikström",
   "license": "ISC",
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.18.4",
     "@types/jest": "^26.0.24",
     "jest": "^27.0.6",
     "rimraf": "^3.0.2",

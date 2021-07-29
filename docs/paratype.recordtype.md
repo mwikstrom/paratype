@@ -9,7 +9,7 @@ Constructs a [Type](./paratype.type.md) that represents a record with the specif
 <b>Signature:</b>
 
 ```typescript
-export declare function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<T>;
+export declare function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<WithRecordOptions<T, O>>;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ export declare function recordType<T extends Record<string, unknown>, O extends 
 
 <b>Returns:</b>
 
-[Type](./paratype.type.md)<!-- -->&lt;T&gt;
+[Type](./paratype.type.md)<!-- -->&lt;[WithRecordOptions](./paratype.withrecordoptions.md)<!-- -->&lt;T, O&gt;&gt;
 

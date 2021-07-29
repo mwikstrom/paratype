@@ -67,7 +67,7 @@ export interface RecordOptions<O extends string | never = never> {
 }
 
 // @public
-export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<T>;
+export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<WithRecordOptions<T, O>>;
 
 // @public
 export const stringType: Type<string>;
@@ -90,5 +90,12 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
 
 // @public
 export const voidType: Type<void>;
+
+// @public
+export type WithRecordOptions<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
+    [P in Exclude<keyof T, O>]-?: T[P];
+} & {
+    [P in O]?: T[P];
+};
 
 ```

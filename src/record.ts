@@ -17,7 +17,7 @@ import { Type } from "./type";
 export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(
     properties: PropertyTypes<T, O>,
     options?: RecordOptions<O>,
-): Type<T> {
+): Type<WithRecordOptions<T, O>> {
     const props = new Map<string, Type<unknown>>(Object.entries(properties));
     const optional = new Set<string>(options?.optional || []);
 
@@ -48,7 +48,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         });
     };
 
-    const fromJsonValue: Type<T>["fromJsonValue"] = (value, path) => {
+    const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = (value, path) => {
         if (!_isRecord(value)) {
             throw new TypeError(_formatError("Must be a JSON object", path));
         }
@@ -73,10 +73,10 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         }
 
         path.pop();
-        return result as T;
+        return result as WithRecordOptions<T, O>;
     };
 
-    const toJsonValue: Type<T>["toJsonValue"] = (value, depth = 0) => {
+    const toJsonValue: Type<WithRecordOptions<T, O>>["toJsonValue"] = (value, depth = 0) => {
         const result: JsonObject = {};
         _assertDepth(++depth);
 
@@ -91,7 +91,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         return result;
     };
 
-    return _makeType({ error, fromJsonValue, toJsonValue });
+    return _makeType<WithRecordOptions<T, O>>({ error, fromJsonValue, toJsonValue });
 }
 
 /**
@@ -110,4 +110,14 @@ export interface RecordOptions<O extends string | never = never> {
     /** An array of property names that shall be optional (not required) in the record type */
     optional?: O[];
     // TODO: Additional props
+}
+
+/**
+ * Applies {@link RecordOptions} to a type
+ * @public
+ */
+export type WithRecordOptions<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
+    [P in Exclude<keyof T, O>]-?: T[P];
+} & {
+    [P in O]?: T[P];
 }

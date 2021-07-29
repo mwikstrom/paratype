@@ -50,4 +50,5 @@ Basic run-time type information for typescript and javascript.
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [PropertyTypes](./paratype.propertytypes.md) | Maps all properties to their corresponding run-time types |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
+|  [WithRecordOptions](./paratype.withrecordoptions.md) | Applies [RecordOptions](./paratype.recordoptions.md) to a type |
 

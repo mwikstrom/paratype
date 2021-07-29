@@ -17,7 +17,7 @@ export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
         restrict,
     });
     return type;
-}
+};
 
 /** @internal */
 export type TypeGuard<T> = (this: void, value: any) => value is T;

@@ -9,6 +9,7 @@
     "build": "tsc",
     "postbuild": "api-extractor run --local && api-documenter markdown --input temp --output docs",
     "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix",
     "test": "jest"
   },
   "repository": {

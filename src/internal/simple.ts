@@ -1,6 +1,6 @@
 import { Type } from "../type";
-import { _makeType } from "./make";
-import { _formatError } from "./utils";
+import { _makeType } from "./make-type";
+import { _formatError } from "./format-error";
 
 /** @internal */
 export const _simpleType = <T>(typename: "boolean" | "string" | "number"): Type<T> => _makeType<T>({

@@ -1,4 +1,4 @@
-import { _isObject } from "./internal/utils";
+import { _isRecord } from "./internal/is-record";
 
 /**
  * A run-time type
@@ -67,7 +67,7 @@ const funcs: (keyof Type)[] = [
  */
 export function isType(value: unknown): value is Type {
     return (
-        _isObject(value) &&
+        _isRecord(value) &&
         funcs.every(key => key in value && typeof value[key] === "function")
     );
 }

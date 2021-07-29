@@ -1,6 +1,6 @@
 import { Predicate, Type } from "../type";
-import { _makeType } from "./make";
-import { _formatError } from "./utils";
+import { _makeType } from "./make-type";
+import { _formatError } from "./format-error";
 
 /** @internal */
 export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Predicate<T>): Type<T> => {

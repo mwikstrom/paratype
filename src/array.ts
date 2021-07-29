@@ -1,5 +1,6 @@
-import { _makeType } from "./internal/make";
-import { _checkArray, _formatError } from "./internal/utils";
+import { _checkArray } from "./internal/check-array";
+import { _formatError } from "./internal/format-error";
+import { _makeType } from "./internal/make-type";
 import { Type } from "./type";
 
 /**

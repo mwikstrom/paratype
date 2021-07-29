@@ -1,5 +1,5 @@
 import { _constType } from "./internal/const";
-import { _makeType } from "./internal/make";
+import { _makeType } from "./internal/make-type";
 import { _simpleType } from "./internal/simple";
 
 /** 

@@ -1,6 +1,6 @@
 import { Type } from "../type";
-import { _makeType } from "./make";
-import { _formatError } from "./utils";
+import { _formatError } from "./format-error";
+import { _makeType } from "./make-type";
 
 /** @internal */
 export const _constType = <T>(fixed: T, message: string): Type<T> => _makeType({

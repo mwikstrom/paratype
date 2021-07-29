@@ -1,5 +1,8 @@
-import { TypeOptions, _makeType } from "./internal/make";
-import { _isObject, _checkArray, _checkRecord, _formatError } from "./internal/utils";
+import { _checkArray } from "./internal/check-array";
+import { _checkRecord } from "./internal/check-record";
+import { _formatError } from "./internal/format-error";
+import { _isRecord } from "./internal/is-record";
+import { TypeOptions, _makeType } from "./internal/make-type";
 
 /**
  * A JSON value
@@ -40,7 +43,7 @@ const error: TypeOptions["error"] = (value, path = []) => {
         return _checkArray(value, path, error);
     }
 
-    if (_isObject(value)) {
+    if (_isRecord(value)) {
         return _checkRecord(value, path, error);
     }
 

@@ -11,5 +11,14 @@ export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Pre
         }
         return result;
     };
-    return _makeType({ error });
+
+    const fromJsonValue: Type<T>["fromJsonValue"] = (value, path) => {
+        const result = inner.fromJsonValue(value, path);
+        if (!predicate(result)) {
+            throw new TypeError(_formatError(message, path));
+        }
+        return result;
+    };
+
+    return _makeType({ error, fromJsonValue });
 };

@@ -80,6 +80,7 @@ export interface Type<T = unknown> {
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
+    toJsonValue(this: void, value: T): JsonValue | undefined;
 }
 
 // @public

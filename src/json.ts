@@ -2,7 +2,8 @@ import { _checkArray } from "./internal/check-array";
 import { _checkRecord } from "./internal/check-record";
 import { _formatError } from "./internal/format-error";
 import { _isRecord } from "./internal/is-record";
-import { TypeOptions, _makeType } from "./internal/make-type";
+import { _makeType } from "./internal/make-type";
+import { Type } from "./type";
 
 /**
  * A JSON value
@@ -30,7 +31,7 @@ export type JsonArray = Array<JsonValue>;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface JsonObject extends Record<string, JsonValue> { }
 
-const error: TypeOptions["error"] = (value, path, shallow) => {
+const error: Type["error"] = (value, path, shallow) => {
     if (value === null || typeof value === "string" || typeof value === "boolean") {
         return void(0);
     }
@@ -54,4 +55,7 @@ const error: TypeOptions["error"] = (value, path, shallow) => {
  * Matches JSON values
  * @public
  */
-export const jsonValueType = _makeType<JsonValue>({ error });
+export const jsonValueType = _makeType<JsonValue>({
+    error, 
+    toJsonValue: value => value,
+});

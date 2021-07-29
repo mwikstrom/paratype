@@ -3,8 +3,10 @@
  * @packageDocumentation
  */
 
-export * from "./array";
+// must be exported first because we depend on it in internal code
 export * from "./json";
+
+export * from "./array";
 export * from "./path";
 export * from "./primitives";
 export * from "./record";

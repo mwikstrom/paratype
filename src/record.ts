@@ -2,6 +2,7 @@ import { _checkRecord } from "./internal/check-record";
 import { _formatError } from "./internal/format-error";
 import { _isRecord } from "./internal/is-record";
 import { _makeType } from "./internal/make-type";
+import { JsonObject } from "./json";
 import { Type, TypeOf } from "./type";
 
 /**
@@ -17,6 +18,7 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
 ): Type<RecordProperties<T, O>> {
     const props = new Map(Object.entries(properties));
     const optional = new Set(options?.optional || []);
+
     const error: Type["error"] = (value, path, shallow) => {
         if (!_isRecord(value)) {
             return _formatError("Must be a record object", path);
@@ -36,7 +38,22 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
                 _formatError("Invalid property name", path);
         });
     };
-    return _makeType({ error });
+
+    const toJsonValue: Type<RecordProperties<T, O>>["toJsonValue"] = value => {
+        const result: JsonObject = {};
+
+        for (const [key, item] of Object.entries(value)) {
+            const mapped = props.get(key)?.toJsonValue(item);
+            if (mapped === void(0)) {
+                return void(0);
+            }
+            result[key] = mapped;
+        }
+
+        return result;
+    };
+
+    return _makeType({ error, toJsonValue });
 }
 
 /** 

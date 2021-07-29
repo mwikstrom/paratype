@@ -1,4 +1,5 @@
 import { _isRecord } from "./internal/is-record";
+import { JsonValue } from "./json";
 import { PathArray } from "./path";
 
 /**
@@ -41,6 +42,16 @@ export interface Type<T = unknown> {
      * @returns `true` if the value matches; otherwise, `false`
      */
     test(this: void, value: unknown, path?: PathArray): value is T;
+
+    /**
+     * Converts the specified value, which is assumed to match the current run-time type,
+     * to a {@link JsonValue}.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param value - The value to be converted
+     * @returns A {@link JsonValue} that represents the specified value when conversion is
+     *          successful, and `undefined` otherwise.
+     */
+    toJsonValue(this: void, value: T): JsonValue | undefined;
 }
 
 /**

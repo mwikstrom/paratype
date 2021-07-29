@@ -1,10 +1,14 @@
+import { jsonValueType } from "../json";
 import { PathArray } from "../path";
 import { Type } from "../type";
 import { _restrictType } from "./restrict";
 
 /** @internal */
-export const _makeType = <T>(options: TypeOptions): Type<T> => {
-    const { error } = options;
+export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
+    const {
+        error,
+        toJsonValue = value => jsonValueType.test(value) ? value : void(0),
+    } = options;
     const assert: Type<T>["assert"] = (value, path) => {
         const message = error(value, path);
         if (message !== void(0)) {
@@ -20,9 +24,10 @@ export const _makeType = <T>(options: TypeOptions): Type<T> => {
         error,
         restrict,
         test, 
+        toJsonValue,
     });
     return type;
 };
 
 /** @internal */
-export type TypeOptions = Pick<Type, "error">;
+export type TypeOptions<T = unknown> = Pick<Type, "error"> & Partial<Pick<Type<T>, "toJsonValue">>;

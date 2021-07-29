@@ -9,5 +9,5 @@ Matches JSON values
 <b>Signature:</b>
 
 ```typescript
-jsonValueType: import("./type").Type<JsonValue>
+jsonValueType: Type<JsonValue>
 ```

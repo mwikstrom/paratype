@@ -4,6 +4,9 @@
   "description": "Basic run-time type information for typescript and javascript",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "prebuild": "rimraf temp lib docs && eslint",
     "build": "tsc",
@@ -14,10 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://marten@dev.azure.com/marten/paratype/_git/paratype"
+    "url": "git+https://github.com/mwikstrom/paramodel.git"
   },
   "author": "Mårten Wikström",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwikstrom/paramodel/issues"
+  },
+  "homepage": "https://github.com/mwikstrom/paramodel#readme",
   "devDependencies": {
     "@microsoft/api-documenter": "^7.13.33",
     "@microsoft/api-extractor": "^7.18.4",

@@ -31,7 +31,7 @@ export const numberType: Type<number>;
 // @public (undocumented)
 export const positiveIntegerType: Type<number>;
 
-// @public (undocumented)
+// @public
 export type Predicate<T> = (value: T) => boolean;
 
 // @public
@@ -59,7 +59,7 @@ export interface Type<T = any> {
     test(this: void, value: any): value is T;
 }
 
-// @public (undocumented)
+// @public
 export type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? V : never;
 
 // @public (undocumented)

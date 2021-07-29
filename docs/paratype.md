@@ -39,7 +39,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Predicate](./paratype.predicate.md) |  |
+|  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [RecordProperties](./paratype.recordproperties.md) |  |
-|  [TypeOf](./paratype.typeof.md) |  |
+|  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
 

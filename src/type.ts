@@ -35,6 +35,7 @@ export type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? 
 
 /**
  * Returns `true` if the specified value matches a predicate
+ * @public 
  */
 export type Predicate<T> = (value: T) => boolean;
 

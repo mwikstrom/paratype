@@ -4,6 +4,7 @@
 
 ## TypeOf type
 
+Extracts the underlying type from a [Type](./paratype.type.md) (it gets the `T` from `Type<T>`<!-- -->)
 
 <b>Signature:</b>
 

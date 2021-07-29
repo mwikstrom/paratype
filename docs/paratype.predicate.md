@@ -4,6 +4,7 @@
 
 ## Predicate type
 
+Returns `true` if the specified value matches a predicate
 
 <b>Signature:</b>
 

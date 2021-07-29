@@ -4,20 +4,23 @@
 
 ## isType() function
 
+Determines whether the specified value is a [Type](./paratype.type.md)
 
 <b>Signature:</b>
 
 ```typescript
-export declare function isType(thing: any): thing is Type;
+export declare function isType(value: any): value is Type;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  thing | any |  |
+|  value | any | The value to be checked |
 
 <b>Returns:</b>
 
-thing is [Type](./paratype.type.md)
+value is [Type](./paratype.type.md)
+
+`true` if the value is a [Type](./paratype.type.md)<!-- -->; otherwise, `false`
 

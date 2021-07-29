@@ -7,8 +7,8 @@
 // @public (undocumented)
 export const anyType: Type<any>;
 
-// @public (undocumented)
-export function arrayType<T>(items: Type<T>): Type<T[]>;
+// @public
+export function arrayType<T>(itemType: Type<T>): Type<T[]>;
 
 // @public (undocumented)
 export const booleanType: Type<boolean>;
@@ -16,8 +16,8 @@ export const booleanType: Type<boolean>;
 // @public (undocumented)
 export const integerType: Type<number>;
 
-// @public (undocumented)
-export function isType(thing: any): thing is Type;
+// @public
+export function isType(value: any): value is Type;
 
 // @public (undocumented)
 export const nonNegativeIntegerType: Type<number>;

@@ -4,18 +4,19 @@
 
 ## arrayType() function
 
+Constructs a [Type](./paratype.type.md) that represents an array of the specified item type.
 
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayType<T>(items: Type<T>): Type<T[]>;
+export declare function arrayType<T>(itemType: Type<T>): Type<T[]>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  items | [Type](./paratype.type.md)<!-- -->&lt;T&gt; |  |
+|  itemType | [Type](./paratype.type.md)<!-- -->&lt;T&gt; | Type of items in the array |
 
 <b>Returns:</b>
 

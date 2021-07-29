@@ -10,8 +10,8 @@ Basic run-time type information for typescript and javascript.
 
 |  Function | Description |
 |  --- | --- |
-|  [arrayType(items)](./paratype.arraytype.md) |  |
-|  [isType(thing)](./paratype.istype.md) |  |
+|  [arrayType(itemType)](./paratype.arraytype.md) | Constructs a [Type](./paratype.type.md) that represents an array of the specified item type. |
+|  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |
 |  [recordType(properties, options)](./paratype.recordtype.md) |  |
 
 ## Interfaces

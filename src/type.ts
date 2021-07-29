@@ -17,11 +17,16 @@ const funcs: (keyof Type)[] = [
     "restrict",
 ];
 
-/** @public */
-export function isType(thing: any): thing is Type {
+/**
+ * Determines whether the specified value is a {@link Type}
+ * @param value - The value to be checked
+ * @returns `true` if the value is a {@link Type}; otherwise, `false`
+ * @public
+ */
+export function isType(value: any): value is Type {
     return (
-        !!thing &&
-        typeof thing === "object" &&
-        funcs.every(key => key in thing && typeof thing[key] === "function")
+        !!value &&
+        typeof value === "object" &&
+        funcs.every(key => key in value && typeof value[key] === "function")
     );
 }

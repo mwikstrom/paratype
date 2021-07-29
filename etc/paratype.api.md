@@ -57,19 +57,17 @@ export const positiveIntegerType: Type<number>;
 export type Predicate<T> = (value: T) => boolean;
 
 // @public
-export interface RecordOptions<O> {
-    optional?: O;
+export type PropertyTypes<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
+    [P in keyof T]-?: P extends O ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+};
+
+// @public
+export interface RecordOptions<O extends string | never = never> {
+    optional?: O[];
 }
 
 // @public
-export type RecordProperties<T extends Record<string, Type<unknown>>, O extends (keyof T)[]> = ({
-    [P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>;
-} & {
-    [P in O[number]]?: TypeOf<T[P]>;
-});
-
-// @public
-export function recordType<T extends Record<string, Type<unknown>>, O extends (keyof T)[] = []>(properties: T, options?: RecordOptions<O>): Type<RecordProperties<T, O>>;
+export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<T>;
 
 // @public
 export const stringType: Type<string>;

@@ -12,12 +12,12 @@ import { Type, TypeOf } from "./type";
  * @param options - <i>(Optional)</i> Provides record type behavior
  * @public
  */
-export function recordType<T extends Record<string, Type<unknown>>, O extends (keyof T)[] = []>(
-    properties: T,
+export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(
+    properties: PropertyTypes<T, O>,
     options?: RecordOptions<O>,
-): Type<RecordProperties<T, O>> {
+): Type<T> {
     const props = new Map(Object.entries(properties));
-    const optional = new Set(options?.optional || []);
+    const optional = new Set<string>(options?.optional || []);
 
     const error: Type["error"] = (value, path, shallow) => {
         if (!_isRecord(value)) {
@@ -39,7 +39,7 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
         });
     };
 
-    const toJsonValue: Type<RecordProperties<T, O>>["toJsonValue"] = value => {
+    const toJsonValue: Type<T>["toJsonValue"] = value => {
         const result: JsonObject = {};
 
         for (const [key, item] of Object.entries(value)) {
@@ -56,21 +56,20 @@ export function recordType<T extends Record<string, Type<unknown>>, O extends (k
     return _makeType({ error, toJsonValue });
 }
 
-/** 
- * Extracts the underlying types from properties supplied to {@link recordType}
- * @public 
+/**
+ * Maps all properties to their corresponding run-time types
+ * @public
  */
-export type RecordProperties<T extends Record<string, Type<unknown>>, O extends (keyof T)[]> = (
-    {[P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>} &
-    {[P in O[number]]?: TypeOf<T[P]>}
-);
+export type PropertyTypes<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
+    [P in keyof T]-?: P extends O ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+};
 
 /**
  * Specifies behavior for a record type
  * @public
  */
-export interface RecordOptions<O> {
+export interface RecordOptions<O extends string | never = never> {
     /** An array of property names that shall be optional (not required) in the record type */
-    optional?: O;
+    optional?: O[];
     // TODO: Additional props
 }

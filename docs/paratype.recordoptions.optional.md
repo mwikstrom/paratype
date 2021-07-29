@@ -9,5 +9,5 @@ An array of property names that shall be optional (not required) in the record t
 <b>Signature:</b>
 
 ```typescript
-optional?: O;
+optional?: O[];
 ```

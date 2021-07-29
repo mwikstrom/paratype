@@ -7,6 +7,6 @@ import { Type } from "./type";
  * @public
  **/
 export function arrayType<T>(itemType: Type<T>): Type<T[]> {
-    const test = (value: any) => Array.isArray(value) && value.every(itemType.test);
+    const test = (value: unknown) => Array.isArray(value) && value.every(itemType.test);
     return _makeType({ test });
 }

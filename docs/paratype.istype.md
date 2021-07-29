@@ -9,14 +9,14 @@ Determines whether the specified value is a [Type](./paratype.type.md)
 <b>Signature:</b>
 
 ```typescript
-export declare function isType(value: any): value is Type;
+export declare function isType(value: unknown): value is Type;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | any | The value to be checked |
+|  value | unknown | The value to be checked |
 
 <b>Returns:</b>
 

@@ -9,7 +9,7 @@ A run-time type
 <b>Signature:</b>
 
 ```typescript
-export interface Type<T = any> 
+export interface Type<T = unknown> 
 ```
 
 ## Methods

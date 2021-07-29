@@ -6,7 +6,7 @@ import { _simpleType } from "./internal/simple";
  * Represents a type that matches any value
  * @public
  */
-export const anyType = _makeType<any>({
+export const anyType = _makeType<unknown>({
     test: () => true,
 });
 

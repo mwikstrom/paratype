@@ -9,7 +9,7 @@ Extracts the underlying types from properties supplied to [recordType()](./parat
 <b>Signature:</b>
 
 ```typescript
-export declare type RecordProperties<T extends Record<string, Type<any>>, O extends (keyof T)[]> = ({
+export declare type RecordProperties<T extends Record<string, Type<unknown>>, O extends (keyof T)[]> = ({
     [P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>;
 } & {
     [P in O[number]]?: TypeOf<T[P]>;

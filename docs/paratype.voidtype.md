@@ -9,5 +9,5 @@ Represents a type that only matches `undefined` values
 <b>Signature:</b>
 
 ```typescript
-voidType: import("./type").Type<unknown>
+voidType: import("./type").Type<void>
 ```

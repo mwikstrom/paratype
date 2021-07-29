@@ -9,5 +9,5 @@ Represents a type that matches any value
 <b>Signature:</b>
 
 ```typescript
-anyType: import("./type").Type<any>
+anyType: import("./type").Type<unknown>
 ```

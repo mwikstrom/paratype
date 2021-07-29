@@ -9,7 +9,7 @@ Asserts that the specified value matches the current run-time type. A `TypeError
 <b>Signature:</b>
 
 ```typescript
-assert(this: void, value: any): asserts value is T;
+assert(this: void, value: unknown): asserts value is T;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ assert(this: void, value: any): asserts value is T;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
-|  value | any | The value to be checked |
+|  value | unknown | The value to be checked |
 
 <b>Returns:</b>
 

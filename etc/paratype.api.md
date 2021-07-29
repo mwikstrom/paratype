@@ -5,7 +5,7 @@
 ```ts
 
 // @public
-export const anyType: Type<any>;
+export const anyType: Type<unknown>;
 
 // @public
 export function arrayType<T>(itemType: Type<T>): Type<T[]>;
@@ -17,13 +17,13 @@ export const booleanType: Type<boolean>;
 export const integerType: Type<number>;
 
 // @public
-export function isType(value: any): value is Type;
+export function isType(value: unknown): value is Type;
 
 // @public
 export const nonNegativeIntegerType: Type<number>;
 
 // @public
-export const nullType: Type<unknown>;
+export const nullType: Type<null>;
 
 // @public
 export const numberType: Type<number>;
@@ -40,29 +40,29 @@ export interface RecordOptions<O> {
 }
 
 // @public
-export type RecordProperties<T extends Record<string, Type<any>>, O extends (keyof T)[]> = ({
+export type RecordProperties<T extends Record<string, Type<unknown>>, O extends (keyof T)[]> = ({
     [P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>;
 } & {
     [P in O[number]]?: TypeOf<T[P]>;
 });
 
 // @public
-export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(properties: T, options?: RecordOptions<O>): Type<RecordProperties<T, O>>;
+export function recordType<T extends Record<string, Type<unknown>>, O extends (keyof T)[] = []>(properties: T, options?: RecordOptions<O>): Type<RecordProperties<T, O>>;
 
 // @public
 export const stringType: Type<string>;
 
 // @public
-export interface Type<T = any> {
-    assert(this: void, value: any): asserts value is T;
+export interface Type<T = unknown> {
+    assert(this: void, value: unknown): asserts value is T;
     restrict(this: void, predicate: Predicate<T>): Type<T>;
-    test(this: void, value: any): value is T;
+    test(this: void, value: unknown): value is T;
 }
 
 // @public
-export type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? V : never;
+export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V> ? V : never;
 
 // @public
-export const voidType: Type<unknown>;
+export const voidType: Type<void>;
 
 ```

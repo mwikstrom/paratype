@@ -2,10 +2,10 @@ import { Predicate, Type } from "../type";
 import { _restrictType } from "./restrict";
 
 /** @internal */
-export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
+export const _makeType = <T>(options: TypeOptions): Type<T> => {
     const { test: _test } = options;
     const test = _test as TypeGuard<T>;
-    const assert = (value: any) => {
+    const assert = (value: unknown) => {
         if (!test(value)) {
             throw new TypeError();
         }
@@ -20,9 +20,9 @@ export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
 };
 
 /** @internal */
-export type TypeGuard<T> = (this: void, value: any) => value is T;
+export type TypeGuard<T> = (this: void, value: unknown) => value is T;
 
 /** @internal */
-export interface TypeOptions<T> {
-    test(this: void, value: any): boolean;
+export interface TypeOptions {
+    test(this: void, value: unknown): boolean;
 }

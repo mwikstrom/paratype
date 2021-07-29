@@ -1,4 +1,5 @@
 import { _makeType } from "./internal/make";
+import { isObject } from "./internal/utils";
 import { Type, TypeOf } from "./type";
 
 /**
@@ -8,14 +9,14 @@ import { Type, TypeOf } from "./type";
  * @param options - <i>(Optional)</i> Provides record type behavior
  * @public
  */
-export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(
+export function recordType<T extends Record<string, Type<unknown>>, O extends (keyof T)[] = []>(
     properties: T,
     options?: RecordOptions<O>,
 ): Type<RecordProperties<T, O>> {
     const props = new Map(Object.entries(properties));
     const optional = new Set(options?.optional || []);
-    const test = (value: any) => {
-        if (!value || typeof value !== "object") {
+    const test = (value: unknown) => {
+        if (!isObject(value)) {
             return false;
         }
 
@@ -41,7 +42,7 @@ export function recordType<T extends Record<string, Type<any>>, O extends (keyof
  * Extracts the underlying types from properties supplied to {@link recordType}
  * @public 
  */
-export type RecordProperties<T extends Record<string, Type<any>>, O extends (keyof T)[]> = (
+export type RecordProperties<T extends Record<string, Type<unknown>>, O extends (keyof T)[]> = (
     {[P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>} &
     {[P in O[number]]?: TypeOf<T[P]>}
 );

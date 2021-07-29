@@ -9,7 +9,7 @@ Extracts the underlying type from a [Type](./paratype.type.md) (it gets the `T` 
 <b>Signature:</b>
 
 ```typescript
-export declare type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? V : never;
+export declare type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V> ? V : never;
 ```
 <b>References:</b> [Type](./paratype.type.md)
 

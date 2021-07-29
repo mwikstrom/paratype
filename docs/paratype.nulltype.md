@@ -9,5 +9,5 @@ Represents a type that only matches `null` values
 <b>Signature:</b>
 
 ```typescript
-nullType: import("./type").Type<unknown>
+nullType: import("./type").Type<null>
 ```

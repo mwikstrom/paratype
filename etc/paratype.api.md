@@ -14,6 +14,9 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]>;
 export const booleanType: Type<boolean>;
 
 // @public
+export function formatPath(path: Path): string;
+
+// @public
 export const integerType: Type<number>;
 
 // @public
@@ -45,6 +48,9 @@ export const nullType: Type<null>;
 export const numberType: Type<number>;
 
 // @public
+export type Path = Array<string | number>;
+
+// @public
 export const positiveIntegerType: Type<number>;
 
 // @public
@@ -70,10 +76,10 @@ export const stringType: Type<string>;
 
 // @public
 export interface Type<T = unknown> {
-    assert(this: void, value: unknown, path?: Array<string | number>): asserts value is T;
-    error(this: void, value: unknown, path?: Array<string | number>, shallow?: boolean): string | undefined;
+    assert(this: void, value: unknown, path?: Path): asserts value is T;
+    error(this: void, value: unknown, path?: Path, shallow?: boolean): string | undefined;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
-    test(this: void, value: unknown, path?: Array<string | number>): value is T;
+    test(this: void, value: unknown, path?: Path): value is T;
 }
 
 // @public

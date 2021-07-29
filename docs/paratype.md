@@ -11,6 +11,7 @@ Basic run-time type information for typescript and javascript.
 |  Function | Description |
 |  --- | --- |
 |  [arrayType(itemType)](./paratype.arraytype.md) | Constructs a [Type](./paratype.type.md) that represents an array of the specified item type. |
+|  [formatPath(path)](./paratype.formatpath.md) | Returns a string that represents the specified value path |
 |  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |
 |  [recordType(properties, options)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 
@@ -44,6 +45,7 @@ Basic run-time type information for typescript and javascript.
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
+|  [Path](./paratype.path.md) | An array of string or numbers that represents the path of a value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [RecordProperties](./paratype.recordproperties.md) | Extracts the underlying types from properties supplied to [recordType()](./paratype.recordtype.md) |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |

@@ -9,7 +9,7 @@ Determines whether the specified value matches the current run-time type.
 <b>Signature:</b>
 
 ```typescript
-test(this: void, value: unknown, path?: Array<string | number>): value is T;
+test(this: void, value: unknown, path?: Path): value is T;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ test(this: void, value: unknown, path?: Array<string | number>): value is T;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
-|  path | Array&lt;string \| number&gt; | <i>(Optional)</i> Path to the value |
+|  path | [Path](./paratype.path.md) | <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>
 

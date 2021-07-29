@@ -5,6 +5,7 @@
 
 export * from "./array";
 export * from "./json";
+export * from "./path";
 export * from "./primitives";
 export * from "./record";
 export * from "./type";

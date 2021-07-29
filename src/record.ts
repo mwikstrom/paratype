@@ -4,15 +4,15 @@ import { Type, TypeOf } from "./type";
 /**
  * Constructs a {@link Type} that represents a record with the specified properties
  * @param properties - Properties of the record. Must be an object where keys provide property names, and values their {@link Type}
- * @param options - *(Optional)* Provides record type behavior
+ * @param options - <i>(Optional)</i> Provides record type behavior
  * @public
  */
 export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(
     properties: T,
-    options: RecordOptions<O> = {},
+    options?: RecordOptions<O>,
 ): Type<RecordProperties<T, O>> {
     const props = new Map(Object.entries(properties));
-    const optional = new Set(options.optional || []);
+    const optional = new Set(options?.optional || []);
     const test = (value: any) => {
         if (!value || typeof value !== "object") {
             return false;

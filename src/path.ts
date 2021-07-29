@@ -2,14 +2,14 @@
  * An array of string or numbers that represents the path of a value
  * @public
  */
-export type Path = Array<string | number>;
+export type PathArray = Array<string | number>;
 
 /**
  * Returns a string that represents the specified value path
  * @param path - The path to the formatted
  * @public
  */
-export function formatPath(path: Path): string {
+export function formatPath(path: PathArray): string {
     return path.reduce<string>(
         (before, key) => (
             _isSafeArrayIndex(key) ?

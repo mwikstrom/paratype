@@ -1,7 +1,7 @@
-import { formatPath, Path } from "../path";
+import { formatPath, PathArray } from "../path";
 
 /** @internal */
 export const _formatError = (
     message: string,
-    path: Path | undefined
+    path: PathArray | undefined
 ): string => !path?.length ? message : `${formatPath(path)}: ${message}`;

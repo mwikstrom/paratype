@@ -1,11 +1,11 @@
-import { Path } from "../path";
+import { PathArray } from "../path";
 import { _checkPath } from "./check-path";
 
 /** @internal */
 export const _checkArray = <T>(
     array: T[], 
-    path: Path | undefined,
-    error: (this: void, value: unknown, path: Path) => string | undefined,
+    path: PathArray | undefined,
+    error: (this: void, value: unknown, path: PathArray) => string | undefined,
 ): string | undefined => {
     const depth = (path = path || []).length;
     let index = 0;

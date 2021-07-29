@@ -1,4 +1,4 @@
-import { Path } from "../path";
+import { PathArray } from "../path";
 import { Type } from "../type";
 import { _restrictType } from "./restrict";
 
@@ -11,7 +11,7 @@ export const _makeType = <T>(options: TypeOptions): Type<T> => {
             throw new TypeError(message);
         }
     };
-    function test(value: unknown, path?: Path): value is T {
+    function test(value: unknown, path?: PathArray): value is T {
         return error(value, path) === void(0);
     }
     const restrict: Type<T>["restrict"] = (message, predicate) => _restrictType(type, message, predicate);

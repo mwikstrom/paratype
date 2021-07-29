@@ -1,5 +1,5 @@
 import { _isRecord } from "./internal/is-record";
-import { Path } from "./path";
+import { PathArray } from "./path";
 
 /**
  * A run-time type
@@ -13,7 +13,7 @@ export interface Type<T = unknown> {
      * @param value - The value to be checked
      * @param path - <i>(Optional)</i> Path to the value
      */
-    assert(this: void, value: unknown, path?: Path): asserts value is T;
+    assert(this: void, value: unknown, path?: PathArray): asserts value is T;
 
     /**
      * Returns an error message when the specified value doesn't match the current run-time type,
@@ -23,7 +23,7 @@ export interface Type<T = unknown> {
      * @param path - <i>(Optional)</i> Path to the value
      * @param shallow - <i>(Optiona)</i> When `true` errors from array items or record properties are ignored
      */
-    error(this: void, value: unknown, path?: Path, shallow?: boolean): string | undefined;
+    error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
 
     /**
      * Constructs a new {@link Type} that represents a restriction of the current run-time type.
@@ -40,7 +40,7 @@ export interface Type<T = unknown> {
      * @param path - <i>(Optional)</i> Path to the value
      * @returns `true` if the value matches; otherwise, `false`
      */
-    test(this: void, value: unknown, path?: Path): value is T;
+    test(this: void, value: unknown, path?: PathArray): value is T;
 }
 
 /**

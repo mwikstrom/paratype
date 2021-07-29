@@ -9,7 +9,7 @@ Returns an error message when the specified value doesn't match the current run-
 <b>Signature:</b>
 
 ```typescript
-error(this: void, value: unknown, path?: Path, shallow?: boolean): string | undefined;
+error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ error(this: void, value: unknown, path?: Path, shallow?: boolean): string | unde
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
-|  path | [Path](./paratype.path.md) | <i>(Optional)</i> Path to the value |
+|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
 |  shallow | boolean | <i>(Optiona)</i> When <code>true</code> errors from array items or record properties are ignored |
 
 <b>Returns:</b>

@@ -1,13 +1,13 @@
-import { Path } from "../path";
+import { PathArray } from "../path";
 import { _checkPath } from "./check-path";
 import { _formatError } from "./format-error";
 
 /** @internal */
 export const _checkRecord = (
     record: Record<string, unknown>,
-    path: Path | undefined,
+    path: PathArray | undefined,
     shallow: boolean | undefined,
-    error: (this: void, value: unknown, path: Path) => string | undefined,
+    error: (this: void, value: unknown, path: PathArray) => string | undefined,
 ): string | undefined => {
     if (Object.getOwnPropertySymbols(record).length) {
         return _formatError("Record cannot have symbol properties", path);

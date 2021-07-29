@@ -33,8 +33,8 @@ export function recordType<T extends Record<string, Type<any>>, O extends (keyof
 
         return true;
     };
-    return _makeType({ test });
-};
+    return _makeType({ test })
+}
 
 /** 
  * Extracts the underlying types from properties supplied to {@link recordType}

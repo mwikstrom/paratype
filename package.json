@@ -5,9 +5,10 @@
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "prebuild": "rimraf temp lib docs",
+    "prebuild": "rimraf temp lib docs && eslint",
     "build": "tsc",
     "postbuild": "api-extractor run --local && api-documenter markdown --input temp --output docs",
+    "lint": "eslint src test",
     "test": "jest"
   },
   "repository": {
@@ -20,6 +21,9 @@
     "@microsoft/api-documenter": "^7.13.33",
     "@microsoft/api-extractor": "^7.18.4",
     "@types/jest": "^26.0.24",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "eslint": "^7.31.0",
     "jest": "^27.0.6",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.4",

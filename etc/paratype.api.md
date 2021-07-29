@@ -17,7 +17,7 @@ export const booleanType: Type<boolean>;
 export const integerType: Type<number>;
 
 // @public (undocumented)
-export function isType(this: void, thing: any): thing is Type;
+export function isType(thing: any): thing is Type;
 
 // @public (undocumented)
 export const nonNegativeIntegerType: Type<number>;

@@ -8,14 +8,13 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function isType(this: void, thing: any): thing is Type;
+export declare function isType(thing: any): thing is Type;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | void |  |
 |  thing | any |  |
 
 <b>Returns:</b>

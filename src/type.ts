@@ -18,7 +18,7 @@ const funcs: (keyof Type)[] = [
 ];
 
 /** @public */
-export function isType(this: void, thing: any): thing is Type {
+export function isType(thing: any): thing is Type {
     return (
         !!thing &&
         typeof thing === "object" &&

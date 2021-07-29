@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mwikstrom/paramodel.git"
+    "url": "git+https://github.com/mwikstrom/paratype.git"
   },
   "author": "Mårten Wikström",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mwikstrom/paramodel/issues"
+    "url": "https://github.com/mwikstrom/paratype/issues"
   },
-  "homepage": "https://github.com/mwikstrom/paramodel#readme",
+  "homepage": "https://github.com/mwikstrom/paratype#readme",
   "devDependencies": {
     "@microsoft/api-documenter": "^7.13.33",
     "@microsoft/api-extractor": "^7.18.4",

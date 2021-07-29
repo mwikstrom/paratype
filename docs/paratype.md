@@ -6,6 +6,13 @@
 
 Basic run-time type information for typescript and javascript.
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [arrayType(items)](./paratype.arraytype.md) |  |
+|  [recordType(properties, options)](./paratype.recordtype.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -18,14 +25,12 @@ Basic run-time type information for typescript and javascript.
 |  Variable | Description |
 |  --- | --- |
 |  [anyType](./paratype.anytype.md) |  |
-|  [arrayType](./paratype.arraytype.md) |  |
 |  [booleanType](./paratype.booleantype.md) |  |
 |  [integerType](./paratype.integertype.md) |  |
 |  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) |  |
 |  [nullType](./paratype.nulltype.md) |  |
 |  [numberType](./paratype.numbertype.md) |  |
 |  [positiveIntegerType](./paratype.positiveintegertype.md) |  |
-|  [recordType](./paratype.recordtype.md) |  |
 |  [stringType](./paratype.stringtype.md) |  |
 |  [voidType](./paratype.voidtype.md) |  |
 

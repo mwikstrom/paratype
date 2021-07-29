@@ -2,11 +2,22 @@
 
 [Home](./index.md) &gt; [paratype](./paratype.md) &gt; [arrayType](./paratype.arraytype.md)
 
-## arrayType variable
+## arrayType() function
 
 
 <b>Signature:</b>
 
 ```typescript
-arrayType: <T>(items: Type<T>) => Type<unknown>
+export declare function arrayType<T>(items: Type<T>): Type<T[]>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  items | [Type](./paratype.type.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Type](./paratype.type.md)<!-- -->&lt;T\[\]&gt;
+

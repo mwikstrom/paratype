@@ -2,11 +2,23 @@
 
 [Home](./index.md) &gt; [paratype](./paratype.md) &gt; [recordType](./paratype.recordtype.md)
 
-## recordType variable
+## recordType() function
 
 
 <b>Signature:</b>
 
 ```typescript
-recordType: <P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(properties: P, options?: RecordOptions<O>) => Type<RecordProperties<P, O>>
+export declare function recordType<P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(properties: P, options?: RecordOptions<O>): Type<RecordProperties<P, O>>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  properties | P |  |
+|  options | [RecordOptions](./paratype.recordoptions.md)<!-- -->&lt;O&gt; |  |
+
+<b>Returns:</b>
+
+[Type](./paratype.type.md)<!-- -->&lt;[RecordProperties](./paratype.recordproperties.md)<!-- -->&lt;P, O&gt;&gt;
+

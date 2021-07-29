@@ -8,7 +8,7 @@
 export const anyType: Type<any>;
 
 // @public (undocumented)
-export const arrayType: <T>(items: Type<T>) => Type<unknown>;
+export function arrayType<T>(items: Type<T>): Type<T[]>;
 
 // @public (undocumented)
 export const booleanType: Type<boolean>;
@@ -42,7 +42,7 @@ export type RecordProperties<T extends Record<string, Type<any>>, O extends (key
 });
 
 // @public (undocumented)
-export const recordType: <P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(properties: P, options?: RecordOptions<O>) => Type<RecordProperties<P, O>>;
+export function recordType<P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(properties: P, options?: RecordOptions<O>): Type<RecordProperties<P, O>>;
 
 // @public (undocumented)
 export const stringType: Type<string>;

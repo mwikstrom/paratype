@@ -4,6 +4,8 @@
 
 ## Type.test() method
 
+Determines whether the specified value matches the current run-time type.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,12 @@ test(this: void, value: any): value is T;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | void |  |
-|  value | any |  |
+|  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
+|  value | any | The value to be checked |
 
 <b>Returns:</b>
 
 value is T
+
+`true` if the value matches; otherwise, `false`
 

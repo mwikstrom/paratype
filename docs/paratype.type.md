@@ -4,6 +4,7 @@
 
 ## Type interface
 
+A run-time type
 
 <b>Signature:</b>
 
@@ -15,7 +16,7 @@ export interface Type<T = any>
 
 |  Method | Description |
 |  --- | --- |
-|  [assert(this, value)](./paratype.type.assert.md) |  |
-|  [restrict(this, predicate)](./paratype.type.restrict.md) |  |
-|  [test(this, value)](./paratype.type.test.md) |  |
+|  [assert(this, value)](./paratype.type.assert.md) | Asserts that the specified value matches the current run-time type. A <code>TypeError</code> is thrown in case the value doesn't match. |
+|  [restrict(this, predicate)](./paratype.type.restrict.md) | Constructs a new [Type](./paratype.type.md) that represents a restriction of the current run-time type. |
+|  [test(this, value)](./paratype.type.test.md) | Determines whether the specified value matches the current run-time type. |
 

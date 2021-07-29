@@ -1,7 +1,29 @@
-/** @public */
+/**
+ * A run-time type
+ * @public
+ */
 export interface Type<T = any> {
+    /**
+     * Asserts that the specified value matches the current run-time type.
+     * A `TypeError` is thrown in case the value doesn't match.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param value - The value to be checked
+     */
     assert(this: void, value: any): asserts value is T;
+
+    /**
+     * Determines whether the specified value matches the current run-time type.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param value - The value to be checked
+     * @returns `true` if the value matches; otherwise, `false`
+     */
     test(this: void, value: any): value is T;
+
+    /**
+     * Constructs a new {@link Type} that represents a restriction of the current run-time type.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param predicate - A predicate that represents the restriction
+     */
     restrict(this: void, predicate: Predicate<T>): Type<T>;
 }
 

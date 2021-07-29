@@ -52,13 +52,10 @@ export function recordType<T extends Record<string, Type<any>>, O extends (keyof
 // @public (undocumented)
 export const stringType: Type<string>;
 
-// @public (undocumented)
+// @public
 export interface Type<T = any> {
-    // (undocumented)
     assert(this: void, value: any): asserts value is T;
-    // (undocumented)
     restrict(this: void, predicate: Predicate<T>): Type<T>;
-    // (undocumented)
     test(this: void, value: any): value is T;
 }
 

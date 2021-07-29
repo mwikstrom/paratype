@@ -4,6 +4,8 @@
 
 ## Type.restrict() method
 
+Constructs a new [Type](./paratype.type.md) that represents a restriction of the current run-time type.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,8 +16,8 @@ restrict(this: void, predicate: Predicate<T>): Type<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | void |  |
-|  predicate | [Predicate](./paratype.predicate.md)<!-- -->&lt;T&gt; |  |
+|  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
+|  predicate | [Predicate](./paratype.predicate.md)<!-- -->&lt;T&gt; | A predicate that represents the restriction |
 
 <b>Returns:</b>
 

@@ -4,6 +4,8 @@
 
 ## Type.assert() method
 
+Asserts that the specified value matches the current run-time type. A `TypeError` is thrown in case the value doesn't match.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,8 +16,8 @@ assert(this: void, value: any): asserts value is T;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | void |  |
-|  value | any |  |
+|  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
+|  value | any | The value to be checked |
 
 <b>Returns:</b>
 

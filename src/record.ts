@@ -36,7 +36,10 @@ export function recordType<T extends Record<string, Type<any>>, O extends (keyof
     return _makeType({ test });
 };
 
-/** @public */
+/** 
+ * Extracts the underlying types from properties supplied to {@link recordType}
+ * @public 
+ */
 export type RecordProperties<T extends Record<string, Type<any>>, O extends (keyof T)[]> = (
     {[P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>} &
     {[P in O[number]]?: TypeOf<T[P]>}

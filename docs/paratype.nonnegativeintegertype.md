@@ -4,6 +4,7 @@
 
 ## nonNegativeIntegerType variable
 
+Represents a type that matches safer integer values that are greater than or equal to zero
 
 <b>Signature:</b>
 

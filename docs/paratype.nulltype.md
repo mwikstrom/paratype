@@ -4,6 +4,7 @@
 
 ## nullType variable
 
+Represents a type that only matches `null` values
 
 <b>Signature:</b>
 

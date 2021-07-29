@@ -4,6 +4,7 @@
 
 ## voidType variable
 
+Represents a type that only matches `undefined` values
 
 <b>Signature:</b>
 

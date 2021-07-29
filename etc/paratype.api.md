@@ -4,31 +4,31 @@
 
 ```ts
 
-// @public (undocumented)
+// @public
 export const anyType: Type<any>;
 
 // @public
 export function arrayType<T>(itemType: Type<T>): Type<T[]>;
 
-// @public (undocumented)
+// @public
 export const booleanType: Type<boolean>;
 
-// @public (undocumented)
+// @public
 export const integerType: Type<number>;
 
 // @public
 export function isType(value: any): value is Type;
 
-// @public (undocumented)
+// @public
 export const nonNegativeIntegerType: Type<number>;
 
-// @public (undocumented)
+// @public
 export const nullType: Type<unknown>;
 
-// @public (undocumented)
+// @public
 export const numberType: Type<number>;
 
-// @public (undocumented)
+// @public
 export const positiveIntegerType: Type<number>;
 
 // @public
@@ -39,7 +39,7 @@ export interface RecordOptions<O> {
     optional?: O;
 }
 
-// @public (undocumented)
+// @public
 export type RecordProperties<T extends Record<string, Type<any>>, O extends (keyof T)[]> = ({
     [P in Exclude<keyof T, O[number]>]: TypeOf<T[P]>;
 } & {
@@ -49,7 +49,7 @@ export type RecordProperties<T extends Record<string, Type<any>>, O extends (key
 // @public
 export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(properties: T, options?: RecordOptions<O>): Type<RecordProperties<T, O>>;
 
-// @public (undocumented)
+// @public
 export const stringType: Type<string>;
 
 // @public
@@ -62,7 +62,7 @@ export interface Type<T = any> {
 // @public
 export type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? V : never;
 
-// @public (undocumented)
+// @public
 export const voidType: Type<unknown>;
 
 ```

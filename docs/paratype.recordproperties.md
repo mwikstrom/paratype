@@ -4,6 +4,7 @@
 
 ## RecordProperties type
 
+Extracts the underlying types from properties supplied to [recordType()](./paratype.recordtype.md)
 
 <b>Signature:</b>
 

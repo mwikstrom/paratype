@@ -25,21 +25,21 @@ Basic run-time type information for typescript and javascript.
 
 |  Variable | Description |
 |  --- | --- |
-|  [anyType](./paratype.anytype.md) |  |
-|  [booleanType](./paratype.booleantype.md) |  |
-|  [integerType](./paratype.integertype.md) |  |
-|  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) |  |
-|  [nullType](./paratype.nulltype.md) |  |
-|  [numberType](./paratype.numbertype.md) |  |
-|  [positiveIntegerType](./paratype.positiveintegertype.md) |  |
-|  [stringType](./paratype.stringtype.md) |  |
-|  [voidType](./paratype.voidtype.md) |  |
+|  [anyType](./paratype.anytype.md) | Represents a type that matches any value |
+|  [booleanType](./paratype.booleantype.md) | Represents a type that matches boolean values |
+|  [integerType](./paratype.integertype.md) | Represents a type that matches safe integer values |
+|  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) | Represents a type that matches safer integer values that are greater than or equal to zero |
+|  [nullType](./paratype.nulltype.md) | Represents a type that only matches <code>null</code> values |
+|  [numberType](./paratype.numbertype.md) | Represents a type that matches number values |
+|  [positiveIntegerType](./paratype.positiveintegertype.md) | Represents a type that matches safer integer values that are greater than zero |
+|  [stringType](./paratype.stringtype.md) | Represents a type that matches string values |
+|  [voidType](./paratype.voidtype.md) | Represents a type that only matches <code>undefined</code> values |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
-|  [RecordProperties](./paratype.recordproperties.md) |  |
+|  [RecordProperties](./paratype.recordproperties.md) | Extracts the underlying types from properties supplied to [recordType()](./paratype.recordtype.md) |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
 

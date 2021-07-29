@@ -4,6 +4,7 @@
 
 ## numberType variable
 
+Represents a type that matches number values
 
 <b>Signature:</b>
 

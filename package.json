@@ -1,0 +1,25 @@
+{
+  "name": "paratype",
+  "version": "1.0.0",
+  "description": "Basic run-time type information for typescript and javascript",
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://marten@dev.azure.com/marten/paratype/_git/paratype"
+  },
+  "author": "Mårten Wikström",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "jest": "^27.0.6",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}

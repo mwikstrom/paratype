@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "target": "ES2015",
+        "skipLibCheck": true,
+        "outDir": "dist"
+    },
+    "include": ["src"]
+}

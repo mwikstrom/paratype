@@ -47,8 +47,8 @@ export type RecordProperties<T extends Record<string, Type<any>>, O extends (key
     [P in O[number]]?: TypeOf<T[P]>;
 });
 
-// @public (undocumented)
-export function recordType<P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(properties: P, options?: RecordOptions<O>): Type<RecordProperties<P, O>>;
+// @public
+export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(properties: T, options?: RecordOptions<O>): Type<RecordProperties<T, O>>;
 
 // @public (undocumented)
 export const stringType: Type<string>;

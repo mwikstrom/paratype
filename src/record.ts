@@ -1,11 +1,16 @@
 import { _makeType } from "./internal/make";
 import { Type, TypeOf } from "./type";
 
-/** @public */
-export function recordType<P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(
-    properties: P,
+/**
+ * Constructs a {@link Type} that represents a record with the specified properties
+ * @param properties - Properties of the record. Must be an object where keys provide property names, and values their {@link Type}
+ * @param options - Options for how the record type shall be constructed
+ * @public
+ */
+export function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(
+    properties: T,
     options: RecordOptions<O> = {},
-): Type<RecordProperties<P, O>> {
+): Type<RecordProperties<T, O>> {
     const props = new Map(Object.entries(properties));
     const optional = new Set(options.optional || []);
     const test = (value: any) => {

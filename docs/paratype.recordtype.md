@@ -4,21 +4,22 @@
 
 ## recordType() function
 
+Constructs a [Type](./paratype.type.md) that represents a record with the specified properties
 
 <b>Signature:</b>
 
 ```typescript
-export declare function recordType<P extends Record<string, Type<any>>, O extends (keyof P)[] = []>(properties: P, options?: RecordOptions<O>): Type<RecordProperties<P, O>>;
+export declare function recordType<T extends Record<string, Type<any>>, O extends (keyof T)[] = []>(properties: T, options?: RecordOptions<O>): Type<RecordProperties<T, O>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | P |  |
-|  options | [RecordOptions](./paratype.recordoptions.md)<!-- -->&lt;O&gt; |  |
+|  properties | T | Properties of the record. Must be an object where keys provide property names, and values their [Type](./paratype.type.md) |
+|  options | [RecordOptions](./paratype.recordoptions.md)<!-- -->&lt;O&gt; | Options for how the record type shall be constructed |
 
 <b>Returns:</b>
 
-[Type](./paratype.type.md)<!-- -->&lt;[RecordProperties](./paratype.recordproperties.md)<!-- -->&lt;P, O&gt;&gt;
+[Type](./paratype.type.md)<!-- -->&lt;[RecordProperties](./paratype.recordproperties.md)<!-- -->&lt;T, O&gt;&gt;
 

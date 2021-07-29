@@ -27,10 +27,15 @@ export interface Type<T = any> {
     restrict(this: void, predicate: Predicate<T>): Type<T>;
 }
 
-/** @public */
+/**
+ * Extracts the underlying type from a {@link Type} (it gets the `T` from `Type<T>`)
+ * @public 
+ */
 export type TypeOf<T extends Type<any> | undefined> = T extends Type<infer V> ? V : never;
 
-/** @public */
+/**
+ * Returns `true` if the specified value matches a predicate
+ */
 export type Predicate<T> = (value: T) => boolean;
 
 const funcs: (keyof Type)[] = [

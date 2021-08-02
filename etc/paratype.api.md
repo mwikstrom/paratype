@@ -57,17 +57,17 @@ export const positiveIntegerType: Type<number>;
 export type Predicate<T> = (value: T) => boolean;
 
 // @public
-export type PropertyTypes<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
-    [P in keyof T]-?: P extends O ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+export type PropertyTypes<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
+    [P in keyof T]-?: P extends O[number] ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
 };
 
 // @public
-export interface RecordOptions<O extends string | never = never> {
-    optional?: O[];
+export interface RecordOptions<O extends string[] = []> {
+    optional?: O;
 }
 
 // @public
-export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<WithRecordOptions<T, O>>;
+export function recordType<T extends Record<string, unknown>, O extends (string & keyof T)[] = []>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<WithRecordOptions<T, O>>;
 
 // @public
 export const stringType: Type<string>;
@@ -92,10 +92,10 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
 export const voidType: Type<void>;
 
 // @public
-export type WithRecordOptions<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
-    [P in Exclude<keyof T, O>]-?: T[P];
+export type WithRecordOptions<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
+    [P in Exclude<keyof T, O[number]>]-?: T[P];
 } & {
-    [P in O]?: T[P];
+    [P in O[number]]?: T[P];
 };
 
 ```

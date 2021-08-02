@@ -9,12 +9,12 @@ Specifies behavior for a record type
 <b>Signature:</b>
 
 ```typescript
-export interface RecordOptions<O extends string | never = never> 
+export interface RecordOptions<O extends string[] = []> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [optional?](./paratype.recordoptions.optional.md) | O\[\] | <i>(Optional)</i> An array of property names that shall be optional (not required) in the record type |
+|  [optional?](./paratype.recordoptions.optional.md) | O | <i>(Optional)</i> An array of property names that shall be optional (not required) in the record type |
 

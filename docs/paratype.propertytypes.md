@@ -9,8 +9,8 @@ Maps all properties to their corresponding run-time types
 <b>Signature:</b>
 
 ```typescript
-export declare type PropertyTypes<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
-    [P in keyof T]-?: P extends O ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+export declare type PropertyTypes<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
+    [P in keyof T]-?: P extends O[number] ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
 };
 ```
 <b>References:</b> [Type](./paratype.type.md)

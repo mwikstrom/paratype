@@ -9,9 +9,9 @@ Applies [RecordOptions](./paratype.recordoptions.md) to a type
 <b>Signature:</b>
 
 ```typescript
-export declare type WithRecordOptions<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
-    [P in Exclude<keyof T, O>]-?: T[P];
+export declare type WithRecordOptions<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
+    [P in Exclude<keyof T, O[number]>]-?: T[P];
 } & {
-    [P in O]?: T[P];
+    [P in O[number]]?: T[P];
 };
 ```

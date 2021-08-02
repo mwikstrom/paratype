@@ -14,7 +14,7 @@ import { Type } from "./type";
  * @param options - <i>(Optional)</i> Provides record type behavior
  * @public
  */
-export function recordType<T extends Record<string, unknown>, O extends (string & keyof T) | never = never>(
+export function recordType<T extends Record<string, unknown>, O extends (string & keyof T)[] = []>(
     properties: PropertyTypes<T, O>,
     options?: RecordOptions<O>,
 ): Type<WithRecordOptions<T, O>> {
@@ -98,17 +98,17 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
  * Maps all properties to their corresponding run-time types
  * @public
  */
-export type PropertyTypes<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
-    [P in keyof T]-?: P extends O ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+export type PropertyTypes<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
+    [P in keyof T]-?: P extends O[number] ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
 };
 
 /**
  * Specifies behavior for a record type
  * @public
  */
-export interface RecordOptions<O extends string | never = never> {
+export interface RecordOptions<O extends string[] = []> {
     /** An array of property names that shall be optional (not required) in the record type */
-    optional?: O[];
+    optional?: O;
     // TODO: Additional props
 }
 
@@ -116,8 +116,8 @@ export interface RecordOptions<O extends string | never = never> {
  * Applies {@link RecordOptions} to a type
  * @public
  */
-export type WithRecordOptions<T extends Record<string, unknown>, O extends (keyof T) | never = never> = {
-    [P in Exclude<keyof T, O>]-?: T[P];
+export type WithRecordOptions<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
+    [P in Exclude<keyof T, O[number]>]-?: T[P];
 } & {
-    [P in O]?: T[P];
+    [P in O[number]]?: T[P];
 }

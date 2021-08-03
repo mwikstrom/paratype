@@ -7,9 +7,9 @@ import { Type } from "./type";
  * @param values - Allowed values of the new enum type
  * @public
  **/
-export function enumType(values: string[]): Type<string> {
+export function enumType<V extends string>(values: V[]): Type<V> {
     const error: Type<string>["error"] = (value, path) => {
-        if (typeof value === "string" && values.includes(value)) {
+        if (typeof value === "string" && values.includes(value as V)) {
             return void(0);
         } else {
             const message = `Must be one of: ${values.map(item => `"${item}"`).join(" | ")}`;

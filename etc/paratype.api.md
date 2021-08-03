@@ -14,6 +14,9 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]>;
 export const booleanType: Type<boolean>;
 
 // @public
+export function enumType(values: string[]): Type<string>;
+
+// @public
 export function formatPath(path: PathArray): string;
 
 // @public

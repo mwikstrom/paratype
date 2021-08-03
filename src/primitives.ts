@@ -46,11 +46,7 @@ export const nullType = _constType<null>(null, "Must be null");
  */
 export const integerType = numberType.restrict(
     "Must be a safe integer",
-    value => (
-        value >= Number.MIN_SAFE_INTEGER && 
-        value <= Number.MAX_SAFE_INTEGER &&
-        value % 1 !== 0
-    ),
+    Number.isSafeInteger,
 );
 
 /** 

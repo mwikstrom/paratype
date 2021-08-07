@@ -3,6 +3,7 @@ import { _checkRecord } from "./internal/check-record";
 import { _formatError } from "./internal/format-error";
 import { _isRecord } from "./internal/is-record";
 import { _makeType } from "./internal/make-type";
+import { _makeTypeError } from "./internal/make-type-error";
 import { JsonObject } from "./json";
 import { PathArray } from "./path";
 import { Type } from "./type";
@@ -48,15 +49,15 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         });
     };
 
-    const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = (value, path) => {
+    const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
         if (!_isRecord(value)) {
-            throw new TypeError(_formatError("Must be a JSON object", path));
+            throw makeError(_formatError("Must be a JSON object", path));
         }
 
         const missing = checkMissing(value, path);
         const result: Record<string, unknown> = {};
         if (missing !== void(0)) {
-            throw new TypeError(missing);
+            throw makeError(missing);
         }
 
         const depth = (path = _assertPath(path)).length;
@@ -66,9 +67,9 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
             const propType = props.get(key);
             path[depth] = key;
             if (!propType) {
-                throw new TypeError(_formatError("Invalid property name", path));
+                throw makeError(_formatError("Invalid property name", path));
             }
-            const converted = propType.fromJsonValue(item, path);
+            const converted = propType.fromJsonValue(item, makeError, path);
             result[key] = converted;
         }
 

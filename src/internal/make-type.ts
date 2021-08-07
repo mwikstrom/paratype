@@ -1,23 +1,24 @@
 import { jsonValueType } from "../json";
 import { PathArray } from "../path";
 import { Type } from "../type";
+import { _makeTypeError } from "./make-type-error";
 import { _restrictType } from "./restrict";
 
 /** @internal */
 export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
     const {
         error,
-        fromJsonValue = (value, path) => {
-            type.assert(value, path);
+        fromJsonValue = (value, makeError, path) => {
+            type.assert(value, makeError, path);
             return value;
         },
         toJsonValue = value => jsonValueType.test(value) ? value : void(0),
     } = options;
 
-    const assert: Type<T>["assert"] = (value, path) => {
+    const assert: Type<T>["assert"] = (value, makeError = _makeTypeError, path) => {
         const message = error(value, path);
         if (message !== void(0)) {
-            throw new TypeError(message);
+            throw makeError(message);
         }
     };
 

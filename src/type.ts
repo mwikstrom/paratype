@@ -9,12 +9,14 @@ import { PathArray } from "./path";
 export interface Type<T = unknown> {
     /**
      * Asserts that the specified value matches the current run-time type.
-     * A `TypeError` is thrown in case the value doesn't match.
+     * An error is thrown in case the value doesn't match.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be checked
+     * @param error - <i>(Optional)</i> A callback that is invoked to construct the error to be 
+     *               thrown when value doesn't match
      * @param path - <i>(Optional)</i> Path to the value
      */
-    assert(this: void, value: unknown, path?: PathArray): asserts value is T;
+    assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
 
     /**
      * Returns an error message when the specified value doesn't match the current run-time type,
@@ -28,10 +30,14 @@ export interface Type<T = unknown> {
 
     /**
      * Converts the specified JSON value to a value that matches the current run-time type.
+     * An error is thrown in case conversion is unsuccessful.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be converted
+     * @param error - <i>(Optional)</i> A callback that is invoked to construct the error to be 
+     *               thrown when conversion is unsuccessful
+     * @param path - <i>(Optional)</i> Path to the value
      */
-    fromJsonValue(this: void, value: JsonValue, path?: PathArray): T;
+    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
 
      /**
      * Constructs a new {@link Type} that represents a restriction of the current run-time type.
@@ -73,6 +79,12 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
  * @public 
  */
 export type Predicate<T> = (value: T) => boolean;
+
+/**
+ * A callback that, given a message, creates an error
+ * @public
+ */
+export type ErrorCallback = (message: string) => Error;
 
 const funcs: (keyof Type)[] = [
     "assert",

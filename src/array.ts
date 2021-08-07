@@ -2,6 +2,7 @@ import { _checkArray } from "./internal/check-array";
 import { _assertDepth, _assertPath } from "./internal/check-path";
 import { _formatError } from "./internal/format-error";
 import { _makeType } from "./internal/make-type";
+import { _makeTypeError } from "./internal/make-type-error";
 import { JsonValue } from "./json";
 import { Type } from "./type";
 
@@ -17,9 +18,9 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
             _formatError("Must be an array", path)
     );
 
-    const fromJsonValue: Type<T[]>["fromJsonValue"] = (value, path) => {
+    const fromJsonValue: Type<T[]>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
         if (!Array.isArray(value)) {
-            throw new TypeError(_formatError("Must a JSON array", path));
+            throw makeError(_formatError("Must a JSON array", path));
         }
 
         const depth = (path = _assertPath(path)).length;
@@ -28,7 +29,7 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
         path.push(index);
 
         for (const item of value) {
-            result.push(itemType.fromJsonValue(item, path));
+            result.push(itemType.fromJsonValue(item, makeError, path));
             path[depth] = ++index;
         }
 

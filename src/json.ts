@@ -55,8 +55,11 @@ const error: Type["error"] = (value, path, shallow) => {
  * Matches JSON values
  * @public
  */
-export const jsonValueType = _makeType<JsonValue>({
+export const jsonValueType: Type<JsonValue> = _makeType({
     error, 
-    fromJsonValue: value => value,
+    fromJsonValue: (value, makeError, path) => {
+        jsonValueType.assert(value, makeError, path);
+        return  value;
+    },
     toJsonValue: value => value,
 });

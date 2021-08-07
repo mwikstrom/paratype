@@ -4,12 +4,12 @@
 
 ## Type.fromJsonValue() method
 
-Converts the specified JSON value to a value that matches the current run-time type.
+Converts the specified JSON value to a value that matches the current run-time type. An error is thrown in case conversion is unsuccessful.
 
 <b>Signature:</b>
 
 ```typescript
-fromJsonValue(this: void, value: JsonValue, path?: PathArray): T;
+fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
 ```
 
 ## Parameters
@@ -18,7 +18,8 @@ fromJsonValue(this: void, value: JsonValue, path?: PathArray): T;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | [JsonValue](./paratype.jsonvalue.md) | The value to be converted |
-|  path | [PathArray](./paratype.patharray.md) |  |
+|  error | [ErrorCallback](./paratype.errorcallback.md) | <i>(Optional)</i> A callback that is invoked to construct the error to be thrown when conversion is unsuccessful |
+|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>
 

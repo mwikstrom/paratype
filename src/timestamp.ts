@@ -1,5 +1,6 @@
 import { _formatError } from "./internal/format-error";
 import { _makeType } from "./internal/make-type";
+import { _makeTypeError } from "./internal/make-type-error";
 import { Type } from "./type";
 
 const error: Type<Date>["error"] = (value, path) => (
@@ -8,9 +9,9 @@ const error: Type<Date>["error"] = (value, path) => (
         void(0)
 );
 
-const fromJsonValue: Type<Date>["fromJsonValue"] = (value, path) => {
+const fromJsonValue: Type<Date>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
     if (typeof value !== "string" || !STRICT_PATTERN.test(value)) {
-        throw new TypeError(_formatError(ERROR_MESSAGE, path));
+        throw makeError(_formatError(ERROR_MESSAGE, path));
     } else {
         return new Date(value);
     }

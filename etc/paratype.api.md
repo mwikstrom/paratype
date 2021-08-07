@@ -17,6 +17,9 @@ export const booleanType: Type<boolean>;
 export function enumType<V extends string>(values: V[]): Type<V>;
 
 // @public
+export type ErrorCallback = (message: string) => Error;
+
+// @public
 export function formatPath(path: PathArray): string;
 
 // @public
@@ -80,9 +83,9 @@ export const timestampType: Type<Date>;
 
 // @public
 export interface Type<T = unknown> {
-    assert(this: void, value: unknown, path?: PathArray): asserts value is T;
+    assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
-    fromJsonValue(this: void, value: JsonValue, path?: PathArray): T;
+    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
     toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;

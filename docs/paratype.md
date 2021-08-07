@@ -44,6 +44,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [ErrorCallback](./paratype.errorcallback.md) | A callback that, given a message, creates an error |
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |

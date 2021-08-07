@@ -4,12 +4,12 @@
 
 ## Type.assert() method
 
-Asserts that the specified value matches the current run-time type. A `TypeError` is thrown in case the value doesn't match.
+Asserts that the specified value matches the current run-time type. An error is thrown in case the value doesn't match.
 
 <b>Signature:</b>
 
 ```typescript
-assert(this: void, value: unknown, path?: PathArray): asserts value is T;
+assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ assert(this: void, value: unknown, path?: PathArray): asserts value is T;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
+|  error | [ErrorCallback](./paratype.errorcallback.md) | <i>(Optional)</i> A callback that is invoked to construct the error to be thrown when value doesn't match |
 |  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>

@@ -45,7 +45,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
             const propType = props.get(propName);
             return propType ?
                 propType.error(propValue, propPath) :
-                _formatError("Invalid property name", path);
+                _formatError("Invalid property name", propPath);
         });
     };
 

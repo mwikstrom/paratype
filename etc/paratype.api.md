@@ -88,7 +88,7 @@ export interface Type<T = unknown> {
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
-    toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;
+    toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
 }
 
 // @public

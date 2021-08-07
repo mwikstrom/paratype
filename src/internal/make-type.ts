@@ -12,7 +12,10 @@ export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
             type.assert(value, makeError, path);
             return value;
         },
-        toJsonValue = value => jsonValueType.test(value) ? value : void(0),
+        toJsonValue = (value, makeError, path) => {
+            jsonValueType.assert(value, makeError, path);
+            return value;
+        },
     } = options;
 
     const assert: Type<T>["assert"] = (value, makeError = _makeTypeError, path) => {

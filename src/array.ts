@@ -1,5 +1,5 @@
 import { _checkArray } from "./internal/check-array";
-import { _assertDepth, _assertPath } from "./internal/check-path";
+import { _assertPath } from "./internal/check-path";
 import { _formatError } from "./internal/format-error";
 import { _makeType } from "./internal/make-type";
 import { _makeTypeError } from "./internal/make-type-error";
@@ -37,18 +37,18 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
         return result;
     };
     
-    const toJsonValue: Type<T[]>["toJsonValue"] = (value, depth = 0) => {
+    const toJsonValue: Type<T[]>["toJsonValue"] = (value, makeError, path) => {
         const result = new Array<JsonValue>();
-        _assertDepth(++depth);
-
+        const depth = (path = _assertPath(path)).length;
+        let index = 0;        
+        path.push(index);
+        
         for (const item of value) {
-            const mapped = itemType.toJsonValue(item, depth);
-            if (mapped === void(0)) {
-                return void(0);
-            }
-            result.push(mapped);
+            result.push(itemType.toJsonValue(item, makeError, path));
+            path[depth] = ++index;
         }
 
+        path.pop();
         return result;
     };
 

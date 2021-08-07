@@ -21,5 +21,5 @@ export interface Type<T = unknown>
 |  [fromJsonValue(this, value, error, path)](./paratype.type.fromjsonvalue.md) | Converts the specified JSON value to a value that matches the current run-time type. An error is thrown in case conversion is unsuccessful. |
 |  [restrict(this, message, predicate)](./paratype.type.restrict.md) | Constructs a new [Type](./paratype.type.md) that represents a restriction of the current run-time type. |
 |  [test(this, value, path)](./paratype.type.test.md) | Determines whether the specified value matches the current run-time type. |
-|  [toJsonValue(this, value, depth)](./paratype.type.tojsonvalue.md) | Converts the specified value, which is assumed to match the current run-time type, to a [JsonValue](./paratype.jsonvalue.md)<!-- -->. |
+|  [toJsonValue(this, value, error, path)](./paratype.type.tojsonvalue.md) | Converts the specified value, which is assumed to match the current run-time type, to a [JsonValue](./paratype.jsonvalue.md)<!-- -->. |
 

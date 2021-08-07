@@ -9,13 +9,6 @@ export const _checkPath = (path: PathArray): string | undefined => {
 };
 
 /** @internal */
-export const _assertDepth = (depth: number): void => {
-    if (depth >= MAX_PATH_DEPTH) {
-        throw new RangeError("Maximum path depth exceeded");
-    }
-};
-
-/** @internal */
 export const _assertPath = (path: PathArray | undefined): PathArray => {
     if (!path) {
         path = [];

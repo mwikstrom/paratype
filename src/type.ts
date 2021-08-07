@@ -61,11 +61,11 @@ export interface Type<T = unknown> {
      * to a {@link JsonValue}.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be converted
-     * @param depth - <i>(Optional)</i> Path depth of the value
-     * @returns A {@link JsonValue} that represents the specified value when conversion is
-     *          successful, and `undefined` otherwise.
+     * @param error - <i>(Optional)</i> A callback that is invoked to construct the error to be 
+     *               thrown when conversion is unsuccessful
+     * @param path - <i>(Optional)</i> Path to the value
      */
-    toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;
+    toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
 }
 
 /**

@@ -9,7 +9,7 @@ Converts the specified value, which is assumed to match the current run-time typ
 <b>Signature:</b>
 
 ```typescript
-toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;
+toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
 ```
 
 ## Parameters
@@ -18,11 +18,10 @@ toJsonValue(this: void, value: T, depth?: number): JsonValue | undefined;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | T | The value to be converted |
-|  depth | number | <i>(Optional)</i> Path depth of the value |
+|  error | [ErrorCallback](./paratype.errorcallback.md) | <i>(Optional)</i> A callback that is invoked to construct the error to be thrown when conversion is unsuccessful |
+|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>
 
-[JsonValue](./paratype.jsonvalue.md) \| undefined
-
-A [JsonValue](./paratype.jsonvalue.md) that represents the specified value when conversion is successful, and `undefined` otherwise.
+[JsonValue](./paratype.jsonvalue.md)
 

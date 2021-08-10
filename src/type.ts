@@ -73,7 +73,7 @@ export interface ConversionContext {
      * An optional callback that shall be invoked to lookup services, by their well-known
      * symbol, during conversion.
      */
-    service?: (key: symbol) => unknown | undefined;
+    service?: (this: void, key: symbol) => unknown | undefined;
 
     /**
      * An optional callback that shall be invoked to construct the error to be 
@@ -97,13 +97,13 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
  * Returns `true` if the specified value matches a predicate
  * @public 
  */
-export type Predicate<T> = (value: T) => boolean;
+export type Predicate<T> = (this: void, value: T) => boolean;
 
 /**
  * A callback that, given a message, creates an error
  * @public
  */
-export type ErrorCallback = (message: string) => Error;
+export type ErrorCallback = (this: void, message: string) => Error;
 
 const funcs: (keyof Type)[] = [
     "assert",

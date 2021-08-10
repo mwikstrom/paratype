@@ -9,7 +9,7 @@ Converts the specified JSON value to a value that matches the current run-time t
 <b>Signature:</b>
 
 ```typescript
-fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
+fromJsonValue(this: void, value: JsonValue, context?: ConversionContext): Promise<T>;
 ```
 
 ## Parameters
@@ -18,10 +18,9 @@ fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathAr
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | [JsonValue](./paratype.jsonvalue.md) | The value to be converted |
-|  error | [ErrorCallback](./paratype.errorcallback.md) | <i>(Optional)</i> A callback that is invoked to construct the error to be thrown when conversion is unsuccessful |
-|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
+|  context | [ConversionContext](./paratype.conversioncontext.md) | <i>(Optional)</i> Context in which the value is being converted |
 
 <b>Returns:</b>
 
-T
+Promise&lt;T&gt;
 

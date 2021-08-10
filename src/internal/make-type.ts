@@ -8,11 +8,13 @@ import { _restrictType } from "./restrict";
 export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
     const {
         error,
-        fromJsonValue = (value, makeError, path) => {
+        fromJsonValue = async (value, context = {}) => {
+            const { error: makeError, path } = context;
             type.assert(value, makeError, path);
             return value;
         },
-        toJsonValue = (value, makeError, path) => {
+        toJsonValue = async (value, context = {}) => {
+            const { error: makeError, path } = context;
             jsonValueType.assert(value, makeError, path);
             return value;
         },

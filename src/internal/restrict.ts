@@ -13,8 +13,9 @@ export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Pre
         return result;
     };
 
-    const fromJsonValue: Type<T>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
-        const result = inner.fromJsonValue(value, makeError, path);
+    const fromJsonValue: Type<T>["fromJsonValue"] = async (value, context = {}) => {
+        const { error: makeError = _makeTypeError, path } = context;
+        const result = await inner.fromJsonValue(value, context);
         if (!predicate(result)) {
             throw makeError(_formatError(message, path));
         }

@@ -18,7 +18,10 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
             _formatError("Must be an array", path)
     );
 
-    const fromJsonValue: Type<T[]>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
+    const fromJsonValue: Type<T[]>["fromJsonValue"] = async (value, context = {}) => {
+        const { error: makeError = _makeTypeError } = context;
+        let { path } = context;
+
         if (!Array.isArray(value)) {
             throw makeError(_formatError("Must a JSON array", path));
         }
@@ -29,7 +32,7 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
         path.push(index);
 
         for (const item of value) {
-            result.push(itemType.fromJsonValue(item, makeError, path));
+            result.push(await itemType.fromJsonValue(item, context));
             path[depth] = ++index;
         }
 
@@ -37,14 +40,15 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
         return result;
     };
     
-    const toJsonValue: Type<T[]>["toJsonValue"] = (value, makeError, path) => {
+    const toJsonValue: Type<T[]>["toJsonValue"] = async (value, context = {}) => {
+        let { path } = context;
         const result = new Array<JsonValue>();
         const depth = (path = _assertPath(path)).length;
         let index = 0;        
         path.push(index);
         
         for (const item of value) {
-            result.push(itemType.toJsonValue(item, makeError, path));
+            result.push(await itemType.toJsonValue(item, context));
             path[depth] = ++index;
         }
 

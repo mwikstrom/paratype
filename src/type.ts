@@ -33,11 +33,9 @@ export interface Type<T = unknown> {
      * An error is thrown in case conversion is unsuccessful.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be converted
-     * @param error - <i>(Optional)</i> A callback that is invoked to construct the error to be 
-     *               thrown when conversion is unsuccessful
-     * @param path - <i>(Optional)</i> Path to the value
+     * @param context - <i>(Optional)</i> Context in which the value is being converted
      */
-    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
+    fromJsonValue(this: void, value: JsonValue, context?: ConversionContext): Promise<T>;
 
      /**
      * Constructs a new {@link Type} that represents a restriction of the current run-time type.
@@ -61,11 +59,32 @@ export interface Type<T = unknown> {
      * to a {@link JsonValue}.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
      * @param value - The value to be converted
-     * @param error - <i>(Optional)</i> A callback that is invoked to construct the error to be 
-     *               thrown when conversion is unsuccessful
-     * @param path - <i>(Optional)</i> Path to the value
+     * @param context - <i>(Optional)</i> Context in which the value is being converted
      */
-    toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
+    toJsonValue(this: void, value: T, context?: ConversionContext): Promise<JsonValue>;
+}
+
+/**
+ * Represents the context in which a value is converted
+ * @public
+ */
+export interface ConversionContext {
+    /**
+     * An optional callback that shall be invoked to lookup services, by their well-known
+     * symbol, during conversion.
+     */
+    service?: (key: symbol) => unknown | undefined;
+
+    /**
+     * An optional callback that shall be invoked to construct the error to be 
+     * thrown when conversion is unsuccessful
+     */
+    error?: ErrorCallback;
+
+    /**
+     * Optional path to the value being converted
+     */
+    path?: PathArray;
 }
 
 /**

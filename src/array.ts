@@ -20,13 +20,13 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
 
     const fromJsonValue: Type<T[]>["fromJsonValue"] = async (value, context = {}) => {
         const { error: makeError = _makeTypeError } = context;
-        const path = _assertPath(context);
+        let { path } = context;
 
         if (!Array.isArray(value)) {
             throw makeError(_formatError("Must a JSON array", path));
         }
-        
-        const depth = path.length;
+
+        const depth = (path = _assertPath(path)).length;
         const result = new Array<T>();
         let index = 0;        
         path.push(index);
@@ -41,9 +41,9 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
     };
     
     const toJsonValue: Type<T[]>["toJsonValue"] = async (value, context = {}) => {
-        const path = _assertPath(context);
+        let { path } = context;
         const result = new Array<JsonValue>();
-        const depth = path.length;
+        const depth = (path = _assertPath(path)).length;
         let index = 0;        
         path.push(index);
         

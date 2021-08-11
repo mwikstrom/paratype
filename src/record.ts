@@ -51,8 +51,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
 
     const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = async (value, context = {}) => {
         const { error: makeError = _makeTypeError } = context;
-        const path = _assertPath(context);
-
+        let { path } = context;
         if (!_isRecord(value)) {
             throw makeError(_formatError("Must be a JSON object", path));
         }
@@ -63,7 +62,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
             throw makeError(missing);
         }
 
-        const depth = path.length;
+        const depth = (path = _assertPath(path)).length;
         path.push("");
 
         for (const [key, item] of Object.entries(value)) {
@@ -81,9 +80,9 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
 
     const toJsonValue: Type<WithRecordOptions<T, O>>["toJsonValue"] = async (value, context = {}) => {
         const { error: makeError = _makeTypeError } = context;
-        const path = _assertPath(context);
+        let { path } = context;
         const result: JsonObject = {};
-        const depth = path.length;
+        const depth = (path = _assertPath(path)).length;
         path.push("");
 
         for (const [key, item] of Object.entries(value)) {

@@ -17,14 +17,14 @@ export const booleanType: Type<boolean>;
 export interface ConversionContext {
     error?: ErrorCallback;
     path?: PathArray;
-    service?: (this: void, key: symbol) => unknown | undefined;
+    service?: (key: symbol) => unknown | undefined;
 }
 
 // @public
 export function enumType<V extends string>(values: V[]): Type<V>;
 
 // @public
-export type ErrorCallback = (this: void, message: string) => Error;
+export type ErrorCallback = (message: string) => Error;
 
 // @public
 export function formatPath(path: PathArray): string;
@@ -67,7 +67,7 @@ export type PathArray = Array<string | number>;
 export const positiveIntegerType: Type<number>;
 
 // @public
-export type Predicate<T> = (this: void, value: T) => boolean;
+export type Predicate<T> = (value: T) => boolean;
 
 // @public
 export type PropertyTypes<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {

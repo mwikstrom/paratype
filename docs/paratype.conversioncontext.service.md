@@ -9,5 +9,5 @@ An optional callback that shall be invoked to lookup services, by their well-kno
 <b>Signature:</b>
 
 ```typescript
-service?: (this: void, key: symbol) => unknown | undefined;
+service?: (key: symbol) => unknown | undefined;
 ```

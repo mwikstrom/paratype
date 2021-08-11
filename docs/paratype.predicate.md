@@ -9,5 +9,5 @@ Returns `true` if the specified value matches a predicate
 <b>Signature:</b>
 
 ```typescript
-export declare type Predicate<T> = (this: void, value: T) => boolean;
+export declare type Predicate<T> = (value: T) => boolean;
 ```

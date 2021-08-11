@@ -9,5 +9,5 @@ A callback that, given a message, creates an error
 <b>Signature:</b>
 
 ```typescript
-export declare type ErrorCallback = (this: void, message: string) => Error;
+export declare type ErrorCallback = (message: string) => Error;
 ```

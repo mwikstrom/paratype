@@ -18,5 +18,5 @@ export interface ConversionContext
 |  --- | --- | --- |
 |  [error?](./paratype.conversioncontext.error.md) | [ErrorCallback](./paratype.errorcallback.md) | <i>(Optional)</i> An optional callback that shall be invoked to construct the error to be thrown when conversion is unsuccessful |
 |  [path?](./paratype.conversioncontext.path.md) | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Optional path to the value being converted |
-|  [service?](./paratype.conversioncontext.service.md) | (this: void, key: symbol) =&gt; unknown \| undefined | <i>(Optional)</i> An optional callback that shall be invoked to lookup services, by their well-known symbol, during conversion. |
+|  [service?](./paratype.conversioncontext.service.md) | (key: symbol) =&gt; unknown \| undefined | <i>(Optional)</i> An optional callback that shall be invoked to lookup services, by their well-known symbol, during conversion. |
 

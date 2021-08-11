@@ -1,6 +1,6 @@
 {
   "name": "paratype",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Basic run-time type information for typescript and javascript",
   "main": "./dist/paratype.js",
   "typings": "./dist/paratype.d.ts",

@@ -17,6 +17,9 @@ export const binaryType: Type<ArrayBufferLike>;
 export const booleanType: Type<boolean>;
 
 // @public
+export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I>;
+
+// @public
 export function enumType<V extends string>(values: V[]): Type<V>;
 
 // @public
@@ -92,6 +95,20 @@ export interface Type<T = unknown> {
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
     toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
+}
+
+// @public
+export interface TypeClass<I extends TypeInstance> {
+    // (undocumented)
+    new (...args: any): I;
+    // (undocumented)
+    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): I;
+}
+
+// @public
+export interface TypeInstance {
+    // (undocumented)
+    toJsonValue(error?: ErrorCallback, path?: PathArray): JsonValue;
 }
 
 // @public

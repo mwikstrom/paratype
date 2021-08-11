@@ -11,6 +11,7 @@ Basic run-time type information for typescript and javascript.
 |  Function | Description |
 |  --- | --- |
 |  [arrayType(itemType)](./paratype.arraytype.md) | Constructs a [Type](./paratype.type.md) that represents an array of the specified item type. |
+|  [classType(ctor)](./paratype.classtype.md) | Matches instances of a specific class |
 |  [enumType(values)](./paratype.enumtype.md) | Constructs a [Type](./paratype.type.md) that represents an enumeration of the specified values. |
 |  [formatPath(path)](./paratype.formatpath.md) | Returns a string that represents the specified value path |
 |  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |
@@ -23,6 +24,8 @@ Basic run-time type information for typescript and javascript.
 |  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [Type](./paratype.type.md) | A run-time type |
+|  [TypeClass](./paratype.typeclass.md) | The static interface of type classes |
+|  [TypeInstance](./paratype.typeinstance.md) | The interface of type class instances |
 
 ## Variables
 

@@ -7,6 +7,7 @@
 export * from "./json";
 
 export * from "./array";
+export * from "./binary";
 export * from "./enum";
 export * from "./path";
 export * from "./primitives";

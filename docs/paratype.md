@@ -29,6 +29,7 @@ Basic run-time type information for typescript and javascript.
 |  Variable | Description |
 |  --- | --- |
 |  [anyType](./paratype.anytype.md) | Matches any value |
+|  [binaryType](./paratype.binarytype.md) | Matches <code>ArrayBuffer</code> values |
 |  [booleanType](./paratype.booleantype.md) | Matches boolean values |
 |  [integerType](./paratype.integertype.md) | Matches safe integer values |
 |  [jsonValueType](./paratype.jsonvaluetype.md) | Matches JSON values |

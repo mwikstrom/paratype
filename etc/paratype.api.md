@@ -11,6 +11,9 @@ export const anyType: Type<unknown>;
 export function arrayType<T>(itemType: Type<T>): Type<T[]>;
 
 // @public
+export const binaryType: Type<ArrayBufferLike>;
+
+// @public
 export const booleanType: Type<boolean>;
 
 // @public

@@ -1,4 +1,5 @@
 import { PathArray } from "../path";
+import { ConversionContext } from "../type";
 import { _formatError } from "./format-error";
 
 /** @internal */
@@ -9,16 +10,17 @@ export const _checkPath = (path: PathArray): string | undefined => {
 };
 
 /** @internal */
-export const _assertPath = (path: PathArray | undefined): PathArray => {
-    if (!path) {
-        path = [];
-    } else {
-        const message = _checkPath(path);
-        if (message !== void(0)) {
-            throw new RangeError(message);
-        }
+export const _assertPath = (context: ConversionContext): PathArray => {
+    if (!context.path) {
+        return context.path = [];
     }
-    return path;
+
+    const message = _checkPath(context.path);
+    if (message !== void(0)) {
+        throw new RangeError(message);
+    }
+
+    return context.path;
 };
 
 const MAX_PATH_DEPTH = 100;

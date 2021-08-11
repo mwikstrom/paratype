@@ -20,7 +20,6 @@ Basic run-time type information for typescript and javascript.
 
 |  Interface | Description |
 |  --- | --- |
-|  [ConversionContext](./paratype.conversioncontext.md) | Represents the context in which a value is converted |
 |  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [Type](./paratype.type.md) | A run-time type |

@@ -57,10 +57,9 @@ const error: Type["error"] = (value, path, shallow) => {
  */
 export const jsonValueType: Type<JsonValue> = _makeType({
     error, 
-    fromJsonValue: async (value, context = {}) => {
-        const { error: makeError, path } = context;
+    fromJsonValue: (value, makeError, path) => {
         jsonValueType.assert(value, makeError, path);
         return  value;
     },
-    toJsonValue: async value => value,
+    toJsonValue: value => value,
 });

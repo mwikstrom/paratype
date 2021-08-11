@@ -9,8 +9,7 @@ const error: Type<Date>["error"] = (value, path) => (
         void(0)
 );
 
-const fromJsonValue: Type<Date>["fromJsonValue"] = async (value, context = {}) => {
-    const { error: makeError = _makeTypeError, path } = context;
+const fromJsonValue: Type<Date>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
     if (typeof value !== "string" || !STRICT_PATTERN.test(value)) {
         throw makeError(_formatError(ERROR_MESSAGE, path));
     } else {
@@ -18,8 +17,7 @@ const fromJsonValue: Type<Date>["fromJsonValue"] = async (value, context = {}) =
     }
 };
 
-const toJsonValue: Type<Date>["toJsonValue"] = async (value, context = {}) => {
-    const { error: makeError = _makeTypeError, path } = context;
+const toJsonValue: Type<Date>["toJsonValue"] = (value, makeError = _makeTypeError, path) => {
     const result = value.toISOString();
     if (!STRICT_PATTERN.test(result)) {
         throw makeError(_formatError(ERROR_MESSAGE, path));

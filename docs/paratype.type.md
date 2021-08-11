@@ -18,8 +18,8 @@ export interface Type<T = unknown>
 |  --- | --- |
 |  [assert(this, value, error, path)](./paratype.type.assert.md) | Asserts that the specified value matches the current run-time type. An error is thrown in case the value doesn't match. |
 |  [error(this, value, path, shallow)](./paratype.type.error.md) | Returns an error message when the specified value doesn't match the current run-time type, and otherwise <code>undefined</code>. |
-|  [fromJsonValue(this, value, context)](./paratype.type.fromjsonvalue.md) | Converts the specified JSON value to a value that matches the current run-time type. An error is thrown in case conversion is unsuccessful. |
+|  [fromJsonValue(this, value, error, path)](./paratype.type.fromjsonvalue.md) | Converts the specified JSON value to a value that matches the current run-time type. An error is thrown in case conversion is unsuccessful. |
 |  [restrict(this, message, predicate)](./paratype.type.restrict.md) | Constructs a new [Type](./paratype.type.md) that represents a restriction of the current run-time type. |
 |  [test(this, value, path)](./paratype.type.test.md) | Determines whether the specified value matches the current run-time type. |
-|  [toJsonValue(this, value, context)](./paratype.type.tojsonvalue.md) | Converts the specified value, which is assumed to match the current run-time type, to a [JsonValue](./paratype.jsonvalue.md)<!-- -->. |
+|  [toJsonValue(this, value, error, path)](./paratype.type.tojsonvalue.md) | Converts the specified value, which is assumed to match the current run-time type, to a [JsonValue](./paratype.jsonvalue.md)<!-- -->. |
 

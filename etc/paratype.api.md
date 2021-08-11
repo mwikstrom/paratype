@@ -14,13 +14,6 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]>;
 export const booleanType: Type<boolean>;
 
 // @public
-export interface ConversionContext {
-    error?: ErrorCallback;
-    path?: PathArray;
-    service?: (key: symbol) => unknown | undefined;
-}
-
-// @public
 export function enumType<V extends string>(values: V[]): Type<V>;
 
 // @public
@@ -92,10 +85,10 @@ export const timestampType: Type<Date>;
 export interface Type<T = unknown> {
     assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
-    fromJsonValue(this: void, value: JsonValue, context?: ConversionContext): Promise<T>;
+    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
-    toJsonValue(this: void, value: T, context?: ConversionContext): Promise<JsonValue>;
+    toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
 }
 
 // @public

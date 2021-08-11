@@ -49,9 +49,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         });
     };
 
-    const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = async (value, context = {}) => {
-        const { error: makeError = _makeTypeError } = context;
-        let { path } = context;
+    const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
         if (!_isRecord(value)) {
             throw makeError(_formatError("Must be a JSON object", path));
         }
@@ -71,16 +69,14 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
             if (!propType) {
                 throw makeError(_formatError("Invalid property name", path));
             }
-            result[key] = await propType.fromJsonValue(item, context);
+            result[key] = propType.fromJsonValue(item, makeError, path);
         }
 
         path.pop();
         return result as WithRecordOptions<T, O>;
     };
 
-    const toJsonValue: Type<WithRecordOptions<T, O>>["toJsonValue"] = async (value, context = {}) => {
-        const { error: makeError = _makeTypeError } = context;
-        let { path } = context;
+    const toJsonValue: Type<WithRecordOptions<T, O>>["toJsonValue"] = (value, makeError = _makeTypeError, path) => {
         const result: JsonObject = {};
         const depth = (path = _assertPath(path)).length;
         path.push("");
@@ -91,7 +87,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
             if (!propType) {
                 throw makeError(_formatError("Invalid property name", path));
             }
-            result[key] = await propType.toJsonValue(item, context);
+            result[key] = propType.toJsonValue(item, makeError, path);
         }
 
         path.pop();

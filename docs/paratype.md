@@ -15,6 +15,7 @@ Basic run-time type information for typescript and javascript.
 |  [enumType(values)](./paratype.enumtype.md) | Constructs a [Type](./paratype.type.md) that represents an enumeration of the specified values. |
 |  [formatPath(path)](./paratype.formatpath.md) | Returns a string that represents the specified value path |
 |  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |
+|  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
 |  [recordType(properties, options)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 
 ## Interfaces

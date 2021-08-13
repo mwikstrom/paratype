@@ -24,7 +24,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
 
     const checkMissing = (value: Record<string, unknown>, path?: PathArray): string | undefined => {
         for (const key of props.keys()) {
-            if (!optional.has(key) && !(key in value)) {
+            if (!optional.has(key) && value[key] === void(0)) {
                 return _formatError(`Missing required property: ${key}`, path);
             }
         }
@@ -43,9 +43,13 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         return _checkRecord(value, path, shallow, (propValue, propPath) => {
             const propName = propPath.slice(-1)[0] as string;
             const propType = props.get(propName);
-            return propType ?
-                propType.error(propValue, propPath) :
-                _formatError("Invalid property name", propPath);
+            if (!propType) {
+                return _formatError("Invalid property name", propPath);
+            } else if (propValue === void(0) && optional.has(propName)) {
+                return void(0);
+            } else {
+                return propType.error(propValue, propPath);
+            }
         });
     };
 
@@ -87,7 +91,9 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
             if (!propType) {
                 throw makeError(_formatError("Invalid property name", path));
             }
-            result[key] = propType.toJsonValue(item, makeError, path);
+            if (item !== void(0) || !optional.has(key)) {
+                result[key] = propType.toJsonValue(item, makeError, path);
+            }            
         }
 
         path.pop();

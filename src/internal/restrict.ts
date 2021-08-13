@@ -21,5 +21,7 @@ export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Pre
         return result;
     };
 
-    return _makeType({ error, fromJsonValue });
+    const toJsonValue: Type<T>["toJsonValue"] = inner.toJsonValue;
+
+    return _makeType({ error, fromJsonValue, toJsonValue });
 };

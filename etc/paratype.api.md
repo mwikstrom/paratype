@@ -20,7 +20,7 @@ export const booleanType: Type<boolean>;
 export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I>;
 
 // @public
-export function constType(fixed: string): Type<string>;
+export function constType<T extends string>(fixed: T): Type<T>;
 
 // @public
 export function enumType<V extends string>(values: V[]): Type<V>;

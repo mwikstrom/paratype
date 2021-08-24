@@ -9,16 +9,16 @@ Constructs a [Type](./paratype.type.md) that represents a fixed string value.
 <b>Signature:</b>
 
 ```typescript
-export declare function constType(fixed: string): Type<string>;
+export declare function constType<T extends string>(fixed: T): Type<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fixed | string |  |
+|  fixed | T |  |
 
 <b>Returns:</b>
 
-[Type](./paratype.type.md)<!-- -->&lt;string&gt;
+[Type](./paratype.type.md)<!-- -->&lt;T&gt;
 

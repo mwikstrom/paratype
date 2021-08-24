@@ -9,6 +9,7 @@ export * from "./json";
 export * from "./array";
 export * from "./binary";
 export * from "./class";
+export * from "./const";
 export * from "./enum";
 export * from "./map";
 export * from "./path";

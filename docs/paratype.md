@@ -12,6 +12,7 @@ Basic run-time type information for typescript and javascript.
 |  --- | --- |
 |  [arrayType(itemType)](./paratype.arraytype.md) | Constructs a [Type](./paratype.type.md) that represents an array of the specified item type. |
 |  [classType(ctor)](./paratype.classtype.md) | Matches instances of a specific class |
+|  [constType(fixed)](./paratype.consttype.md) | Constructs a [Type](./paratype.type.md) that represents a fixed string value. |
 |  [enumType(values)](./paratype.enumtype.md) | Constructs a [Type](./paratype.type.md) that represents an enumeration of the specified values. |
 |  [formatPath(path)](./paratype.formatpath.md) | Returns a string that represents the specified value path |
 |  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |

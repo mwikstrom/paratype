@@ -10,6 +10,7 @@ export * from "./array";
 export * from "./binary";
 export * from "./class";
 export * from "./const";
+export * from "./discriminator";
 export * from "./enum";
 export * from "./map";
 export * from "./path";

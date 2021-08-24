@@ -23,6 +23,9 @@ export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: 
 export function constType<T extends string>(fixed: T): Type<T>;
 
 // @public
+export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof Union]>, Union extends Record<string, Type>>(key: Key, union: Union): Type<TypeOf<Union[keyof Union]>>;
+
+// @public
 export function enumType<V extends string>(values: V[]): Type<V>;
 
 // @public

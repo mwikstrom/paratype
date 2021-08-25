@@ -39,6 +39,12 @@ export interface Type<T = unknown> {
      */
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
 
+    /**
+     * Constructs a new {@link Type} that represents a read-only (frozen) variant of the current run-time type.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     */
+    frozen(this: void): Type<Readonly<T>>;
+
      /**
      * Constructs a new {@link Type} that represents a restriction of the current run-time type.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding

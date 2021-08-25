@@ -101,6 +101,7 @@ export interface Type<T = unknown> {
     assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
+    frozen(this: void): Type<Readonly<T>>;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
     toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;

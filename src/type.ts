@@ -29,6 +29,16 @@ export interface Type<T = unknown> {
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
 
     /**
+     * Determines whether the specified values are equal according to the current run-time type.
+     * @param this - <i>(Ignored)</i> This method uses implicit `this` binding
+     * @param first - The first value to test for equality. 
+     *                It is assumed that this values matches the current run-time type.
+     * @param second - The second value to test for equality.
+     *                 This value does not have to match the current run-time type.
+     */
+    equals(this: void, first: T, second: unknown): second is T;
+
+    /**
      * Converts the specified JSON value to a value that matches the current run-time type.
      * An error is thrown in case conversion is unsuccessful.
      * @param this - <i>(Ignored)</i> This method uses implicit `this` binding

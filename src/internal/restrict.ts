@@ -5,6 +5,7 @@ import { _makeTypeError } from "./make-type-error";
 
 /** @internal */
 export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Predicate<T>): Type<T> => {
+    const { toJsonValue, equals } = inner;
     const error: Type["error"] = (value, path) => {
         let result = inner.error(value, path);
         if (result === void(0) && !predicate(value as T)) {
@@ -21,7 +22,5 @@ export const _restrictType = <T>(inner: Type<T>, message: string, predicate: Pre
         return result;
     };
 
-    const toJsonValue: Type<T>["toJsonValue"] = inner.toJsonValue;
-
-    return _makeType({ error, fromJsonValue, toJsonValue });
+    return _makeType({ error, fromJsonValue, toJsonValue, equals });
 };

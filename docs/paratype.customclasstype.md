@@ -9,7 +9,7 @@ Matches instances of a specific class and uses custom conversion callbacks
 <b>Signature:</b>
 
 ```typescript
-export declare function customClassType<T, Args extends unknown[] = unknown[]>(ctor: {
+export declare function customClassType<T extends Partial<Equatable>, Args extends unknown[] = unknown[]>(ctor: {
     new (...args: Args): T;
 }, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
 ```

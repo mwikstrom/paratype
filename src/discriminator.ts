@@ -52,6 +52,16 @@ export function discriminatorType<
         return typeof type === "string" ? type : type.error(value, path, shallow);
     };
 
+    const equals = (first: TypeOf<Union[keyof Union]>, second: unknown): boolean => {
+        const firstType = select(first);
+        const secondType = select(second);
+        return (
+            typeof secondType !== "string" &&
+            firstType === secondType &&
+            firstType.equals(first, second)
+        );
+    };
+
     const fromJsonValue: Type<TypeOf<Union[keyof Union]>>["fromJsonValue"] = (
         value, 
         makeError = _makeTypeError, 
@@ -76,5 +86,5 @@ export function discriminatorType<
         return type.toJsonValue(value, makeError, path);
     };
 
-    return _makeType<TypeOf<Union[keyof Union]>>({ error, fromJsonValue, toJsonValue });
+    return _makeType<TypeOf<Union[keyof Union]>>({ error, equals, fromJsonValue, toJsonValue });
 }

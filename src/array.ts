@@ -18,6 +18,12 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
             _formatError("Must be an array", path)
     );
 
+    const equals = (first: readonly T[], second: unknown): boolean => (
+        Array.isArray(second) &&
+        first.length === second.length &&
+        first.every((item, index) => itemType.equals(item, second[index]))
+    );
+
     const fromJsonValue: Type<T[]>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
         if (!Array.isArray(value)) {
             throw makeError(_formatError("Must a JSON array", path));
@@ -52,5 +58,5 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
         return result;
     };
 
-    return _makeType({ error, fromJsonValue, toJsonValue });
+    return _makeType({ error, equals, fromJsonValue, toJsonValue });
 }

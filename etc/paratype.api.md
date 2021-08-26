@@ -23,7 +23,7 @@ export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: 
 export function constType<T extends string>(fixed: T): Type<T>;
 
 // @public
-export function customClassType<T, Args extends unknown[] = unknown[]>(ctor: {
+export function customClassType<T extends Partial<Equatable>, Args extends unknown[] = unknown[]>(ctor: {
     new (...args: Args): T;
 }, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
 
@@ -32,6 +32,12 @@ export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof 
 
 // @public
 export function enumType<V extends string>(values: V[]): Type<V>;
+
+// @public
+export interface Equatable {
+    // (undocumented)
+    equals(other: unknown): boolean;
+}
 
 // @public
 export type ErrorCallback = (message: string) => Error;
@@ -107,6 +113,7 @@ export const timestampType: Type<Date>;
 // @public
 export interface Type<T = unknown> {
     assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
+    equals(this: void, first: T, second: unknown): second is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
     frozen(this: void): Type<Readonly<T>>;
@@ -124,7 +131,7 @@ export interface TypeClass<I extends TypeInstance> {
 }
 
 // @public
-export interface TypeInstance {
+export interface TypeInstance extends Partial<Equatable> {
     // (undocumented)
     toJsonValue(error?: ErrorCallback, path?: PathArray): JsonValue;
 }

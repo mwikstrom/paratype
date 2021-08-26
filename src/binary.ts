@@ -9,6 +9,30 @@ import { Type } from "./type";
  */
 export const binaryType: Type<ArrayBufferLike> = _makeType<ArrayBufferLike>({
     error: (value, path) => isArrayBufferLike(value) ? void(0) : _formatError("Must be an ArrayBuffer instance", path),
+    equals: (first, second) => {
+        if (first === second) {
+            return true;
+        }
+
+        if (!isArrayBufferLike(second)) {
+            return false;
+        }
+
+        if (first.byteLength !== second.byteLength) {
+            return false;
+        }
+
+        const firstView = new DataView(first);
+        const secondView = new DataView(second);
+
+        for (let i = 0; i < first.byteLength; ++i) {
+            if (firstView.getUint8(i) !== secondView.getUint8(i)) {
+                return false;
+            }
+        }
+
+        return true;
+    },
     toJsonValue: value => Buffer.from(value).toString("base64"),
     fromJsonValue: (value, error, path) => {
         if (typeof value !== "string") {

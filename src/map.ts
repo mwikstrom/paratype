@@ -78,5 +78,24 @@ export function mapType<T>(valueType: Type<T>): Type<Map<string, T>> {
         return result;
     };
 
-    return _makeType({ error, toJsonValue, fromJsonValue });
+    const equals = (first: Map<string, T>, second: unknown) => {
+        if (!(second instanceof Map)) {
+            return false;
+        }
+
+        if (first.size !== second.size) {
+            return false;
+        }
+
+        for (const [propName, firstValue] of first) {
+            const secondValue = second.get(propName);
+            if (secondValue === void(0) || !valueType.equals(firstValue, secondValue)) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    return _makeType({ error, equals, toJsonValue, fromJsonValue });
 }

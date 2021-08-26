@@ -17,6 +17,7 @@ export interface Type<T = unknown>
 |  Method | Description |
 |  --- | --- |
 |  [assert(this, value, error, path)](./paratype.type.assert.md) | Asserts that the specified value matches the current run-time type. An error is thrown in case the value doesn't match. |
+|  [equals(this, first, second)](./paratype.type.equals.md) | Determines whether the specified values are equal according to the current run-time type. |
 |  [error(this, value, path, shallow)](./paratype.type.error.md) | Returns an error message when the specified value doesn't match the current run-time type, and otherwise <code>undefined</code>. |
 |  [fromJsonValue(this, value, error, path)](./paratype.type.fromjsonvalue.md) | Converts the specified JSON value to a value that matches the current run-time type. An error is thrown in case conversion is unsuccessful. |
 |  [frozen(this)](./paratype.type.frozen.md) | Constructs a new [Type](./paratype.type.md) that represents a read-only (frozen) variant of the current run-time type. |

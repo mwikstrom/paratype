@@ -16,8 +16,8 @@ export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: 
  * Matches instances of a specific class and uses custom conversion callbacks
  * @public
  */
-export function customClassType<T, Args extends unknown[] = unknown[]>(
-    ctor: {new (...args: Args): T},
+export function customClassType<T extends Partial<Equatable>, Args extends unknown[] = unknown[]>(
+    ctor: {new (...args: Args): T },
     fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T,
     toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue,
 ): Type<T> {
@@ -27,6 +27,7 @@ export function customClassType<T, Args extends unknown[] = unknown[]>(
                 void(0) :
                 _formatError(`Must be an instance of ${ctor.name}`, path)
         ),
+        equals: (first, second) => typeof first.equals === "function" ? first.equals(second) : first === second,
         fromJsonValue,
         toJsonValue,
     });
@@ -45,6 +46,14 @@ export interface TypeClass<I extends TypeInstance> {
  * The interface of type class instances
  * @public
  */
-export interface TypeInstance {
+export interface TypeInstance extends Partial<Equatable> {
     toJsonValue(error?: ErrorCallback, path?: PathArray): JsonValue;
+}
+
+/**
+ * Implements equality
+ * @public
+ */
+export interface Equatable {
+    equals(other: unknown): boolean;
 }

@@ -25,12 +25,18 @@ const toJsonValue: Type<Date>["toJsonValue"] = (value, makeError = _makeTypeErro
     return result;
 };
 
+const equals = (first: Date, second: unknown): boolean => (
+    second instanceof Date && 
+    first.getTime() === second.getTime()
+);
+
 /**
  * Matches timestamp values
  * @public
  */
 export const timestampType = _makeType<Date>({
     error,
+    equals,
     fromJsonValue,
     toJsonValue,
 });

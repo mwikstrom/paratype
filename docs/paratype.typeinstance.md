@@ -9,8 +9,9 @@ The interface of type class instances
 <b>Signature:</b>
 
 ```typescript
-export interface TypeInstance 
+export interface TypeInstance extends Partial<Equatable> 
 ```
+<b>Extends:</b> Partial&lt;[Equatable](./paratype.equatable.md)<!-- -->&gt;
 
 ## Methods
 

@@ -66,6 +66,29 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         });
     };
 
+    const equals = (first: WithRecordOptions<T, O>, second: unknown): boolean => {
+        if (!_isRecord(second)) {
+            return false;
+        }
+
+        const firstMap = new Map(Object.entries(first).filter(([,value]) => value !== void(0)));
+        const secondMap = new Map(Object.entries(second).filter(([,value]) => value !== void(0)));
+
+        if (firstMap.size !== secondMap.size) {
+            return false;
+        }
+
+        for (const [propName, firstValue] of firstMap) {
+            const propType = props.get(propName);
+            const secondValue = secondMap.get(propName);
+            if (secondValue === void(0) || !propType?.equals(firstValue, secondValue)) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
     const fromJsonValue: Type<WithRecordOptions<T, O>>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
         if (!_isRecord(value)) {
             throw makeError(_formatError("Must be a JSON object", path));
@@ -113,7 +136,7 @@ export function recordType<T extends Record<string, unknown>, O extends (string 
         return result;
     };
 
-    return _makeType<WithRecordOptions<T, O>>({ error, fromJsonValue, toJsonValue });
+    return _makeType<WithRecordOptions<T, O>>({ error, equals, fromJsonValue, toJsonValue });
 }
 
 /**

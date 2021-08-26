@@ -26,6 +26,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Interface | Description |
 |  --- | --- |
+|  [Equatable](./paratype.equatable.md) | Implements equality |
 |  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [Type](./paratype.type.md) | A run-time type |

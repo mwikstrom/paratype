@@ -5,6 +5,7 @@ import { _makeTypeError } from "./make-type-error";
 
 /** @internal */
 export const _frozenType = <T>(inner: Type<T>): Type<Readonly<T>> => {
+    const { toJsonValue, equals } = inner;
     const error: Type["error"] = (value, path) => {
         let result = inner.error(value, path);
         if (result === void(0) && !Object.isFrozen(value)) {
@@ -18,7 +19,5 @@ export const _frozenType = <T>(inner: Type<T>): Type<Readonly<T>> => {
         return Object.freeze(result);
     };
 
-    const toJsonValue: Type<T>["toJsonValue"] = inner.toJsonValue;
-
-    return _makeType({ error, fromJsonValue, toJsonValue });
+    return _makeType({ error, fromJsonValue, toJsonValue, equals });
 };

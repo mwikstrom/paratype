@@ -7,11 +7,11 @@ import { Type, TypeOf } from "./type";
  **/
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>> {
     const error: Type["error"] = (...args) => {
-        const mapped = types.map(t => t.error(...args)).filter(msg => msg !== void(0));
-        if (mapped.length === 0) {
-            return void(0);
+        const mapped = types.map(t => t.error(...args));
+        if (!mapped.some(msg => msg === void(0))) {
+            const errors = mapped.filter(msg => msg !== void(0));
+            return errors.length === 1 ? errors[0] : "(" + errors.join(" -or- ") + ")";
         }
-        return "(" + mapped.join(" -or- ") + ")";
     };
 
     const equals = (first: TypeOf<T[number]>, second: unknown): boolean => (

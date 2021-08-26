@@ -9,6 +9,19 @@ import { PathArray } from "./path";
 import { Type } from "./type";
 
 /**
+ * Constructs a {@link Type} that represents a partial record with the specified properties
+ * @param properties - Properties of the record. Must be an object where keys provide property names,
+ *                     and values their {@link Type}
+ * @public
+ */
+export function partialType<T extends Record<string, unknown>>(
+    properties: PropertyTypes<T, (string & keyof T)[]>,
+): Type<WithRecordOptions<T, (string & keyof T)[]>> {
+    const optional = Object.keys(properties) as (string & keyof T)[];
+    return recordType(properties, { optional });
+}
+
+/**
  * Constructs a {@link Type} that represents a record with the specified properties
  * @param properties - Properties of the record. Must be an object where keys provide property names,
  *                     and values their {@link Type}

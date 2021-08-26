@@ -74,6 +74,9 @@ export const nullType: Type<null>;
 export const numberType: Type<number>;
 
 // @public
+export function partialType<T extends Record<string, unknown>>(properties: PropertyTypes<T, (string & keyof T)[]>): Type<WithRecordOptions<T, (string & keyof T)[]>>;
+
+// @public
 export type PathArray = Array<string | number>;
 
 // @public

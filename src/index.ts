@@ -12,6 +12,7 @@ export * from "./class";
 export * from "./const";
 export * from "./discriminator";
 export * from "./enum";
+export * from "./lazy";
 export * from "./map";
 export * from "./path";
 export * from "./primitives";

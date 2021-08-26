@@ -68,6 +68,9 @@ export type JsonValue = JsonPrimitive | JsonArray | JsonObject;
 export const jsonValueType: Type<JsonValue>;
 
 // @public
+export function lazyType<T>(init: () => Type<T>): Type<T>;
+
+// @public
 export function mapType<T>(valueType: Type<T>): Type<Map<string, T>>;
 
 // @public

@@ -9,8 +9,8 @@ Matches instances of a specific class and uses custom conversion callbacks
 <b>Signature:</b>
 
 ```typescript
-export declare function customClassType<T>(ctor: {
-    new (...args: unknown[]): T;
+export declare function customClassType<T, Args extends unknown[] = unknown[]>(ctor: {
+    new (...args: Args): T;
 }, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
 ```
 
@@ -18,7 +18,7 @@ export declare function customClassType<T>(ctor: {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ctor | { new (...args: unknown\[\]): T; } |  |
+|  ctor | { new (...args: Args): T; } |  |
 |  fromJsonValue | (this: void, value: [JsonValue](./paratype.jsonvalue.md)<!-- -->, error?: [ErrorCallback](./paratype.errorcallback.md)<!-- -->, path?: [PathArray](./paratype.patharray.md)<!-- -->) =&gt; T |  |
 |  toJsonValue | (this: void, value: T, error?: [ErrorCallback](./paratype.errorcallback.md)<!-- -->, path?: [PathArray](./paratype.patharray.md)<!-- -->) =&gt; [JsonValue](./paratype.jsonvalue.md) |  |
 

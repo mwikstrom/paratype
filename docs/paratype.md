@@ -21,6 +21,7 @@ Basic run-time type information for typescript and javascript.
 |  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
 |  [partialType(properties)](./paratype.partialtype.md) | Constructs a [Type](./paratype.type.md) that represents a partial record with the specified properties |
 |  [recordType(properties, options)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
+|  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
 
 ## Interfaces
 

@@ -18,3 +18,4 @@ export * from "./primitives";
 export * from "./record";
 export * from "./timestamp";
 export * from "./type";
+export * from "./union";

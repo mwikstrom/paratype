@@ -140,6 +140,9 @@ export interface TypeInstance extends Partial<Equatable> {
 export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V> ? V : never;
 
 // @public
+export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>>;
+
+// @public
 export const voidType: Type<void>;
 
 // @public

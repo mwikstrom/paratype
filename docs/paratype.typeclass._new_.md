@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-new (...args: any): I;
+new (...args: unknown[]): I;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  args | any |  |
+|  args | unknown\[\] |  |
 
 <b>Returns:</b>
 

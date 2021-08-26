@@ -23,6 +23,11 @@ export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: 
 export function constType<T extends string>(fixed: T): Type<T>;
 
 // @public
+export function customClassType<T>(ctor: {
+    new (...args: unknown[]): T;
+}, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
+
+// @public
 export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof Union]>, Union extends Record<string, Type>>(key: Key, union: Union): Type<TypeOf<Union[keyof Union]>>;
 
 // @public
@@ -110,7 +115,7 @@ export interface Type<T = unknown> {
 // @public
 export interface TypeClass<I extends TypeInstance> {
     // (undocumented)
-    new (...args: any): I;
+    new (...args: unknown[]): I;
     // (undocumented)
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): I;
 }

@@ -9,14 +9,26 @@ import { ErrorCallback, Type } from "./type";
  * @public
  */
 export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I> {
+    return customClassType(ctor, ctor.fromJsonValue, (value, ...rest) => value.toJsonValue(...rest));
+}
+
+/** 
+ * Matches instances of a specific class and uses custom conversion callbacks
+ * @public
+ */
+export function customClassType<T>(
+    ctor: {new (...args: unknown[]): T},
+    fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T,
+    toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue,
+): Type<T> {
     return _makeType({
         error: (value, path) => (
             value instanceof ctor ? 
                 void(0) :
                 _formatError(`Must be an instance of ${ctor.name}`, path)
         ),
-        fromJsonValue: ctor.fromJsonValue,
-        toJsonValue: (value, error, path) => value.toJsonValue(error, path),
+        fromJsonValue,
+        toJsonValue,
     });
 }
 
@@ -25,8 +37,7 @@ export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: 
  * @public
  */
 export interface TypeClass<I extends TypeInstance> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    new (...args: any): I;
+    new (...args: unknown[]): I;
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): I;
 }
 

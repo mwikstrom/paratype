@@ -43,12 +43,12 @@ describe("Record", () => {
         expect(modified).toBe(original);
     });
 
-    it.skip("setting other value returns other instance", () => {
-        //const original = new TextStyle({ bold: true });
-        //const modified = original.set("bold", false);
-        //expect(modified).not.toBe(original);
-        //expect(original.bold).toBe(true);
-        //expect(modified.bold).toBe(false);
+    it("setting other value returns other instance", () => {
+        const original = new TextStyle({ bold: true });
+        const modified = original.set("bold", false);
+        expect(modified).not.toBe(original);
+        expect(original.bold).toBe(true);
+        expect(modified.bold).toBe(false);
     });
 
     it("cannot be constructed with bad prop", () => {
@@ -96,19 +96,23 @@ describe("Record", () => {
         expect(modified.equals({bold: false, italic: true, underline: true})).toBe(true);
     });
 
-    it.skip("can unmerge properties", () => {
-        //const original = new TextStyle({bold: true, italic: true, strike: true});
-        //const modified = original.unmerge({bold: false, italic: true, underline: true});
-        //expect(modified.equals({bold: true, strike: true})).toBe(true);
+    it("can unmerge properties", () => {
+        const original = new TextStyle({bold: true, italic: true, strike: true});
+        const modified = original.unmerge({bold: false, italic: true, underline: true});
+        expect(modified.equals({bold: true, strike: true})).toBe(true);
     });
 
-    it.skip("can unset properties", () => {
-        //const original = new TextStyle({bold: true, italic: true});
-        //const modified = original.unset("bold", "underline");
-        //expect(modified.equals({italic: true})).toBe(true);
+    it("can unset properties", () => {
+        const original = new TextStyle({bold: true, italic: true});
+        const modified = original.unset("bold", "underline");
+        expect(modified.equals({italic: true})).toBe(true);
     });
 
-    it.skip("cannot unset required property", () => {
-        // TODO...
+    it("cannot unset required property", () => {
+        const R = Record(recordType({ bold: booleanType, italic: booleanType }).withOptional("italic"));
+        const r = new R({ bold: true, italic: true });
+        expect(r.italic).toBeDefined();
+        expect(r.unset("italic").italic).toBeUndefined();
+        expect(() => r.unset("bold" as "italic")).toThrow("Cannot unset required property: bold");
     });
 });

@@ -13,23 +13,14 @@ export type RecordClass<T> = {
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new (props: T): RecordInstance<T>;
+    new(props: T): RecordMethods<T> & Readonly<T>;
 };
-
-/**
- * Alias for extracting the exposed interface for {@link RecordClass} instances
- * @public
- */
-export type RecordInstance<T> = (
-    Readonly<T> &
-    Omit<RecordMethods<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>
-);
 
 /**
  * Methods implemented by {@link RecordClass} instances
  * @public
  */
-export interface RecordMethods<T> {
+export declare class RecordMethods<T> {
     /**
      * Determines whether the current object is equal to another object, by comparing
      * their properties.
@@ -126,7 +117,9 @@ export interface RecordMethods<T> {
  * Extracts unsettable properties from a type
  * @public
  */
-export type Unsettable<T> = { [K in keyof T]: T[K] extends undefined ? K & string : never }[keyof T];
+export type Unsettable<T> = string & Exclude<{
+    [K in keyof T]: T extends Record<K, T[K]> ? never : K
+}[keyof T], undefined>;
 
 /**
  * Returns a {@link RecordClass} for the specified record type

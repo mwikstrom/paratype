@@ -6,6 +6,12 @@
 
 Basic run-time type information for typescript and javascript.
 
+## Classes
+
+|  Class | Description |
+|  --- | --- |
+|  [RecordMethods](./paratype.recordmethods.md) | Methods implemented by [RecordClass](./paratype.recordclass.md) instances |
+
 ## Functions
 
 |  Function | Description |
@@ -30,7 +36,6 @@ Basic run-time type information for typescript and javascript.
 |  --- | --- |
 |  [Equatable](./paratype.equatable.md) | Implements equality |
 |  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
-|  [RecordMethods](./paratype.recordmethods.md) | Methods implemented by [RecordClass](./paratype.recordclass.md) instances |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [RecordType](./paratype.recordtype.md) | A run-time record type |
 |  [Type](./paratype.type.md) | A run-time type |
@@ -66,7 +71,6 @@ Basic run-time type information for typescript and javascript.
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [PropertyTypes](./paratype.propertytypes.md) | Maps properties to their corresponding run-time types |
 |  [RecordClass](./paratype.recordclass.md) | A class that act as wrapper for record properties |
-|  [RecordInstance](./paratype.recordinstance.md) | Alias for extracting the exposed interface for [RecordClass](./paratype.recordclass.md) instances |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
 |  [Unsettable](./paratype.unsettable.md) | Extracts unsettable properties from a type |
 

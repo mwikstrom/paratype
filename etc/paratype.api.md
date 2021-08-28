@@ -102,14 +102,11 @@ export { Record_2 as Record }
 
 // @public
 export type RecordClass<T> = {
-    new (props: T): RecordInstance<T>;
+    new (props: T): RecordMethods<T> & Readonly<T>;
 };
 
 // @public
-export type RecordInstance<T> = (Readonly<T> & Omit<RecordMethods<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>);
-
-// @public
-export interface RecordMethods<T> {
+export class RecordMethods<T> {
     equals(other: unknown): boolean;
     get<K extends keyof T>(key: K): T[K];
     get(key: string): unknown | undefined;
@@ -180,9 +177,9 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>>;
 
 // @public
-export type Unsettable<T> = {
-    [K in keyof T]: T[K] extends undefined ? K & string : never;
-}[keyof T];
+export type Unsettable<T> = string & Exclude<{
+    [K in keyof T]: T extends Record<K, T[K]> ? never : K;
+}[keyof T], undefined>;
 
 // @public
 export const voidType: Type<void>;

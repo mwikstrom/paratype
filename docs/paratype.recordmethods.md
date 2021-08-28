@@ -2,27 +2,27 @@
 
 [Home](./index.md) &gt; [paratype](./paratype.md) &gt; [RecordMethods](./paratype.recordmethods.md)
 
-## RecordMethods interface
+## RecordMethods class
 
 Methods implemented by [RecordClass](./paratype.recordclass.md) instances
 
 <b>Signature:</b>
 
 ```typescript
-export interface RecordMethods<T> 
+export declare class RecordMethods<T> 
 ```
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [equals(other)](./paratype.recordmethods.equals.md) | Determines whether the current object is equal to another object, by comparing their properties. |
-|  [get(key)](./paratype.recordmethods.get.md) | Gets the specified property value |
-|  [get(key)](./paratype.recordmethods.get_1.md) | Gets the specified property value |
-|  [has(key, value)](./paratype.recordmethods.has.md) | Determines whether the current object has the specified property |
-|  [has(key, value)](./paratype.recordmethods.has_1.md) | Determines whether the current object has the specified property |
-|  [merge(props)](./paratype.recordmethods.merge.md) | Returns a copy of the current object with the specified properties merged in |
-|  [set(key, value)](./paratype.recordmethods.set.md) | Returns a copy of the current object with the specified property merged in |
-|  [unmerge(props)](./paratype.recordmethods.unmerge.md) | Returns a copy of the current object with the specified properties merged out |
-|  [unset(keys)](./paratype.recordmethods.unset.md) | Returns a copy of the current object without the specified properties |
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [equals(other)](./paratype.recordmethods.equals.md) |  | Determines whether the current object is equal to another object, by comparing their properties. |
+|  [get(key)](./paratype.recordmethods.get.md) |  | Gets the specified property value |
+|  [get(key)](./paratype.recordmethods.get_1.md) |  | Gets the specified property value |
+|  [has(key, value)](./paratype.recordmethods.has.md) |  | Determines whether the current object has the specified property |
+|  [has(key, value)](./paratype.recordmethods.has_1.md) |  | Determines whether the current object has the specified property |
+|  [merge(props)](./paratype.recordmethods.merge.md) |  | Returns a copy of the current object with the specified properties merged in |
+|  [set(key, value)](./paratype.recordmethods.set.md) |  | Returns a copy of the current object with the specified property merged in |
+|  [unmerge(props)](./paratype.recordmethods.unmerge.md) |  | Returns a copy of the current object with the specified properties merged out |
+|  [unset(keys)](./paratype.recordmethods.unset.md) |  | Returns a copy of the current object without the specified properties |
 

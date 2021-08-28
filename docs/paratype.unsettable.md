@@ -9,7 +9,7 @@ Extracts unsettable properties from a type
 <b>Signature:</b>
 
 ```typescript
-export declare type Unsettable<T> = {
-    [K in keyof T]: T[K] extends undefined ? K & string : never;
-}[keyof T];
+export declare type Unsettable<T> = string & Exclude<{
+    [K in keyof T]: T extends Record<K, T[K]> ? never : K;
+}[keyof T], undefined>;
 ```

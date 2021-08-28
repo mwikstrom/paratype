@@ -122,14 +122,23 @@ export function recordType<T extends Record<string, unknown>>(
 
         const asPartial = () => makeRecordType(new Set(props.keys()));
         const isOptional = (key: string) => optional.has(key);
+        const getPropertyNames = () => props.keys();
         const getPropertyType = (key: string) => props.get(key);
         const withOptional = (...keys: string[]) => makeRecordType(new Set([...optional.keys(), ...keys]));
+        const pick = <S extends Partial<T>>(source: S): Pick<S, keyof T> => (
+            Object.assign({}, Object.fromEntries(Object
+                .entries(source)
+                .filter(([key]) => props.has(key)))
+            ) as Pick<S, keyof T>
+        );
 
         return Object.freeze({
             ..._makeType<T>({ error, equals, fromJsonValue, toJsonValue }),
             asPartial,
             isOptional,
+            getPropertyNames,
             getPropertyType,
+            pick,
             withOptional,
         });
     };
@@ -156,6 +165,11 @@ export interface RecordType<T> extends Type<T> {
     asPartial(this: void): RecordType<Partial<T>>;
 
     /**
+     * Gets the property names
+     */
+    getPropertyNames(): Iterable<string>;
+
+    /**
      * Gets the run-time type of the specified property
      */
     getPropertyType(key: string): Type<unknown> | undefined;
@@ -164,6 +178,11 @@ export interface RecordType<T> extends Type<T> {
      * Determines whether the specified property is optional
      */
     isOptional(key: string): boolean;
+
+    /**
+     * Picks the properties in this record type from the specified source object
+     */
+    pick<S extends Partial<T>>(source: S): Pick<S, keyof T>;
 
     /**
      * Returns a new record type based on the current type but where the specified properties are optional

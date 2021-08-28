@@ -17,11 +17,13 @@ import { Type } from "./type";
 export function recordType<T extends Record<string, unknown>>(
     properties: PropertyTypes<T>,
 ): RecordType<T> {
-    const props = new Map<string, Type<unknown>>(Object.entries(properties));
-    const makeRecordType = (optional = new Set<string>()): RecordType<T> => {
+    const props = new Map<keyof T, Type<T[keyof T]>>(Object.entries(properties));
+    const makeRecordType = <K extends string & keyof T>(
+        optional = new Set<K>()
+    ): RecordType<Omit<T, K> & Partial<Pick<T, K>>> => {
         const checkMissing = (value: Record<string, unknown>, path?: PathArray): string | undefined => {
             for (const key of props.keys()) {
-                if (!optional.has(key) && value[key] === void(0)) {
+                if (!optional.has(key as K) && value[key as string] === void(0)) {
                     return _formatError(`Missing required property: ${key}`, path);
                 }
             }
@@ -42,7 +44,7 @@ export function recordType<T extends Record<string, unknown>>(
                 const propType = props.get(propName);
                 if (!propType) {
                     return _formatError("Invalid property name", propPath);
-                } else if (propValue === void(0) && optional.has(propName)) {
+                } else if (propValue === void(0) && optional.has(propName as K)) {
                     return void(0);
                 } else {
                     return propType.error(propValue, propPath);
@@ -65,7 +67,7 @@ export function recordType<T extends Record<string, unknown>>(
             for (const [propName, firstValue] of firstMap) {
                 const propType = props.get(propName);
                 const secondValue = secondMap.get(propName);
-                if (secondValue === void(0) || !propType?.equals(firstValue, secondValue)) {
+                if (secondValue === void(0) || !propType?.equals(firstValue as T[keyof T], secondValue)) {
                     return false;
                 }
             }
@@ -111,8 +113,8 @@ export function recordType<T extends Record<string, unknown>>(
                 if (!propType) {
                     throw makeError(_formatError("Invalid property name", path));
                 }
-                if (item !== void(0) || !optional.has(key)) {
-                    result[key] = propType.toJsonValue(item, makeError, path);
+                if (item !== void(0) || !optional.has(key as K)) {
+                    result[key] = propType.toJsonValue(item as T[keyof T], makeError, path);
                 }            
             }
 
@@ -120,17 +122,24 @@ export function recordType<T extends Record<string, unknown>>(
             return result;
         };
 
-        const asPartial = () => makeRecordType(new Set(props.keys()));
-        const isOptional = (key: string) => optional.has(key);
-        const getPropertyNames = () => props.keys();
-        const getPropertyType = (key: string) => props.get(key);
-        const withOptional = (...keys: string[]) => makeRecordType(new Set([...optional.keys(), ...keys]));
-        const pick = <S extends Partial<T>>(source: S): Pick<S, keyof T> => (
+        type M<P extends keyof RecordType<T>> = RecordType<Omit<T, K> & Partial<Pick<T, K>>>[P];
+        const asPartial = (
+            () => makeRecordType(new Set(props.keys() as Iterable<string & keyof T>))
+        ) as unknown as M<"asPartial">;
+        const isOptional: M<"isOptional"> = (key: string) => optional.has(key as K);
+        const getPropertyNames = (
+            () => props.keys() as unknown as Iterable<keyof T>
+        ) as unknown as M<"getPropertyNames">;
+        const getPropertyType: M<"getPropertyType"> = <K extends keyof T>(key: K) => props.get(key) as Type<T[K]>;
+        const withOptional = (<O extends (string & keyof T)>(...keys: O[]) => (
+            makeRecordType<K & O>(new Set([...optional.keys(), ...keys] as (K & O)[]))
+        )) as unknown as M<"withOptional">;
+        const pick = (<S extends Partial<T>>(source: S): Pick<S, keyof T> => (
             Object.assign({}, Object.fromEntries(Object
                 .entries(source)
                 .filter(([key]) => props.has(key)))
             ) as Pick<S, keyof T>
-        );
+        )) as unknown as M<"pick">;
 
         return Object.freeze({
             ..._makeType<T>({ error, equals, fromJsonValue, toJsonValue }),
@@ -143,7 +152,7 @@ export function recordType<T extends Record<string, unknown>>(
         });
     };
 
-    return makeRecordType();
+    return makeRecordType<never>();
 }
 
 /**
@@ -167,12 +176,13 @@ export interface RecordType<T> extends Type<T> {
     /**
      * Gets the property names
      */
-    getPropertyNames(): Iterable<string>;
+    getPropertyNames(): Iterable<keyof T>;
 
     /**
      * Gets the run-time type of the specified property
      */
     getPropertyType(key: string): Type<unknown> | undefined;
+    getPropertyType<K extends keyof T>(key: K): Type<T[K]>;
 
     /**
      * Determines whether the specified property is optional

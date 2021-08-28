@@ -1,4 +1,3 @@
-import { _isRecord } from "./internal/is-record";
 import { RecordType } from "./record-type";
 
 export type RecordClass<T> = {
@@ -16,16 +15,27 @@ export interface RecordInterface<T> {
     get(key: string): unknown | undefined;
     has<K extends keyof T>(key: K, value?: T[K]): boolean;
     has(key: string, value?: unknown): boolean;
+
+    /**
+     * Returns a copy of the current object with the specified properties merged in
+     * 
+     * @param props - The properties to merge
+     * 
+     * @remarks
+     * Only properties that are supported by the current object are merged in, other
+     * properties are ignored.
+     */
     merge(props: Partial<T>): this;
+
     set<K extends keyof T>(key: K, value: T[K]): this;
-    unmerge(props: Required<Pick<T, Unsettable<T>>>): this;
+    unmerge(props: Partial<Pick<T, Unsettable<T>>>): this;
     unset(...keys: Unsettable<T>[]): this;
 }
 
-export type Unsettable<T> = { [K in keyof T]: T[K] extends undefined ? K : never }[keyof T];
+export type Unsettable<T> = { [K in keyof T]: T[K] extends undefined ? K & string : never }[keyof T];
 
 export function Record<T>(type: RecordType<T>): RecordClass<T> {
-    return class Record {
+    return class Record implements RecordInterface<T> {
         #ctor: RecordClass<T>;
         #props: T & { [key: string]: unknown };
         
@@ -41,16 +51,24 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
             const reserved = new Set(Object.keys(this));
             Object.assign(this, Object.fromEntries(Object.entries(this.#props).filter(([key]) => !reserved.has(key))));
         }
+
+        #with(props: T): this {
+            if (type.equals(this.#props, props)) {
+                return this;
+            } else {
+                return new this.#ctor(props) as unknown as this;
+            }
+        }
         
         equals = (other: T): boolean => {
             return type.equals(this.#props, type.pick(other));
         }
 
-        get = (key: string): unknown | undefined => {
+        get = <K extends keyof T>(key: K): T[K] => {
             return this.#props[key];
         }
 
-        has = (key: string, value?: unknown): boolean => {
+        has = <K extends keyof T>(key: K, value?: T[K]): boolean => {
             if (!(key in this.#props)) {
                 return false;
             }
@@ -62,11 +80,11 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
             return !!type.getPropertyType(key)?.equals(this.#props[key], value);
         }
 
-        merge = (props: Partial<T>): RecordInstance<T> => {
-            return new this.#ctor({ ...this.#props, ...type.pick(props) });
+        merge = (props: Partial<T>): this => {
+            return this.#with({ ...this.#props, ...type.pick(props) });
         }
 
-        set = (key: string, value: unknown): RecordInstance<T> => {
+        set = <K extends keyof T>(key: K, value: T[K]): this => {
             const propType = type.getPropertyType(key);
             if (!propType) {
                 throw new TypeError(`Cannot set unknown property: ${key}`);
@@ -77,10 +95,10 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
                 throw new TypeError(`Invalid value for property: ${key}: ${error}`);
             }
 
-            return new this.#ctor({ ...this.#props, ...Object.fromEntries([[key, value]])});
+            return this.#with({ ...this.#props, ...Object.fromEntries([[key, value]])});
         }
 
-        unmerge = (props: Partial<T>): RecordInstance<T> => {
+        unmerge = (props: Partial<Pick<T, Unsettable<T>>>): this => {
             const map = new Map(Object.entries(this.#props));
 
             for (const [key, value] of Object.entries(props)) {
@@ -92,10 +110,10 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
                 }
             }
 
-            return new this.#ctor(Object.fromEntries(map) as unknown as T);
+            return this.#with(Object.fromEntries(map) as unknown as T);
         }
 
-        unset = (...keys: string[]): RecordInstance<T> => {
+        unset = (...keys: Unsettable<T>[]): this => {
             const map = new Map(Object.entries(this.#props));
 
             for (const key of keys) {
@@ -110,7 +128,7 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
                 map.delete(key);
             }
 
-            return new this.#ctor(Object.fromEntries(map) as unknown as T);
+            return this.#with(Object.fromEntries(map) as unknown as T);
         }
     } as unknown as RecordClass<T>;
 }

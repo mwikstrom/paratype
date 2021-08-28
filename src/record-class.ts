@@ -146,7 +146,7 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
 
             const error = type.error(this.#props);
             if (typeof error === "string") {
-                throw new TypeError(`Invalid argument to record constructor: ${error}`);
+                throw new TypeError(`new ${this.#ctor.name}(...): Invalid argument: ${error}`);
             }
 
             const reserved = new Set(Object.keys(this));
@@ -170,7 +170,7 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
         }
 
         has = <K extends keyof T>(key: K, value?: T[K]): boolean => {
-            if (!(key in this.#props)) {
+            if (this.#props[key] === void(0)) {
                 return false;
             }
 

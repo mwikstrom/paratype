@@ -5,7 +5,7 @@ describe("recordType", () => {
         a: stringType,
         b: numberType,
         c: booleanType,
-    }, { optional: ["c"] });
+    }).withOptional("c");
 
     it("detects missing prop", () => {
         const e1 = t.error({});

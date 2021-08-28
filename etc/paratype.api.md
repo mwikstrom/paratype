@@ -83,9 +83,6 @@ export const nullType: Type<null>;
 export const numberType: Type<number>;
 
 // @public
-export function partialType<T extends Record<string, unknown>>(properties: PropertyTypes<T, (string & keyof T)[]>): Type<WithRecordOptions<T, (string & keyof T)[]>>;
-
-// @public
 export type PathArray = Array<string | number>;
 
 // @public
@@ -95,8 +92,8 @@ export const positiveIntegerType: Type<number>;
 export type Predicate<T> = (value: T) => boolean;
 
 // @public
-export type PropertyTypes<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
-    [P in keyof T]-?: P extends O[number] ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+export type PropertyTypes<T extends Record<string, unknown>> = {
+    [P in keyof T]-?: Type<Exclude<T[P], undefined>>;
 };
 
 // @public
@@ -105,7 +102,15 @@ export interface RecordOptions<O extends string[] = []> {
 }
 
 // @public
-export function recordType<T extends Record<string, unknown>, O extends (string & keyof T)[] = []>(properties: PropertyTypes<T, O>, options?: RecordOptions<O>): Type<WithRecordOptions<T, O>>;
+export interface RecordType<T> extends Type<T> {
+    asPartial(this: void): RecordType<Partial<T>>;
+    getPropertyType(key: string): Type<unknown> | undefined;
+    isOptional(key: string): boolean;
+    withOptional<K extends (string & keyof T)>(...keys: K[]): RecordType<Omit<T, K> & Partial<Pick<T, K>>>;
+}
+
+// @public
+export function recordType<T extends Record<string, unknown>>(properties: PropertyTypes<T>): RecordType<T>;
 
 // @public
 export const stringType: Type<string>;
@@ -147,12 +152,5 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
 
 // @public
 export const voidType: Type<void>;
-
-// @public
-export type WithRecordOptions<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
-    [P in Exclude<keyof T, O[number]>]-?: T[P];
-} & {
-    [P in O[number]]?: T[P];
-};
 
 ```

@@ -4,13 +4,13 @@
 
 ## PropertyTypes type
 
-Maps all properties to their corresponding run-time types
+Maps properties to their corresponding run-time types
 
 <b>Signature:</b>
 
 ```typescript
-export declare type PropertyTypes<T extends Record<string, unknown>, O extends (string & keyof T)[] = []> = {
-    [P in keyof T]-?: P extends O[number] ? Type<Exclude<T[P], undefined>> : Type<T[P]>;
+export declare type PropertyTypes<T extends Record<string, unknown>> = {
+    [P in keyof T]-?: Type<Exclude<T[P], undefined>>;
 };
 ```
 <b>References:</b> [Type](./paratype.type.md)

@@ -20,6 +20,7 @@ export interface RecordType<T> extends Type<T>
 |  [asPartial(this)](./paratype.recordtype.aspartial.md) | Returns a new record type based on the current type but where all properties are optional |
 |  [getPropertyNames()](./paratype.recordtype.getpropertynames.md) | Gets the property names |
 |  [getPropertyType(key)](./paratype.recordtype.getpropertytype.md) | Gets the run-time type of the specified property |
+|  [getPropertyType(key)](./paratype.recordtype.getpropertytype_1.md) |  |
 |  [isOptional(key)](./paratype.recordtype.isoptional.md) | Determines whether the specified property is optional |
 |  [pick(source)](./paratype.recordtype.pick.md) | Picks the properties in this record type from the specified source object |
 |  [withOptional(keys)](./paratype.recordtype.withoptional.md) | Returns a new record type based on the current type but where the specified properties are optional |

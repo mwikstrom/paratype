@@ -4,10 +4,12 @@
 
 ## RecordInstance type
 
+Alias for extracting the exposed interface for [RecordClass](./paratype.recordclass.md) instances
+
 <b>Signature:</b>
 
 ```typescript
-export declare type RecordInstance<T> = (Readonly<T> & Omit<RecordInterface<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>);
+export declare type RecordInstance<T> = (Readonly<T> & Omit<RecordMethods<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>);
 ```
-<b>References:</b> [RecordInterface](./paratype.recordinterface.md)<!-- -->, [Unsettable](./paratype.unsettable.md)
+<b>References:</b> [RecordMethods](./paratype.recordmethods.md)<!-- -->, [Unsettable](./paratype.unsettable.md)
 

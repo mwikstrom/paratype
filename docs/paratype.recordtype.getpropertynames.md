@@ -9,9 +9,9 @@ Gets the property names
 <b>Signature:</b>
 
 ```typescript
-getPropertyNames(): Iterable<string>;
+getPropertyNames(): Iterable<keyof T>;
 ```
 <b>Returns:</b>
 
-Iterable&lt;string&gt;
+Iterable&lt;keyof T&gt;
 

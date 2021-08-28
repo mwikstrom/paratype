@@ -1,19 +1,71 @@
 import { RecordType } from "./record-type";
 
+/**
+ * A class that act as wrapper for record properties
+ * @public
+ */
 export type RecordClass<T> = {
+    /**
+     * Constructs a new instance with the specified properties.
+     * 
+     * @param props - The properties to assign
+     * 
+     * @remarks
+     * Only supported properties are assigned, other properties are ignored.
+     */
     new (props: T): RecordInstance<T>;
 };
 
+/**
+ * Alias for extracting the exposed interface for {@link RecordClass} instances
+ * @public
+ */
 export type RecordInstance<T> = (
     Readonly<T> &
-    Omit<RecordInterface<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>
+    Omit<RecordMethods<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>
 );
 
-export interface RecordInterface<T> {
+/**
+ * Methods implemented by {@link RecordClass} instances
+ * @public
+ */
+export interface RecordMethods<T> {
+    /**
+     * Determines whether the current object is equal to another object, by comparing
+     * their properties.
+     * 
+     * @param other - The object to test for equality
+     */
     equals(other: unknown): boolean;
+
+    /**
+     * Gets the specified property value
+     * 
+     * @param key - Name of the property to get
+     */
     get<K extends keyof T>(key: K): T[K];
+
+    /**
+     * Gets the specified property value
+     * 
+     * @param key - Name of the property to get
+     */
     get(key: string): unknown | undefined;
+
+    /**
+     * Determines whether the current object has the specified property
+     * 
+     * @param key - Name of the property to test
+     * @param value - Optionally specifies a value that shall be tested for equality
+     */
     has<K extends keyof T>(key: K, value?: T[K]): boolean;
+
+    /**
+     * Determines whether the current object has the specified property
+     * 
+     * @param key - Name of the property to test
+     * @param value - Optionally specifies a value that shall be tested for equality
+     */
     has(key: string, value?: unknown): boolean;
 
     /**
@@ -24,18 +76,67 @@ export interface RecordInterface<T> {
      * @remarks
      * Only properties that are supported by the current object are merged in, other
      * properties are ignored.
+     * 
+     * If the resulting object would be equal to the current instance, then the current
+     * instance is returned instead.
      */
     merge(props: Partial<T>): this;
 
+    /**
+     * Returns a copy of the current object with the specified property merged in
+     * 
+     * @param key - Key of the property to merge in
+     * @param value - Property value to merge in
+     * 
+     * @remarks
+     * If the resulting object would be equal to the current instance, then the current
+     * instance is returned instead.
+     */
     set<K extends keyof T>(key: K, value: T[K]): this;
+
+    /**
+     * Returns a copy of the current object with the specified properties merged out
+     * 
+     * @param props - The properties to unmerge
+     * 
+     * @remarks
+     * Only properties that are supported by the current object and have equal values
+     * with the current object are unmerged, other properties are ignored.
+     * 
+     * If the resulting object would be equal to the current instance, then the current
+     * instance is returned instead.
+     */
     unmerge(props: Partial<Pick<T, Unsettable<T>>>): this;
+
+    /**
+     * Returns a copy of the current object without the specified properties
+     * 
+     * @param keys - Name of properties that shall be removed
+     * 
+     * @remarks
+     * Only optional properties can be unset.
+     * 
+     * If the resulting object would be equal to the current instance, then the current
+     * instance is returned instead.
+     */
     unset(...keys: Unsettable<T>[]): this;
 }
 
+/**
+ * Extracts unsettable properties from a type
+ * @public
+ */
 export type Unsettable<T> = { [K in keyof T]: T[K] extends undefined ? K & string : never }[keyof T];
 
+/**
+ * Returns a {@link RecordClass} for the specified record type
+ * 
+ * @param type - A record type that define properties for the returned class
+ * 
+ * @public
+ */
 export function Record<T>(type: RecordType<T>): RecordClass<T> {
-    return class Record implements RecordInterface<T> {
+    return class Record implements RecordMethods<T> {
         #ctor: RecordClass<T>;
         #props: T & { [key: string]: unknown };
         
@@ -61,7 +162,7 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
         }
         
         equals = (other: T): boolean => {
-            return type.equals(this.#props, type.pick(other));
+            return Object.is(this, other) || type.equals(this.#props, type.pick(other));
         }
 
         get = <K extends keyof T>(key: K): T[K] => {

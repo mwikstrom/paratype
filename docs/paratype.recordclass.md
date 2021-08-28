@@ -4,6 +4,8 @@
 
 ## RecordClass type
 
+A class that act as wrapper for record properties
+
 <b>Signature:</b>
 
 ```typescript

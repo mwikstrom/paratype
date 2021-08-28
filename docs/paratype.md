@@ -20,7 +20,7 @@ Basic run-time type information for typescript and javascript.
 |  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |
 |  [lazyType(init)](./paratype.lazytype.md) | Constructs a late bound [Type](./paratype.type.md)<!-- -->. |
 |  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
-|  [Record\_2(type)](./paratype.record_2.md) |  |
+|  [Record\_2(type)](./paratype.record_2.md) | Returns a [RecordClass](./paratype.recordclass.md) for the specified record type |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 |  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
 
@@ -30,7 +30,7 @@ Basic run-time type information for typescript and javascript.
 |  --- | --- |
 |  [Equatable](./paratype.equatable.md) | Implements equality |
 |  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
-|  [RecordInterface](./paratype.recordinterface.md) |  |
+|  [RecordMethods](./paratype.recordmethods.md) | Methods implemented by [RecordClass](./paratype.recordclass.md) instances |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
 |  [RecordType](./paratype.recordtype.md) | A run-time record type |
 |  [Type](./paratype.type.md) | A run-time type |
@@ -65,8 +65,8 @@ Basic run-time type information for typescript and javascript.
 |  [PathArray](./paratype.patharray.md) | An array of string and/or numbers that represents the path of a value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [PropertyTypes](./paratype.propertytypes.md) | Maps properties to their corresponding run-time types |
-|  [RecordClass](./paratype.recordclass.md) |  |
-|  [RecordInstance](./paratype.recordinstance.md) |  |
+|  [RecordClass](./paratype.recordclass.md) | A class that act as wrapper for record properties |
+|  [RecordInstance](./paratype.recordinstance.md) | Alias for extracting the exposed interface for [RecordClass](./paratype.recordclass.md) instances |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
-|  [Unsettable](./paratype.unsettable.md) |  |
+|  [Unsettable](./paratype.unsettable.md) | Extracts unsettable properties from a type |
 

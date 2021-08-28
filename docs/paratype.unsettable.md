@@ -4,10 +4,12 @@
 
 ## Unsettable type
 
+Extracts unsettable properties from a type
+
 <b>Signature:</b>
 
 ```typescript
 export declare type Unsettable<T> = {
-    [K in keyof T]: T[K] extends undefined ? K : never;
+    [K in keyof T]: T[K] extends undefined ? K & string : never;
 }[keyof T];
 ```

@@ -4,6 +4,8 @@
 
 ## Record\_2() function
 
+Returns a [RecordClass](./paratype.recordclass.md) for the specified record type
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ export declare function Record<T>(type: RecordType<T>): RecordClass<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  type | [RecordType](./paratype.recordtype.md)<!-- -->&lt;T&gt; |  |
+|  type | [RecordType](./paratype.recordtype.md)<!-- -->&lt;T&gt; | A record type that define properties for the returned class |
 
 <b>Returns:</b>
 

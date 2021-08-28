@@ -96,6 +96,40 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
     [P in keyof T]-?: Type<Exclude<T[P], undefined>>;
 };
 
+// @public (undocumented)
+function Record_2<T>(type: RecordType<T>): RecordClass<T>;
+export { Record_2 as Record }
+
+// @public (undocumented)
+export type RecordClass<T> = {
+    new (props: T): RecordInstance<T>;
+};
+
+// @public (undocumented)
+export type RecordInstance<T> = (Readonly<T> & Omit<RecordInterface<T>, (Unsettable<T> extends never ? ("unmerge" | "unset") : never)>);
+
+// @public (undocumented)
+export interface RecordInterface<T> {
+    // (undocumented)
+    equals(other: unknown): boolean;
+    // (undocumented)
+    get<K extends keyof T>(key: K): T[K];
+    // (undocumented)
+    get(key: string): unknown | undefined;
+    // (undocumented)
+    has<K extends keyof T>(key: K, value?: T[K]): boolean;
+    // (undocumented)
+    has(key: string, value?: unknown): boolean;
+    // (undocumented)
+    merge(props: Partial<T>): this;
+    // (undocumented)
+    set<K extends keyof T>(key: K, value: T[K]): this;
+    // (undocumented)
+    unmerge(props: Required<Pick<T, Unsettable<T>>>): this;
+    // (undocumented)
+    unset(...keys: Unsettable<T>[]): this;
+}
+
 // @public
 export interface RecordOptions<O extends string[] = []> {
     optional?: O;
@@ -104,8 +138,10 @@ export interface RecordOptions<O extends string[] = []> {
 // @public
 export interface RecordType<T> extends Type<T> {
     asPartial(this: void): RecordType<Partial<T>>;
+    getPropertyNames(): Iterable<string>;
     getPropertyType(key: string): Type<unknown> | undefined;
     isOptional(key: string): boolean;
+    pick<S extends Partial<T>>(source: S): Pick<S, keyof T>;
     withOptional<K extends (string & keyof T)>(...keys: K[]): RecordType<Omit<T, K> & Partial<Pick<T, K>>>;
 }
 
@@ -149,6 +185,11 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
 
 // @public
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>>;
+
+// @public (undocumented)
+export type Unsettable<T> = {
+    [K in keyof T]: T[K] extends undefined ? K : never;
+}[keyof T];
 
 // @public
 export const voidType: Type<void>;

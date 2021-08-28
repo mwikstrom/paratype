@@ -22,11 +22,8 @@ export interface RecordInterface<T> {
     unset(...keys: Unsettable<T>[]): this;
 }
 
-const RESERVED = new Set(["equals", "get", "has", "merge", "set", "unmerge", "unset"]);
-
 export type Unsettable<T> = { [K in keyof T]: T[K] extends undefined ? K : never }[keyof T];
 
-// TODO: verify this bindings
 export function Record<T>(type: RecordType<T>): RecordClass<T> {
     return class Record {
         #ctor: RecordClass<T>;
@@ -41,18 +38,19 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
                 throw new TypeError(`Invalid argument to record constructor: ${error}`);
             }
 
-            Object.assign(this, Object.fromEntries(Object.entries(this.#props).filter(([key]) => !RESERVED.has(key))));
+            const reserved = new Set(Object.keys(this));
+            Object.assign(this, Object.fromEntries(Object.entries(this.#props).filter(([key]) => !reserved.has(key))));
         }
         
-        equals(other: T): boolean {
+        equals = (other: T): boolean => {
             return type.equals(this.#props, type.pick(other));
         }
 
-        get(key: string): unknown | undefined {
+        get = (key: string): unknown | undefined => {
             return this.#props[key];
         }
 
-        has(key: string, value?: unknown): boolean {
+        has = (key: string, value?: unknown): boolean => {
             if (!(key in this.#props)) {
                 return false;
             }
@@ -64,11 +62,11 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
             return !!type.getPropertyType(key)?.equals(this.#props[key], value);
         }
 
-        merge(props: Partial<T>): RecordInstance<T> {
+        merge = (props: Partial<T>): RecordInstance<T> => {
             return new this.#ctor({ ...this.#props, ...type.pick(props) });
         }
 
-        set(key: string, value: unknown): RecordInstance<T> {
+        set = (key: string, value: unknown): RecordInstance<T> => {
             const propType = type.getPropertyType(key);
             if (!propType) {
                 throw new TypeError(`Cannot set unknown property: ${key}`);
@@ -82,7 +80,7 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
             return new this.#ctor({ ...this.#props, ...Object.fromEntries([[key, value]])});
         }
 
-        unmerge(props: Partial<T>): RecordInstance<T> {
+        unmerge = (props: Partial<T>): RecordInstance<T> => {
             const map = new Map(Object.entries(this.#props));
 
             for (const [key, value] of Object.entries(props)) {
@@ -97,7 +95,7 @@ export function Record<T>(type: RecordType<T>): RecordClass<T> {
             return new this.#ctor(Object.fromEntries(map) as unknown as T);
         }
 
-        unset(...keys: string[]): RecordInstance<T> {
+        unset = (...keys: string[]): RecordInstance<T> => {
             const map = new Map(Object.entries(this.#props));
 
             for (const key of keys) {

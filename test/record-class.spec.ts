@@ -132,5 +132,7 @@ describe("Record", () => {
         expect(new R().toData()).toBe("");
         const complex = { chars: "abc", bold: true };
         expect(new R(complex)).toMatchObject(complex);
+        expect(R.propsType).toBe(propsType);
+        expect(R.dataType).toBe(dataType);
     });
 });

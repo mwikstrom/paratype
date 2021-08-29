@@ -4,7 +4,7 @@
 
 ## RecordClass class
 
-Methods implemented by [DecoratedRecordClass](./paratype.decoratedrecordclass.md) instances
+Methods implemented by [RecordConstructor](./paratype.recordconstructor.md) instances
 
 <b>Signature:</b>
 

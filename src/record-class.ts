@@ -2,10 +2,10 @@ import { RecordType } from "./record-type";
 import { Type } from "./type";
 
 /**
- * A class that act as wrapper for record properties
+ * A constructor for record classes
  * @public
  */
-export type DecoratedRecordClass<Props, Data = Props> = {
+export type RecordConstructor<Props, Data = Props> = {
     /**
      * Constructs a new instance with the specified properties.
      * 
@@ -15,10 +15,20 @@ export type DecoratedRecordClass<Props, Data = Props> = {
      * Only supported properties are assigned, other properties are ignored.
      */
     new(input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
+
+    /**
+     * The run-time type for record properties
+     */
+    readonly propsType: RecordType<Props>;
+
+    /**
+     * The run-time type for record data
+     */
+    readonly dataType: Type<Data>;
 };
 
 /**
- * Methods implemented by {@link DecoratedRecordClass} instances
+ * Methods implemented by {@link RecordConstructor} instances
  * @public
  */
 export declare class RecordClass<Props, Data = Props> {
@@ -127,16 +137,16 @@ export type OptionalPropsOf<T> = string & Exclude<{
 }[keyof T], undefined>;
 
 /**
- * Returns a {@link DecoratedRecordClass} for the specified record type
+ * Returns a {@link RecordConstructor} for the specified record type
  * 
  * @param propsType - A record type that define properties for the returned class
  * 
  * @public
  */
-export function Record<Props>(propsType: RecordType<Props>): DecoratedRecordClass<Props>;
+export function Record<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
 
 /**
- * Returns a {@link DecoratedRecordClass} for the specified record type and data conversion
+ * Returns a {@link RecordConstructor} for the specified record type and data conversion
  * 
  * @param propsType - A record type that define properties for the returned class
  * @param dataType - Run-time data type
@@ -150,20 +160,23 @@ export function Record<Props, Data>(
     dataType: Type<Data>,
     dataToProps: (data: Data) => Props,
     propsToData: (props: Props) => Data,
-): DecoratedRecordClass<Props, Data>;
+): RecordConstructor<Props, Data>;
 
 export function Record<Props, Data = Props>(
     propsType: RecordType<Props>,
     dataType: Type<Data> = propsType as unknown as Type<Data>,
     dataToProps: (data: Data) => Props = data => data as unknown as Props,
     propsToData: (props: Props) => Data = props => props as unknown as Data,
-): DecoratedRecordClass<Props, Data> {
+): RecordConstructor<Props, Data> {
     return class Record implements RecordClass<Props, Data> {
-        #ctor: DecoratedRecordClass<Props, Data>;
+        static readonly propsType: RecordType<Props> = propsType;
+        static readonly dataType: Type<Data> = dataType;
+
+        #ctor: RecordConstructor<Props, Data>;
         #props: Readonly<Props> & { readonly [key: string]: unknown };
         
         constructor(input: Props | Data) {
-            this.#ctor = this.constructor as DecoratedRecordClass<Props, Data>;
+            this.#ctor = this.constructor as RecordConstructor<Props, Data>;
             this.#props = Object.freeze(propsType.pick(
                 Object.is(propsType, dataType) || !dataType.test(input) ? input as Props : dataToProps(input)
             ));
@@ -261,5 +274,5 @@ export function Record<Props, Data = Props>(
 
             return this.#with(Object.fromEntries(map) as unknown as Props);
         }
-    } as unknown as DecoratedRecordClass<Props, Data>;
+    } as unknown as RecordConstructor<Props, Data>;
 }

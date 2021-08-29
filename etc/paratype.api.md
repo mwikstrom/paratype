@@ -28,11 +28,6 @@ export function customClassType<T extends Partial<Equatable>, Args extends unkno
 }, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
 
 // @public
-export type DecoratedRecordClass<Props, Data = Props> = {
-    new (input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
-};
-
-// @public
 export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof Union]>, Union extends Record<string, Type>>(key: Key, union: Union): Type<TypeOf<Union[keyof Union]>>;
 
 // @public
@@ -111,10 +106,10 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
 };
 
 // @public
-function Record_2<Props>(propsType: RecordType<Props>): DecoratedRecordClass<Props>;
+function Record_2<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
 
 // @public
-function Record_2<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): DecoratedRecordClass<Props, Data>;
+function Record_2<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordConstructor<Props, Data>;
 export { Record_2 as Record }
 
 // @public
@@ -130,6 +125,13 @@ export class RecordClass<Props, Data = Props> {
     unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
     unset(...keys: OptionalPropsOf<Props>[]): this;
 }
+
+// @public
+export type RecordConstructor<Props, Data = Props> = {
+    new (input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
+    readonly propsType: RecordType<Props>;
+    readonly dataType: Type<Data>;
+};
 
 // @public
 export interface RecordOptions<O extends string[] = []> {

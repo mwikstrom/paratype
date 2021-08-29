@@ -15,7 +15,7 @@ export type RecordConstructor<Props, Data = Props> = {
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new(input: Props | Data): RecordObject<Props, Data> & Readonly<Props>;
+    new(input: Props | Data): Readonly<Props> & RecordObject<Props, Data>;
 
     /**
      * The run-time type for record properties

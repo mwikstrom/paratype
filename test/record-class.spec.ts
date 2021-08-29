@@ -152,4 +152,11 @@ describe("Record", () => {
         }
         expect(R.classType.test(new R({ myProp: true }))).toBe(true);
     });
+
+    it("cannot overwrite method with prop", () => {
+        class R extends RecordClass(recordType({ merge: booleanType })) {}
+        const r = new R({ merge: true });
+        expect(typeof r.merge).toBe("function");
+        expect(r.get("merge")).toBe(true);
+    });
 });

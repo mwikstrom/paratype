@@ -9,7 +9,7 @@ Gets the specified property value
 <b>Signature:</b>
 
 ```typescript
-get<K extends keyof T>(key: K): T[K];
+get<K extends keyof Props>(key: K): Props[K];
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ get<K extends keyof T>(key: K): T[K];
 
 <b>Returns:</b>
 
-T\[K\]
+Props\[K\]
 

@@ -26,7 +26,8 @@ Basic run-time type information for typescript and javascript.
 |  [isType(value)](./paratype.istype.md) | Determines whether the specified value is a [Type](./paratype.type.md) |
 |  [lazyType(init)](./paratype.lazytype.md) | Constructs a late bound [Type](./paratype.type.md)<!-- -->. |
 |  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
-|  [Record\_2(type)](./paratype.record_2.md) | Returns a [RecordClass](./paratype.recordclass.md) for the specified record type |
+|  [Record\_2(propsType)](./paratype.record_2.md) | Returns a [RecordClass](./paratype.recordclass.md) for the specified record type |
+|  [Record\_2(propsType, dataType, dataToProps, propsToData)](./paratype.record_2_1.md) | Returns a [RecordClass](./paratype.recordclass.md) for the specified record type and data conversion |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 |  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
 

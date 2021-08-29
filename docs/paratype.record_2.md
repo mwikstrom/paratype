@@ -9,16 +9,16 @@ Returns a [RecordClass](./paratype.recordclass.md) for the specified record type
 <b>Signature:</b>
 
 ```typescript
-export declare function Record<T>(type: RecordType<T>): RecordClass<T>;
+export declare function Record<Props>(propsType: RecordType<Props>): RecordClass<Props>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  type | [RecordType](./paratype.recordtype.md)<!-- -->&lt;T&gt; | A record type that define properties for the returned class |
+|  propsType | [RecordType](./paratype.recordtype.md)<!-- -->&lt;Props&gt; | A record type that define properties for the returned class |
 
 <b>Returns:</b>
 
-[RecordClass](./paratype.recordclass.md)<!-- -->&lt;T&gt;
+[RecordClass](./paratype.recordclass.md)<!-- -->&lt;Props&gt;
 

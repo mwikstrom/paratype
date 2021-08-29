@@ -9,7 +9,7 @@ Returns a copy of the current object with the specified property merged in
 <b>Signature:</b>
 
 ```typescript
-set<K extends keyof T>(key: K, value: T[K]): this;
+set<K extends keyof Props>(key: K, value: Props[K]): this;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ set<K extends keyof T>(key: K, value: T[K]): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K | Key of the property to merge in |
-|  value | T\[K\] | Property value to merge in |
+|  value | Props\[K\] | Property value to merge in |
 
 <b>Returns:</b>
 

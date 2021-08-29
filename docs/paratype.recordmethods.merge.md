@@ -9,14 +9,14 @@ Returns a copy of the current object with the specified properties merged in
 <b>Signature:</b>
 
 ```typescript
-merge(props: Partial<T>): this;
+merge(props: Partial<Props>): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | Partial&lt;T&gt; | The properties to merge |
+|  props | Partial&lt;Props&gt; | The properties to merge |
 
 <b>Returns:</b>
 

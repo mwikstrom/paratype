@@ -9,14 +9,14 @@ Returns a copy of the current object without the specified properties
 <b>Signature:</b>
 
 ```typescript
-unset(...keys: Unsettable<T>[]): this;
+unset(...keys: Unsettable<Props>[]): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  keys | [Unsettable](./paratype.unsettable.md)<!-- -->&lt;T&gt;\[\] | Name of properties that shall be removed |
+|  keys | [Unsettable](./paratype.unsettable.md)<!-- -->&lt;Props&gt;\[\] | Name of properties that shall be removed |
 
 <b>Returns:</b>
 

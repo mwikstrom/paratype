@@ -97,25 +97,29 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
 };
 
 // @public
-function Record_2<T>(type: RecordType<T>): RecordClass<T>;
+function Record_2<Props>(propsType: RecordType<Props>): RecordClass<Props>;
+
+// @public
+function Record_2<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordClass<Props, Data>;
 export { Record_2 as Record }
 
 // @public
-export type RecordClass<T> = {
-    new (props: T): RecordMethods<T> & Readonly<T>;
+export type RecordClass<Props, Data = Props> = {
+    new (input: Props | Data): RecordMethods<Props, Data> & Readonly<Props>;
 };
 
 // @public
-export class RecordMethods<T> {
-    equals(other: unknown): boolean;
-    get<K extends keyof T>(key: K): T[K];
+export class RecordMethods<Props, Data = Props> {
+    equals(value: Props | Data): boolean;
+    get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;
-    has<K extends keyof T>(key: K, value?: T[K]): boolean;
+    has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
     has(key: string, value?: unknown): boolean;
-    merge(props: Partial<T>): this;
-    set<K extends keyof T>(key: K, value: T[K]): this;
-    unmerge(props: Partial<Pick<T, Unsettable<T>>>): this;
-    unset(...keys: Unsettable<T>[]): this;
+    merge(props: Partial<Props>): this;
+    set<K extends keyof Props>(key: K, value: Props[K]): this;
+    toData(): Data;
+    unmerge(props: Partial<Pick<Props, Unsettable<Props>>>): this;
+    unset(...keys: Unsettable<Props>[]): this;
 }
 
 // @public

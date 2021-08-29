@@ -9,14 +9,14 @@ Returns a copy of the current object with the specified properties merged out
 <b>Signature:</b>
 
 ```typescript
-unmerge(props: Partial<Pick<T, Unsettable<T>>>): this;
+unmerge(props: Partial<Pick<Props, Unsettable<Props>>>): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | Partial&lt;Pick&lt;T, [Unsettable](./paratype.unsettable.md)<!-- -->&lt;T&gt;&gt;&gt; | The properties to unmerge |
+|  props | Partial&lt;Pick&lt;Props, [Unsettable](./paratype.unsettable.md)<!-- -->&lt;Props&gt;&gt;&gt; | The properties to unmerge |
 
 <b>Returns:</b>
 

@@ -9,8 +9,8 @@ A class that act as wrapper for record properties
 <b>Signature:</b>
 
 ```typescript
-export declare type RecordClass<T> = {
-    new (props: T): RecordMethods<T> & Readonly<T>;
+export declare type RecordClass<Props, Data = Props> = {
+    new (input: Props | Data): RecordMethods<Props, Data> & Readonly<Props>;
 };
 ```
 <b>References:</b> [RecordMethods](./paratype.recordmethods.md)

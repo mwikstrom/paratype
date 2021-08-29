@@ -9,7 +9,7 @@ Determines whether the current object has the specified property
 <b>Signature:</b>
 
 ```typescript
-has<K extends keyof T>(key: K, value?: T[K]): boolean;
+has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ has<K extends keyof T>(key: K, value?: T[K]): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K | Name of the property to test |
-|  value | T\[K\] | Optionally specifies a value that shall be tested for equality |
+|  value | Props\[K\] | Optionally specifies a value that shall be tested for equality |
 
 <b>Returns:</b>
 

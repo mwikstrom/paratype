@@ -21,3 +21,4 @@ export * from "./record-type";
 export * from "./timestamp";
 export * from "./type";
 export * from "./union";
+export * from "./validating";

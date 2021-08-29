@@ -29,7 +29,10 @@ Basic run-time type information for typescript and javascript.
 |  [Record\_2(propsType)](./paratype.record_2.md) | Returns a [RecordClass](./paratype.recordclass.md) for the specified record type |
 |  [Record\_2(propsType, dataType, dataToProps, propsToData)](./paratype.record_2_1.md) | Returns a [RecordClass](./paratype.recordclass.md) for the specified record type and data conversion |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
+|  [restType(type)](./paratype.resttype.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the each rest parameter matches the specified run-time type. |
+|  [type(type)](./paratype.type.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the parameter matches the specified run-time type. |
 |  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
+|  [validating(constructor)](./paratype.validating.md) | A class decorator that enables parameter validation and this bindings in all functions. |
 
 ## Interfaces
 
@@ -68,10 +71,12 @@ Basic run-time type information for typescript and javascript.
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
+|  [ParameterDecorator\_2](./paratype.parameterdecorator_2.md) | Signature for a parameter decorator |
 |  [PathArray](./paratype.patharray.md) | An array of string and/or numbers that represents the path of a value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [PropertyTypes](./paratype.propertytypes.md) | Maps properties to their corresponding run-time types |
 |  [RecordClass](./paratype.recordclass.md) | A class that act as wrapper for record properties |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
 |  [Unsettable](./paratype.unsettable.md) | Extracts unsettable properties from a type |
+|  [ValidationTarget](./paratype.validationtarget.md) | Alias for a class to be decorated |
 

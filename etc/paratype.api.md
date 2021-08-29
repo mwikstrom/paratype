@@ -83,6 +83,10 @@ export const nullType: Type<null>;
 export const numberType: Type<number>;
 
 // @public
+type ParameterDecorator_2<T> = (target: T, propertyKey: string | symbol | undefined, parameterIndex: number) => void;
+export { ParameterDecorator_2 as ParameterDecorator }
+
+// @public
 export type PathArray = Array<string | number>;
 
 // @public
@@ -143,6 +147,9 @@ export interface RecordType<T> extends Type<T> {
 export function recordType<T extends Record<string, unknown>>(properties: PropertyTypes<T>): RecordType<T>;
 
 // @public
+export function restType(type: Type<unknown>): ParameterDecorator_2<ValidationTarget>;
+
+// @public
 export const stringType: Type<string>;
 
 // @public
@@ -159,6 +166,9 @@ export interface Type<T = unknown> {
     test(this: void, value: unknown, path?: PathArray): value is T;
     toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
 }
+
+// @public
+export function type(type: Type<unknown>): ParameterDecorator_2<ValidationTarget>;
 
 // @public
 export interface TypeClass<I extends TypeInstance> {
@@ -184,6 +194,14 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
 export type Unsettable<T> = string & Exclude<{
     [K in keyof T]: T extends Record<K, T[K]> ? never : K;
 }[keyof T], undefined>;
+
+// @public
+export function validating<T extends ValidationTarget>(constructor: T): T;
+
+// @public
+export type ValidationTarget = {
+    new (...args: any[]): any;
+};
 
 // @public
 export const voidType: Type<void>;

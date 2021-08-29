@@ -10,10 +10,10 @@ A constructor for record classes
 
 ```typescript
 export declare type RecordConstructor<Props, Data = Props> = {
-    new (input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
+    new (input: Props | Data): RecordObject<Props, Data> & Readonly<Props>;
     readonly propsType: RecordType<Props>;
     readonly dataType: Type<Data>;
 };
 ```
-<b>References:</b> [RecordClass](./paratype.recordclass.md)<!-- -->, [RecordType](./paratype.recordtype.md)<!-- -->, [Type](./paratype.type.md)
+<b>References:</b> [RecordObject](./paratype.recordobject.md)<!-- -->, [RecordType](./paratype.recordtype.md)<!-- -->, [Type](./paratype.type.md)
 

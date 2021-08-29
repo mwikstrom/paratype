@@ -109,14 +109,20 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
 };
 
 // @public
-function Record_2<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
+export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
 
 // @public
-function Record_2<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordConstructor<Props, Data>;
-export { Record_2 as Record }
+export function RecordClass<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordConstructor<Props, Data>;
 
 // @public
-export class RecordClass<Props, Data = Props> {
+export type RecordConstructor<Props, Data = Props> = {
+    new (input: Props | Data): RecordObject<Props, Data> & Readonly<Props>;
+    readonly propsType: RecordType<Props>;
+    readonly dataType: Type<Data>;
+};
+
+// @public
+export class RecordObject<Props, Data = Props> {
     equals(value: Props | Data): boolean;
     get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;
@@ -128,13 +134,6 @@ export class RecordClass<Props, Data = Props> {
     unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
     unset(...keys: OptionalPropsOf<Props>[]): this;
 }
-
-// @public
-export type RecordConstructor<Props, Data = Props> = {
-    new (input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
-    readonly propsType: RecordType<Props>;
-    readonly dataType: Type<Data>;
-};
 
 // @public
 export interface RecordOptions<O extends string[] = []> {
@@ -212,7 +211,7 @@ export type ValidationTarget = {
 export const voidType: Type<void>;
 
 // @public
-export function withClassType<T extends RecordClass<Props, Data>, Props, Data>(target: {
+export function withClassType<T extends RecordObject<Props, Data>, Props, Data>(target: {
     new (input: Props | Data): T;
     readonly classType: Type<T>;
     readonly dataType: Type<Data>;

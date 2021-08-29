@@ -1,7 +1,7 @@
 import { 
     booleanType, 
     withClassType, 
-    Record, 
+    RecordClass, 
     recordType, 
     stringType, 
     Type, 
@@ -10,7 +10,7 @@ import {
 } from "../src";
 
 describe("Record", () => {
-    class TextStyle extends Record(recordType({
+    class TextStyle extends RecordClass(recordType({
         bold: booleanType,
         italic: booleanType,
         strike: booleanType,
@@ -67,7 +67,7 @@ describe("Record", () => {
     });
 
     it("cannot be constructed without required prop", () => {
-        const R = Record(recordType({ bold: booleanType }));
+        const R = RecordClass(recordType({ bold: booleanType }));
         expect(() => new R({} as unknown as { bold: boolean })).toThrowError(
             "new Record(...): Invalid argument: Missing required property: bold",
         );
@@ -118,7 +118,7 @@ describe("Record", () => {
     });
 
     it("cannot unset required property", () => {
-        const R = Record(recordType({ bold: booleanType, italic: booleanType }).withOptional("italic"));
+        const R = RecordClass(recordType({ bold: booleanType, italic: booleanType }).withOptional("italic"));
         const r = new R({ bold: true, italic: true });
         expect(r.italic).toBeDefined();
         expect(r.unset("italic").italic).toBeUndefined();
@@ -128,7 +128,7 @@ describe("Record", () => {
     it("can be created with data conversion", () => {
         const propsType = recordType({ chars: stringType, bold: booleanType });
         const dataType = unionType(stringType, propsType);
-        class R extends Record(
+        class R extends RecordClass(
             propsType,
             dataType,
             data => typeof data === "string" ? ({ chars: data, bold: false }) : data,
@@ -147,7 +147,7 @@ describe("Record", () => {
 
     it("can assign class type", () => {
         @withClassType
-        class R extends Record(recordType({ myProp: booleanType})) {
+        class R extends RecordClass(recordType({ myProp: booleanType})) {
             static readonly classType: Type<R>;
         }
         expect(R.classType.test(new R({ myProp: true }))).toBe(true);

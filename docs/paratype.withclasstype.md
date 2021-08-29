@@ -9,7 +9,7 @@ A class decorator for record classes that stores the class [Type](./paratype.typ
 <b>Signature:</b>
 
 ```typescript
-export declare function withClassType<T extends RecordClass<Props, Data>, Props, Data>(target: {
+export declare function withClassType<T extends RecordObject<Props, Data>, Props, Data>(target: {
     new (input: Props | Data): T;
     readonly classType: Type<T>;
     readonly dataType: Type<Data>;

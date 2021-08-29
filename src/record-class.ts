@@ -15,7 +15,7 @@ export type RecordConstructor<Props, Data = Props> = {
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new(input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
+    new(input: Props | Data): RecordObject<Props, Data> & Readonly<Props>;
 
     /**
      * The run-time type for record properties
@@ -32,27 +32,27 @@ export type RecordConstructor<Props, Data = Props> = {
  * Methods implemented by {@link RecordConstructor} instances
  * @public
  */
-export declare class RecordClass<Props, Data = Props> {
+export declare class RecordObject<Props, Data = Props> {
     /**
      * Determines whether the specified value is equal to the current object.
      * 
      * @param value - The value to test for equality
      */
-    equals(value: Props | Data): boolean;
+    public equals(value: Props | Data): boolean;
 
     /**
      * Gets the specified property value
      * 
      * @param key - Name of the property to get
      */
-    get<K extends keyof Props>(key: K): Props[K];
+    public get<K extends keyof Props>(key: K): Props[K];
 
     /**
      * Gets the specified property value
      * 
      * @param key - Name of the property to get
      */
-    get(key: string): unknown | undefined;
+    public get(key: string): unknown | undefined;
 
     /**
      * Determines whether the current object has the specified property
@@ -60,7 +60,7 @@ export declare class RecordClass<Props, Data = Props> {
      * @param key - Name of the property to test
      * @param value - Optionally specifies a value that shall be tested for equality
      */
-    has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
+    public has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
 
     /**
      * Determines whether the current object has the specified property
@@ -68,7 +68,7 @@ export declare class RecordClass<Props, Data = Props> {
      * @param key - Name of the property to test
      * @param value - Optionally specifies a value that shall be tested for equality
      */
-    has(key: string, value?: unknown): boolean;
+    public has(key: string, value?: unknown): boolean;
 
     /**
      * Returns a copy of the current object with the specified properties merged in
@@ -82,7 +82,7 @@ export declare class RecordClass<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    merge(props: Partial<Props>): this;
+    public merge(props: Partial<Props>): this;
 
     /**
      * Returns a copy of the current object with the specified property merged in
@@ -94,12 +94,12 @@ export declare class RecordClass<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    set<K extends keyof Props>(key: K, value: Props[K]): this;
+    public set<K extends keyof Props>(key: K, value: Props[K]): this;
 
     /**
      * Extracts data from the current object
      */
-    toData(): Data;
+    public toData(): Data;
 
     /**
      * Returns a copy of the current object with the specified properties merged out
@@ -113,7 +113,7 @@ export declare class RecordClass<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
+    public unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
 
     /**
      * Returns a copy of the current object without the specified properties
@@ -126,7 +126,7 @@ export declare class RecordClass<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    unset(...keys: OptionalPropsOf<Props>[]): this;
+    public unset(...keys: OptionalPropsOf<Props>[]): this;
 }
 
 /**
@@ -143,7 +143,7 @@ export type OptionalPropsOf<T> = string & Exclude<{
  * @param target - The record class
  * @public
  */
-export function withClassType<T extends RecordClass<Props, Data>, Props, Data>(
+export function withClassType<T extends RecordObject<Props, Data>, Props, Data>(
     target: { new (input: Props|Data): T; readonly classType: Type<T>; readonly dataType: Type<Data> }
 ): void {
     const { dataType: { fromJsonValue, toJsonValue } } = target;
@@ -164,7 +164,7 @@ export function withClassType<T extends RecordClass<Props, Data>, Props, Data>(
  * 
  * @public
  */
-export function Record<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
+export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
 
 /**
  * Returns a {@link RecordConstructor} for the specified record type and data conversion
@@ -176,20 +176,20 @@ export function Record<Props>(propsType: RecordType<Props>): RecordConstructor<P
  * 
  * @public
  */
-export function Record<Props, Data>(
+export function RecordClass<Props, Data>(
     propsType: RecordType<Props>,
     dataType: Type<Data>,
     dataToProps: (data: Data) => Props,
     propsToData: (props: Props) => Data,
 ): RecordConstructor<Props, Data>;
 
-export function Record<Props, Data = Props>(
+export function RecordClass<Props, Data = Props>(
     propsType: RecordType<Props>,
     dataType: Type<Data> = propsType as unknown as Type<Data>,
     dataToProps: (data: Data) => Props = data => data as unknown as Props,
     propsToData: (props: Props) => Data = props => props as unknown as Data,
 ): RecordConstructor<Props, Data> {
-    return class Record implements RecordClass<Props, Data> {
+    return class Record implements RecordObject<Props, Data> {
         static readonly propsType: RecordType<Props> = propsType;
         static readonly dataType: Type<Data> = dataType;
 

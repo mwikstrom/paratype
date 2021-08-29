@@ -141,6 +141,7 @@ export type OptionalPropsOf<T> = string & Exclude<{
  * A class decorator for record classes that stores the class {@link Type} in a static
  * property named `classType`.
  * @param target - The record class
+ * @public
  */
 export function withClassType<T extends RecordClass<Props, Data>, Props, Data>(
     target: { new (input: Props|Data): T; readonly classType: Type<T>; readonly dataType: Type<Data> }

@@ -46,6 +46,9 @@ export type ErrorCallback = (message: string) => Error;
 export function formatPath(path: PathArray): string;
 
 // @public
+export const frozen: <T extends new (...args: any[]) => any>(constructor: T) => T;
+
+// @public
 export const integerType: Type<number>;
 
 // @public

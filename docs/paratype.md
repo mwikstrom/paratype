@@ -54,6 +54,7 @@ Basic run-time type information for typescript and javascript.
 |  [anyType](./paratype.anytype.md) | Matches any value |
 |  [binaryType](./paratype.binarytype.md) | Matches <code>ArrayBuffer</code> values |
 |  [booleanType](./paratype.booleantype.md) | Matches boolean values |
+|  [frozen](./paratype.frozen.md) | Freezes the decorated class, its base classes, and all instances of the class. |
 |  [integerType](./paratype.integertype.md) | Matches safe integer values |
 |  [jsonValueType](./paratype.jsonvaluetype.md) | Matches JSON values |
 |  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) | Matches safe integer values that are greater than or equal to zero |

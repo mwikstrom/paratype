@@ -160,13 +160,13 @@ export function Record<Props, Data = Props>(
 ): RecordClass<Props, Data> {
     return class Record implements RecordMethods<Props, Data> {
         #ctor: RecordClass<Props, Data>;
-        #props: Props & { [key: string]: unknown };
+        #props: Readonly<Props> & { readonly [key: string]: unknown };
         
         constructor(input: Props | Data) {
             this.#ctor = this.constructor as RecordClass<Props, Data>;
-            this.#props = propsType.pick(
+            this.#props = Object.freeze(propsType.pick(
                 Object.is(propsType, dataType) || !dataType.test(input) ? input as Props : dataToProps(input)
-            );
+            ));
 
             const error = propsType.error(this.#props);
             if (typeof error === "string") {

@@ -5,7 +5,7 @@ import { Type } from "./type";
  * A class that act as wrapper for record properties
  * @public
  */
-export type RecordClass<Props, Data = Props> = {
+export type DecoratedRecordClass<Props, Data = Props> = {
     /**
      * Constructs a new instance with the specified properties.
      * 
@@ -14,14 +14,14 @@ export type RecordClass<Props, Data = Props> = {
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new(input: Props | Data): RecordMethods<Props, Data> & Readonly<Props>;
+    new(input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
 };
 
 /**
- * Methods implemented by {@link RecordClass} instances
+ * Methods implemented by {@link DecoratedRecordClass} instances
  * @public
  */
-export declare class RecordMethods<Props, Data = Props> {
+export declare class RecordClass<Props, Data = Props> {
     /**
      * Determines whether the specified value is equal to the current object.
      * 
@@ -102,7 +102,7 @@ export declare class RecordMethods<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    unmerge(props: Partial<Pick<Props, Unsettable<Props>>>): this;
+    unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
 
     /**
      * Returns a copy of the current object without the specified properties
@@ -115,28 +115,28 @@ export declare class RecordMethods<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    unset(...keys: Unsettable<Props>[]): this;
+    unset(...keys: OptionalPropsOf<Props>[]): this;
 }
 
 /**
- * Extracts unsettable properties from a type
+ * Extracts optional properties from a type
  * @public
  */
-export type Unsettable<T> = string & Exclude<{
+export type OptionalPropsOf<T> = string & Exclude<{
     [K in keyof T]: T extends Record<K, T[K]> ? never : K
 }[keyof T], undefined>;
 
 /**
- * Returns a {@link RecordClass} for the specified record type
+ * Returns a {@link DecoratedRecordClass} for the specified record type
  * 
  * @param propsType - A record type that define properties for the returned class
  * 
  * @public
  */
-export function Record<Props>(propsType: RecordType<Props>): RecordClass<Props>;
+export function Record<Props>(propsType: RecordType<Props>): DecoratedRecordClass<Props>;
 
 /**
- * Returns a {@link RecordClass} for the specified record type and data conversion
+ * Returns a {@link DecoratedRecordClass} for the specified record type and data conversion
  * 
  * @param propsType - A record type that define properties for the returned class
  * @param dataType - Run-time data type
@@ -150,20 +150,20 @@ export function Record<Props, Data>(
     dataType: Type<Data>,
     dataToProps: (data: Data) => Props,
     propsToData: (props: Props) => Data,
-): RecordClass<Props, Data>;
+): DecoratedRecordClass<Props, Data>;
 
 export function Record<Props, Data = Props>(
     propsType: RecordType<Props>,
     dataType: Type<Data> = propsType as unknown as Type<Data>,
     dataToProps: (data: Data) => Props = data => data as unknown as Props,
     propsToData: (props: Props) => Data = props => props as unknown as Data,
-): RecordClass<Props, Data> {
-    return class Record implements RecordMethods<Props, Data> {
-        #ctor: RecordClass<Props, Data>;
+): DecoratedRecordClass<Props, Data> {
+    return class Record implements RecordClass<Props, Data> {
+        #ctor: DecoratedRecordClass<Props, Data>;
         #props: Readonly<Props> & { readonly [key: string]: unknown };
         
         constructor(input: Props | Data) {
-            this.#ctor = this.constructor as RecordClass<Props, Data>;
+            this.#ctor = this.constructor as DecoratedRecordClass<Props, Data>;
             this.#props = Object.freeze(propsType.pick(
                 Object.is(propsType, dataType) || !dataType.test(input) ? input as Props : dataToProps(input)
             ));
@@ -229,7 +229,7 @@ export function Record<Props, Data = Props>(
 
         toData = () => propsToData(this.#props);
 
-        unmerge = (props: Partial<Pick<Props, Unsettable<Props>>>): this => {
+        unmerge = (props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this => {
             const map = new Map(Object.entries(this.#props));
 
             for (const [key, value] of Object.entries(props)) {
@@ -244,7 +244,7 @@ export function Record<Props, Data = Props>(
             return this.#with(Object.fromEntries(map) as unknown as Props);
         }
 
-        unset = (...keys: Unsettable<Props>[]): this => {
+        unset = (...keys: OptionalPropsOf<Props>[]): this => {
             const map = new Map(Object.entries(this.#props));
 
             for (const key of keys) {
@@ -261,5 +261,5 @@ export function Record<Props, Data = Props>(
 
             return this.#with(Object.fromEntries(map) as unknown as Props);
         }
-    } as unknown as RecordClass<Props, Data>;
+    } as unknown as DecoratedRecordClass<Props, Data>;
 }

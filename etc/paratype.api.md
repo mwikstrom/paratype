@@ -28,6 +28,11 @@ export function customClassType<T extends Partial<Equatable>, Args extends unkno
 }, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
 
 // @public
+export type DecoratedRecordClass<Props, Data = Props> = {
+    new (input: Props | Data): RecordClass<Props, Data> & Readonly<Props>;
+};
+
+// @public
 export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof Union]>, Union extends Record<string, Type>>(key: Key, union: Union): Type<TypeOf<Union[keyof Union]>>;
 
 // @public
@@ -83,6 +88,11 @@ export const nullType: Type<null>;
 export const numberType: Type<number>;
 
 // @public
+export type OptionalPropsOf<T> = string & Exclude<{
+    [K in keyof T]: T extends Record<K, T[K]> ? never : K;
+}[keyof T], undefined>;
+
+// @public
 type ParameterDecorator_2<T> = (target: T, propertyKey: string | symbol | undefined, parameterIndex: number) => void;
 export { ParameterDecorator_2 as ParameterDecorator }
 
@@ -101,19 +111,14 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
 };
 
 // @public
-function Record_2<Props>(propsType: RecordType<Props>): RecordClass<Props>;
+function Record_2<Props>(propsType: RecordType<Props>): DecoratedRecordClass<Props>;
 
 // @public
-function Record_2<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordClass<Props, Data>;
+function Record_2<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): DecoratedRecordClass<Props, Data>;
 export { Record_2 as Record }
 
 // @public
-export type RecordClass<Props, Data = Props> = {
-    new (input: Props | Data): RecordMethods<Props, Data> & Readonly<Props>;
-};
-
-// @public
-export class RecordMethods<Props, Data = Props> {
+export class RecordClass<Props, Data = Props> {
     equals(value: Props | Data): boolean;
     get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;
@@ -122,8 +127,8 @@ export class RecordMethods<Props, Data = Props> {
     merge(props: Partial<Props>): this;
     set<K extends keyof Props>(key: K, value: Props[K]): this;
     toData(): Data;
-    unmerge(props: Partial<Pick<Props, Unsettable<Props>>>): this;
-    unset(...keys: Unsettable<Props>[]): this;
+    unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
+    unset(...keys: OptionalPropsOf<Props>[]): this;
 }
 
 // @public
@@ -189,11 +194,6 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
 
 // @public
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>>;
-
-// @public
-export type Unsettable<T> = string & Exclude<{
-    [K in keyof T]: T extends Record<K, T[K]> ? never : K;
-}[keyof T], undefined>;
 
 // @public
 export function validating<T extends ValidationTarget>(constructor: T): T;

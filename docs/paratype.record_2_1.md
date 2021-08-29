@@ -4,12 +4,12 @@
 
 ## Record\_2() function
 
-Returns a [RecordClass](./paratype.recordclass.md) for the specified record type and data conversion
+Returns a [DecoratedRecordClass](./paratype.decoratedrecordclass.md) for the specified record type and data conversion
 
 <b>Signature:</b>
 
 ```typescript
-export declare function Record<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordClass<Props, Data>;
+export declare function Record<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): DecoratedRecordClass<Props, Data>;
 ```
 
 ## Parameters
@@ -23,5 +23,5 @@ export declare function Record<Props, Data>(propsType: RecordType<Props>, dataTy
 
 <b>Returns:</b>
 
-[RecordClass](./paratype.recordclass.md)<!-- -->&lt;Props, Data&gt;
+[DecoratedRecordClass](./paratype.decoratedrecordclass.md)<!-- -->&lt;Props, Data&gt;
 

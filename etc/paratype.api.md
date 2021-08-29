@@ -208,4 +208,11 @@ export type ValidationTarget = {
 // @public
 export const voidType: Type<void>;
 
+// @public
+export function withClassType<T extends RecordClass<Props, Data>, Props, Data>(target: {
+    new (input: Props | Data): T;
+    readonly classType: Type<T>;
+    readonly dataType: Type<Data>;
+}): void;
+
 ```

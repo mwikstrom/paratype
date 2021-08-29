@@ -33,6 +33,7 @@ Basic run-time type information for typescript and javascript.
 |  [type(type)](./paratype.type.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the parameter matches the specified run-time type. |
 |  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
 |  [validating(constructor)](./paratype.validating.md) | A class decorator that enables parameter validation and this bindings in all functions. |
+|  [withClassType(target)](./paratype.withclasstype.md) | A class decorator for record classes that stores the class [Type](./paratype.type.md) in a static property named <code>classType</code>. |
 
 ## Interfaces
 

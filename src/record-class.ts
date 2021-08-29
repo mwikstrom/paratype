@@ -1,3 +1,4 @@
+import { customClassType } from "./class";
 import { RecordType } from "./record-type";
 import { Type } from "./type";
 
@@ -135,6 +136,25 @@ export declare class RecordClass<Props, Data = Props> {
 export type OptionalPropsOf<T> = string & Exclude<{
     [K in keyof T]: T extends Record<K, T[K]> ? never : K
 }[keyof T], undefined>;
+
+/**
+ * A class decorator for record classes that stores the class {@link Type} in a static
+ * property named `classType`.
+ * @param target - The record class
+ */
+export function withClassType<T extends RecordClass<Props, Data>, Props, Data>(
+    target: { new (input: Props|Data): T; readonly classType: Type<T>; readonly dataType: Type<Data> }
+): void {
+    const { dataType: { fromJsonValue, toJsonValue } } = target;
+    Object.defineProperty(target, "classType", {
+        writable: false,
+        value: customClassType<T, [Props | Data]>(
+            target, 
+            (...args) => new target(fromJsonValue(...args)),
+            (value, ...rest) => toJsonValue(value.toData(), ...rest),
+        ),
+    });
+}
 
 /**
  * Returns a {@link RecordConstructor} for the specified record type

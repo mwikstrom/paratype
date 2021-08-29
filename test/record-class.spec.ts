@@ -1,4 +1,13 @@
-import { booleanType, Record, recordType, stringType, TypeOf, unionType } from "../src";
+import { 
+    booleanType, 
+    withClassType, 
+    Record, 
+    recordType, 
+    stringType, 
+    Type, 
+    TypeOf, 
+    unionType,
+} from "../src";
 
 describe("Record", () => {
     class TextStyle extends Record(recordType({
@@ -134,5 +143,13 @@ describe("Record", () => {
         expect(new R(complex)).toMatchObject(complex);
         expect(R.propsType).toBe(propsType);
         expect(R.dataType).toBe(dataType);
+    });
+
+    it("can assign class type", () => {
+        @withClassType
+        class R extends Record(recordType({ myProp: booleanType})) {
+            static readonly classType: Type<R>;
+        }
+        expect(R.classType.test(new R({ myProp: true }))).toBe(true);
     });
 });

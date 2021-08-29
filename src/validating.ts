@@ -8,7 +8,7 @@ import { Type } from "./type";
  * @param type - The run-time type that parameter values shall be validated against
  * @public
  */
-export function type(type: Type<unknown>): ParameterDecorator<ValidationTarget> {
+export function type(type: Type<unknown>): ParameterTypeDecorator {
     return (target, propertyKey, parameterIndex) => registerValidator(target, propertyKey, parameterIndex, type);
 }
 
@@ -19,7 +19,7 @@ export function type(type: Type<unknown>): ParameterDecorator<ValidationTarget> 
  * @param type - The run-time type that parameter values shall be validated against
  * @public
  */
-export function restType(type: Type<unknown>): ParameterDecorator<ValidationTarget> {
+export function restType(type: Type<unknown>): ParameterTypeDecorator {
     return (target, propertyKey, parameterIndex) => registerValidator(target, propertyKey, ~parameterIndex, type);
 }
 
@@ -81,11 +81,11 @@ export function validating<T extends ValidationTarget>(constructor: T): T {
 }
 
 /**
- * Signature for a parameter decorator
+ * Signature for a parameter type decorator
  * @public
  */
-export type ParameterDecorator<T> = (
-    target: T, 
+export type ParameterTypeDecorator = (
+    target: ValidationTarget, 
     propertyKey: string | symbol | undefined,
     parameterIndex: number
 ) => void;

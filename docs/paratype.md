@@ -74,7 +74,7 @@ Basic run-time type information for typescript and javascript.
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
 |  [OptionalPropsOf](./paratype.optionalpropsof.md) | Extracts optional properties from a type |
-|  [ParameterDecorator\_2](./paratype.parameterdecorator_2.md) | Signature for a parameter decorator |
+|  [ParameterTypeDecorator](./paratype.parametertypedecorator.md) | Signature for a parameter type decorator |
 |  [PathArray](./paratype.patharray.md) | An array of string and/or numbers that represents the path of a value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [PropertyTypes](./paratype.propertytypes.md) | Maps properties to their corresponding run-time types |

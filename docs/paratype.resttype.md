@@ -9,7 +9,7 @@ A parameter decorator to be used in combination with the [validating()](./paraty
 <b>Signature:</b>
 
 ```typescript
-export declare function restType(type: Type<unknown>): ParameterDecorator<ValidationTarget>;
+export declare function restType(type: Type<unknown>): ParameterTypeDecorator;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ export declare function restType(type: Type<unknown>): ParameterDecorator<Valida
 
 <b>Returns:</b>
 
-ParameterDecorator&lt;[ValidationTarget](./paratype.validationtarget.md)<!-- -->&gt;
+[ParameterTypeDecorator](./paratype.parametertypedecorator.md)
 

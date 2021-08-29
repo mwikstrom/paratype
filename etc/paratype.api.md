@@ -91,8 +91,7 @@ export type OptionalPropsOf<T> = string & Exclude<{
 }[keyof T], undefined>;
 
 // @public
-type ParameterDecorator_2<T> = (target: T, propertyKey: string | symbol | undefined, parameterIndex: number) => void;
-export { ParameterDecorator_2 as ParameterDecorator }
+export type ParameterTypeDecorator = (target: ValidationTarget, propertyKey: string | symbol | undefined, parameterIndex: number) => void;
 
 // @public
 export type PathArray = Array<string | number>;
@@ -156,7 +155,7 @@ export interface RecordType<T> extends Type<T> {
 export function recordType<T extends Record<string, unknown>>(properties: PropertyTypes<T>): RecordType<T>;
 
 // @public
-export function restType(type: Type<unknown>): ParameterDecorator_2<ValidationTarget>;
+export function restType(type: Type<unknown>): ParameterTypeDecorator;
 
 // @public
 export const stringType: Type<string>;
@@ -177,7 +176,7 @@ export interface Type<T = unknown> {
 }
 
 // @public
-export function type(type: Type<unknown>): ParameterDecorator_2<ValidationTarget>;
+export function type(type: Type<unknown>): ParameterTypeDecorator;
 
 // @public
 export interface TypeClass<I extends TypeInstance> {

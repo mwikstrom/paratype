@@ -13,7 +13,7 @@ export const frozen = <T extends { new (...args: any[]): any }>(constructor: T):
         }
     };
 
-    Object.defineProperty(freezing, "name", constructor.name);
+    Object.defineProperty(freezing, "name", { value: constructor.name });
     
     for (const proto of prototypeChain(freezing)) {
         Object.freeze(proto);

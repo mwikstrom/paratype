@@ -26,4 +26,9 @@ describe("frozen", () => {
         const instance = new Frozen();
         expect(instance).toBeInstanceOf(Frozen);
     });
+
+    it("keeps the same name", () => {
+        @frozen class MyClass {}
+        expect(MyClass.name).toBe("MyClass");
+    });
 });

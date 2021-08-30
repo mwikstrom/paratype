@@ -198,9 +198,11 @@ export function RecordClass<Props, Data = Props>(
         
         constructor(input: Props | Data) {
             this.#ctor = this.constructor as RecordConstructor<Props, Data>;
-            this.#props = Object.freeze(propsType.pick(
-                Object.is(propsType, dataType) || !dataType.test(input) ? input as Props : dataToProps(input)
-            ));
+            this.#props = Object.freeze(
+                !Object.is(propsType, dataType) && dataType.test(input) ?
+                    dataToProps(input) :
+                    propsType.pick(input) as Props
+            );
 
             const error = propsType.error(this.#props);
             if (typeof error === "string") {

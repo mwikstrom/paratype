@@ -12,6 +12,8 @@ export const frozen = <T extends { new (...args: any[]): any }>(constructor: T):
             Object.freeze(this);
         }
     };
+
+    Object.defineProperty(freezing, "name", constructor.name);
     
     for (const proto of prototypeChain(freezing)) {
         Object.freeze(proto);

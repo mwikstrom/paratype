@@ -164,6 +164,11 @@ export const stringType: Type<string>;
 export const timestampType: Type<Date>;
 
 // @public
+export function tupleType<T extends [...unknown[]]>(...itemTypes: {
+    [I in keyof T]: Type<T[I]>;
+}): Type<T>;
+
+// @public
 export interface Type<T = unknown> {
     assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
     equals(this: void, first: T, second: unknown): second is T;

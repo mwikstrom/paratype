@@ -30,6 +30,7 @@ Basic run-time type information for typescript and javascript.
 |  [RecordClass(propsType, dataType, dataToProps, propsToData)](./paratype.recordclass_1.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type and data conversion |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 |  [restType(type)](./paratype.resttype.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the each rest parameter matches the specified run-time type. |
+|  [tupleType(itemTypes)](./paratype.tupletype.md) | Constructs a [Type](./paratype.type.md) that represents a tuple with the specified item types. |
 |  [type(type)](./paratype.type.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the parameter matches the specified run-time type. |
 |  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
 |  [validating(constructor)](./paratype.validating.md) | A class decorator that enables parameter validation and this bindings in all functions. |

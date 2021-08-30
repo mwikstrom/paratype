@@ -123,17 +123,23 @@ export function recordType<T extends Record<string, unknown>>(
         };
 
         type M<P extends keyof RecordType<T>> = RecordType<Omit<T, K> & Partial<Pick<T, K>>>[P];
+        
         const asPartial = (
             () => makeRecordType(new Set(props.keys() as Iterable<string & keyof T>))
         ) as unknown as M<"asPartial">;
+
         const isOptional: M<"isOptional"> = (key: string) => optional.has(key as K);
+
         const getPropertyNames = (
             () => props.keys() as unknown as Iterable<keyof T>
         ) as unknown as M<"getPropertyNames">;
+
         const getPropertyType: M<"getPropertyType"> = <K extends keyof T>(key: K) => props.get(key) as Type<T[K]>;
+
         const withOptional = (<O extends (string & keyof T)>(...keys: O[]) => (
             makeRecordType<K & O>(new Set([...optional.keys(), ...keys] as (K & O)[]))
         )) as unknown as M<"withOptional">;
+
         const pick = (<S extends Partial<T>>(source: S): Pick<S, keyof T> => (
             Object.assign({}, Object.fromEntries(Object
                 .entries(source)

@@ -8,3 +8,4 @@ Basic run-time type information for typescript and javascript.
 ----
 
 - TODO: Additional props in record types
+- TODO: This binding validation in get/set accessor functions

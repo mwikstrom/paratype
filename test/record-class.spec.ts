@@ -1,6 +1,6 @@
 import { 
     booleanType, 
-    withClassType, 
+    recordClassType, 
     RecordClass, 
     recordType, 
     stringType, 
@@ -146,9 +146,8 @@ describe("Record", () => {
     });
 
     it("can assign class type", () => {
-        @withClassType
         class R extends RecordClass(recordType({ myProp: booleanType})) {
-            static readonly classType: Type<R>;
+            static readonly classType = recordClassType(() => R);
         }
         expect(R.classType.test(new R({ myProp: true }))).toBe(true);
     });

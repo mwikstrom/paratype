@@ -1,4 +1,5 @@
-import { customClassType } from "./class";
+import { customClassType, Equatable } from "./class";
+import { lazyType } from "./lazy";
 import { RecordType } from "./record-type";
 import { Type } from "./type";
 
@@ -138,22 +139,24 @@ export type OptionalPropsOf<T> = string & Exclude<{
 }[keyof T], undefined>;
 
 /**
- * A class decorator for record classes that stores the class {@link Type} in a static
- * property named `classType`.
- * @param target - The record class
+ * Creates a run-time type for a record class
  * @public
  */
-export function withClassType<T extends RecordObject<Props, Data>, Props, Data>(
-    target: { new (input: Props|Data): T; readonly classType: Type<T>; readonly dataType: Type<Data> }
-): void {
-    const { dataType: { fromJsonValue, toJsonValue } } = target;
-    Object.defineProperty(target, "classType", {
-        writable: false,
-        value: customClassType<T, [Props | Data]>(
-            target, 
-            (...args) => new target(fromJsonValue(...args)),
+export function recordClassType<
+    T extends RecordObject<Props, Data> & Equatable & Readonly<Props>, 
+    Props, 
+    Data,
+>(
+    lazy: () => RecordConstructor<Props, Data> & { new (input: Props | Data): T }
+): Type<T> {
+    return lazyType<T>(() => {
+        const target = lazy();
+        const { dataType: { fromJsonValue, toJsonValue } } = target;
+        return customClassType<T, [Props | Data]>(
+            target,
+            (...args) => new target(fromJsonValue(...args)) as unknown as T,
             (value, ...rest) => toJsonValue(value.toData(), ...rest),
-        ),
+        );
     });
 }
 

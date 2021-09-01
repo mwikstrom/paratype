@@ -23,7 +23,7 @@ export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: 
 export function constType<T extends string>(fixed: T): Type<T>;
 
 // @public
-export function customClassType<T extends Partial<Equatable>, Args extends unknown[] = unknown[]>(ctor: {
+export function customClassType<T extends Partial<Equatable>, Args extends [...unknown[]] = unknown[]>(ctor: {
     new (...args: Args): T;
 }, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
 
@@ -114,6 +114,11 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
 export function RecordClass<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordConstructor<Props, Data>;
 
 // @public
+export function recordClassType<T extends RecordObject<Props, Data> & Equatable & Readonly<Props>, Props, Data>(lazy: () => RecordConstructor<Props, Data> & {
+    new (input: Props | Data): T;
+}): Type<T>;
+
+// @public
 export type RecordConstructor<Props, Data = Props> = {
     new (input: Props | Data): Readonly<Props> & RecordObject<Props, Data>;
     readonly propsType: RecordType<Props>;
@@ -121,7 +126,7 @@ export type RecordConstructor<Props, Data = Props> = {
 };
 
 // @public
-export class RecordObject<Props, Data = Props> {
+export interface RecordObject<Props, Data = Props> {
     equals(value: Props | Data): boolean;
     get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;
@@ -213,12 +218,5 @@ export type ValidationTarget = {
 
 // @public
 export const voidType: Type<void>;
-
-// @public
-export function withClassType<T extends RecordObject<Props, Data>, Props, Data>(target: {
-    new (input: Props | Data): T;
-    readonly classType: Type<T>;
-    readonly dataType: Type<Data>;
-}): void;
 
 ```

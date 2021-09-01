@@ -32,27 +32,27 @@ export type RecordConstructor<Props, Data = Props> = {
  * Methods implemented by {@link RecordConstructor} instances
  * @public
  */
-export declare class RecordObject<Props, Data = Props> {
+export interface RecordObject<Props, Data = Props> {
     /**
      * Determines whether the specified value is equal to the current object.
      * 
      * @param value - The value to test for equality
      */
-    public equals(value: Props | Data): boolean;
+    equals(value: Props | Data): boolean;
 
     /**
      * Gets the specified property value
      * 
      * @param key - Name of the property to get
      */
-    public get<K extends keyof Props>(key: K): Props[K];
+    get<K extends keyof Props>(key: K): Props[K];
 
     /**
      * Gets the specified property value
      * 
      * @param key - Name of the property to get
      */
-    public get(key: string): unknown | undefined;
+    get(key: string): unknown | undefined;
 
     /**
      * Determines whether the current object has the specified property
@@ -60,7 +60,7 @@ export declare class RecordObject<Props, Data = Props> {
      * @param key - Name of the property to test
      * @param value - Optionally specifies a value that shall be tested for equality
      */
-    public has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
+    has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
 
     /**
      * Determines whether the current object has the specified property
@@ -68,7 +68,7 @@ export declare class RecordObject<Props, Data = Props> {
      * @param key - Name of the property to test
      * @param value - Optionally specifies a value that shall be tested for equality
      */
-    public has(key: string, value?: unknown): boolean;
+    has(key: string, value?: unknown): boolean;
 
     /**
      * Returns a copy of the current object with the specified properties merged in
@@ -82,7 +82,7 @@ export declare class RecordObject<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    public merge(props: Partial<Props>): this;
+    merge(props: Partial<Props>): this;
 
     /**
      * Returns a copy of the current object with the specified property merged in
@@ -94,12 +94,12 @@ export declare class RecordObject<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    public set<K extends keyof Props>(key: K, value: Props[K]): this;
+    set<K extends keyof Props>(key: K, value: Props[K]): this;
 
     /**
      * Extracts data from the current object
      */
-    public toData(): Data;
+    toData(): Data;
 
     /**
      * Returns a copy of the current object with the specified properties merged out
@@ -113,7 +113,7 @@ export declare class RecordObject<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    public unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
+    unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
 
     /**
      * Returns a copy of the current object without the specified properties
@@ -126,7 +126,7 @@ export declare class RecordObject<Props, Data = Props> {
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
      */
-    public unset(...keys: OptionalPropsOf<Props>[]): this;
+    unset(...keys: OptionalPropsOf<Props>[]): this;
 }
 
 /**
@@ -189,7 +189,7 @@ export function RecordClass<Props, Data = Props>(
     dataToProps: (data: Data) => Props = data => data as unknown as Props,
     propsToData: (props: Props) => Data = props => props as unknown as Data,
 ): RecordConstructor<Props, Data> {
-    return class Record implements RecordObject<Props, Data> {
+    class Record implements RecordObject<Props, Data> {
         static readonly propsType: RecordType<Props> = propsType;
         static readonly dataType: Type<Data> = dataType;
 
@@ -297,5 +297,7 @@ export function RecordClass<Props, Data = Props>(
 
             return this.#with(Object.fromEntries(map) as unknown as Props);
         }
-    } as unknown as RecordConstructor<Props, Data>;
+    }
+
+    return Record as unknown as RecordConstructor<Props, Data>;
 }

@@ -4,7 +4,6 @@ import {
     RecordClass, 
     recordType, 
     stringType, 
-    Type, 
     TypeOf, 
     unionType,
 } from "../src";

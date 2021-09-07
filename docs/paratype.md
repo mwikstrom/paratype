@@ -21,8 +21,6 @@ Basic run-time type information for typescript and javascript.
 |  [lazyType(init)](./paratype.lazytype.md) | Constructs a late bound [Type](./paratype.type.md)<!-- -->. |
 |  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
 |  [RecordClass(propsType)](./paratype.recordclass.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
-|  [RecordClass(propsType, dataType, dataToProps, propsToData)](./paratype.recordclass_1.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type and data conversion |
-|  [recordClassType(lazy)](./paratype.recordclasstype.md) | Creates a run-time type for a record class |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 |  [restType(type)](./paratype.resttype.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the each rest parameter matches the specified run-time type. |
 |  [tupleType(itemTypes)](./paratype.tupletype.md) | Constructs a [Type](./paratype.type.md) that represents a tuple with the specified item types. |

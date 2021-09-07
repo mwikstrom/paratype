@@ -111,30 +111,19 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
 export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
 
 // @public
-export function RecordClass<Props, Data>(propsType: RecordType<Props>, dataType: Type<Data>, dataToProps: (data: Data) => Props, propsToData: (props: Props) => Data): RecordConstructor<Props, Data>;
-
-// @public
-export function recordClassType<T extends RecordObject<Props, Data> & Equatable & Readonly<Props>, Props, Data>(lazy: () => RecordConstructor<Props, Data> & {
-    new (input: Props | Data): T;
-}): Type<T>;
-
-// @public
-export type RecordConstructor<Props, Data = Props> = {
-    new (input: Props | Data): Readonly<Props> & RecordObject<Props, Data>;
-    readonly propsType: RecordType<Props>;
-    readonly dataType: Type<Data>;
+export type RecordConstructor<Props> = {
+    new (props: Props): Readonly<Props> & RecordObject<Props>;
 };
 
 // @public
-export interface RecordObject<Props, Data = Props> {
-    equals(value: Props | Data): boolean;
+export interface RecordObject<Props> {
+    equals(other: Readonly<Props>): boolean;
     get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;
     has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
     has(key: string, value?: unknown): boolean;
     merge(props: Partial<Props>): this;
     set<K extends keyof Props>(key: K, value: Props[K]): this;
-    toData(): Data;
     unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
     unset(...keys: OptionalPropsOf<Props>[]): this;
 }

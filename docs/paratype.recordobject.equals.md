@@ -4,19 +4,19 @@
 
 ## RecordObject.equals() method
 
-Determines whether the specified value is equal to the current object.
+Determines whether the specified object is equal to the current object.
 
 <b>Signature:</b>
 
 ```typescript
-equals(value: Props | Data): boolean;
+equals(other: Readonly<Props>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Props \| Data | The value to test for equality |
+|  other | Readonly&lt;Props&gt; | The object to test for equality |
 
 <b>Returns:</b>
 

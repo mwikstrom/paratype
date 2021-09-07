@@ -9,21 +9,20 @@ Methods implemented by [RecordConstructor](./paratype.recordconstructor.md) inst
 <b>Signature:</b>
 
 ```typescript
-export interface RecordObject<Props, Data = Props> 
+export interface RecordObject<Props> 
 ```
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [equals(value)](./paratype.recordobject.equals.md) | Determines whether the specified value is equal to the current object. |
+|  [equals(other)](./paratype.recordobject.equals.md) | Determines whether the specified object is equal to the current object. |
 |  [get(key)](./paratype.recordobject.get.md) | Gets the specified property value |
 |  [get(key)](./paratype.recordobject.get_1.md) | Gets the specified property value |
 |  [has(key, value)](./paratype.recordobject.has.md) | Determines whether the current object has the specified property |
 |  [has(key, value)](./paratype.recordobject.has_1.md) | Determines whether the current object has the specified property |
 |  [merge(props)](./paratype.recordobject.merge.md) | Returns a copy of the current object with the specified properties merged in |
 |  [set(key, value)](./paratype.recordobject.set.md) | Returns a copy of the current object with the specified property merged in |
-|  [toData()](./paratype.recordobject.todata.md) | Extracts data from the current object |
 |  [unmerge(props)](./paratype.recordobject.unmerge.md) | Returns a copy of the current object with the specified properties merged out |
 |  [unset(keys)](./paratype.recordobject.unset.md) | Returns a copy of the current object without the specified properties |
 

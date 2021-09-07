@@ -141,7 +141,7 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
                 throw new TypeError(`new ${this.#ctor.name}(...): Invalid argument: ${error}`);
             }
 
-            const reserved = new Set(Object.keys(this));
+            const reserved = new Set(Object.getOwnPropertyNames(Record.prototype));
             Object.assign(this, Object.fromEntries(Object.entries(this.#props).filter(([key]) => !reserved.has(key))));
         }
 
@@ -153,15 +153,15 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
             }
         }
         
-        equals = (other: Readonly<Props>): boolean => {
+        equals(other: Readonly<Props>): boolean {
             return Object.is(this, other) || propsType.equals(this.#props, propsType.pick(other));
         }
 
-        get = <K extends keyof Props>(key: K): Props[K] => {
+        get<K extends keyof Props>(key: K): Props[K] {
             return this.#props[key];
         }
 
-        has = <K extends keyof Props>(key: K, value?: Props[K]): boolean => {
+        has<K extends keyof Props>(key: K, value?: Props[K]): boolean {
             if (this.#props[key] === void(0)) {
                 return false;
             }
@@ -173,11 +173,11 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
             return !!propsType.getPropertyType(key)?.equals(this.#props[key], value);
         }
 
-        merge = (props: Partial<Props>): this => {
+        merge(props: Partial<Props>): this {
             return this.#with({ ...this.#props, ...propsType.pick(props) });
         }
 
-        set = <K extends keyof Props>(key: K, value: Props[K]): this => {
+        set<K extends keyof Props>(key: K, value: Props[K]): this {
             const propType = propsType.getPropertyType(key);
             if (!propType) {
                 throw new TypeError(`Cannot set unknown property: ${key}`);
@@ -191,7 +191,7 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
             return this.#with({ ...this.#props, ...Object.fromEntries([[key, value]])});
         }
 
-        unmerge = (props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this => {
+        unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this {
             const map = new Map(Object.entries(this.#props));
 
             for (const [key, value] of Object.entries(props)) {
@@ -206,7 +206,7 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
             return this.#with(Object.fromEntries(map) as unknown as Props);
         }
 
-        unset = (...keys: OptionalPropsOf<Props>[]): this => {
+        unset(...keys: OptionalPropsOf<Props>[]): this {
             const map = new Map(Object.entries(this.#props));
 
             for (const key of keys) {

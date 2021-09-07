@@ -20,6 +20,11 @@ export const booleanType: Type<boolean>;
 export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I>;
 
 // @public
+export type Constructor<T> = Function & {
+    prototype: T;
+};
+
+// @public
 export function constType<T extends string>(fixed: T): Type<T>;
 
 // @public
@@ -111,8 +116,11 @@ export type PropertyTypes<T extends Record<string, unknown>> = {
 export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
 
 // @public
-export type RecordConstructor<Props> = {
-    new (props: Props): Readonly<Props> & RecordObject<Props>;
+export function RecordClass<Props, Base extends object>(propsType: RecordType<Props>, base: Constructor<Base>): RecordConstructor<Props, Base>;
+
+// @public
+export type RecordConstructor<Props, Base extends object = Object> = {
+    new (props: Props): Readonly<Props> & RecordObject<Props> & Base;
 };
 
 // @public

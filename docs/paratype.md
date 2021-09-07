@@ -21,6 +21,7 @@ Basic run-time type information for typescript and javascript.
 |  [lazyType(init)](./paratype.lazytype.md) | Constructs a late bound [Type](./paratype.type.md)<!-- -->. |
 |  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
 |  [RecordClass(propsType)](./paratype.recordclass.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
+|  [RecordClass(propsType, base)](./paratype.recordclass_1.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 |  [restType(type)](./paratype.resttype.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the each rest parameter matches the specified run-time type. |
 |  [tupleType(itemTypes)](./paratype.tupletype.md) | Constructs a [Type](./paratype.type.md) that represents a tuple with the specified item types. |
@@ -63,6 +64,7 @@ Basic run-time type information for typescript and javascript.
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Constructor](./paratype.constructor.md) | A constructor function |
 |  [ErrorCallback](./paratype.errorcallback.md) | A callback that, given a message, creates an error |
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |

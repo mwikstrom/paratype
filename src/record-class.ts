@@ -123,6 +123,7 @@ export type OptionalPropsOf<T> = string & Exclude<{
 
 /**
  * A constructor function
+ * @public
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type Constructor<T> = Function & { prototype: T }

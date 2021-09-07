@@ -17,7 +17,7 @@ export const binaryType: Type<ArrayBufferLike>;
 export const booleanType: Type<boolean>;
 
 // @public
-export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I>;
+export function classType<T extends TypeClass<I, Args>, I extends TypeInstance, Args extends [...unknown[]]>(ctor: T): Type<I>;
 
 // @public
 export type Constructor<T> = Function & {
@@ -186,9 +186,9 @@ export interface Type<T = unknown> {
 export function type(type: Type<unknown>): ParameterTypeDecorator;
 
 // @public
-export interface TypeClass<I extends TypeInstance> {
+export interface TypeClass<I extends TypeInstance, Args extends [...unknown[]]> {
     // (undocumented)
-    new (...args: unknown[]): I;
+    new (...args: Args): I;
     // (undocumented)
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): I;
 }

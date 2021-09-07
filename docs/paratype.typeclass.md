@@ -9,7 +9,7 @@ The static interface of type classes
 <b>Signature:</b>
 
 ```typescript
-export interface TypeClass<I extends TypeInstance> 
+export interface TypeClass<I extends TypeInstance, Args extends [...unknown[]]> 
 ```
 
 ## Methods

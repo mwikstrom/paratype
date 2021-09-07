@@ -9,7 +9,7 @@ Matches instances of a specific class
 <b>Signature:</b>
 
 ```typescript
-export declare function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I>;
+export declare function classType<T extends TypeClass<I, Args>, I extends TypeInstance, Args extends [...unknown[]]>(ctor: T): Type<I>;
 ```
 
 ## Parameters

@@ -8,7 +8,9 @@ import { ErrorCallback, Type } from "./type";
  * Matches instances of a specific class
  * @public
  */
-export function classType<T extends TypeClass<I>, I extends TypeInstance>(ctor: T): Type<I> {
+export function classType<T extends TypeClass<I, Args>, I extends TypeInstance, Args extends [...unknown[]]>(
+    ctor: T
+): Type<I> {
     return customClassType(ctor, ctor.fromJsonValue, (value, ...rest) => value.toJsonValue(...rest));
 }
 
@@ -37,8 +39,8 @@ export function customClassType<T extends Partial<Equatable>, Args extends [...u
  * The static interface of type classes
  * @public
  */
-export interface TypeClass<I extends TypeInstance> {
-    new (...args: unknown[]): I;
+export interface TypeClass<I extends TypeInstance, Args extends [...unknown[]]> {
+    new (...args: Args): I;
     fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): I;
 }
 

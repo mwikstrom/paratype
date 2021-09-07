@@ -2,9 +2,6 @@ import {
     booleanType, 
     RecordClass, 
     recordType, 
-    stringType, 
-    TypeOf, 
-    unionType,
 } from "../src";
 
 describe("Record", () => {

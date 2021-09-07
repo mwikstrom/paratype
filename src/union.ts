@@ -1,41 +1,50 @@
 import { _makeType } from "./internal/make-type";
-import { Type, TypeOf } from "./type";
+import { _makeTypeError } from "./internal/make-type-error";
+import { ErrorCallback, Type, TypeOf } from "./type";
 
 /**
  * Constructs a {@link Type} that represents a union of other types.
  * @public
  **/
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>> {
-    const error: Type["error"] = (...args) => {
-        const mapped = types.map(t => t.error(...args));
-        if (!mapped.some(msg => msg === void(0))) {
-            const errors = mapped.filter(msg => msg !== void(0));
-            return errors.length === 1 ? errors[0] : "(" + errors.join(" -or- ") + ")";
+    const join = (errors: (string | undefined)[]): string | undefined => {
+        const filtered = errors.filter(msg => msg !== void(0));
+        if (filtered.length === 1) {
+            return filtered[0];
+        } else if (filtered.length > 1) {
+            return `Union type error: ${filtered.join(" -or- ")}`;
         }
     };
+
+    const error: Type["error"] = (...args) => join(types.map(t => t.error(...args)));
 
     const equals = (first: TypeOf<T[number]>, second: unknown): boolean => (
         types.some(t => t.test(first) && t.equals(first, second))
     );
 
-    const firstSuccessful = <Result>(func: (t: Type<TypeOf<T[number]>>) => Result) => {
-        let error: Error | undefined;
+    const firstSuccessful = <Result>(
+        func: (t: Type<TypeOf<T[number]>>) => Result,
+        makeError: ErrorCallback = _makeTypeError,
+    ) => {
+        const errors: (string | undefined)[] = [];
         for (const t of types) {
             try {
                 return func(t as Type<TypeOf<T[number]>>);
-            } catch (failed) {
-                error = failed;
+            } catch (e) {
+                if (e instanceof Error) {
+                    errors.push(e.message);
+                }
             }
         }
-        throw error;
+        throw makeError(join(errors) ?? "Unknown union type error");
     };
 
     const fromJsonValue: Type<TypeOf<T[number]>>["fromJsonValue"] = (...args) => (
-        firstSuccessful(t => t.fromJsonValue(...args))
+        firstSuccessful(t => t.fromJsonValue(...args), args[1])
     );
 
     const toJsonValue: Type<TypeOf<T[number]>>["toJsonValue"] = (...args) => (
-        firstSuccessful(t => t.toJsonValue(...args))
+        firstSuccessful(t => t.toJsonValue(...args), args[1])
     );
 
     return _makeType({ error, equals, fromJsonValue, toJsonValue });

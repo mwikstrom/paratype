@@ -12,11 +12,21 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
         if (filtered.length === 1) {
             return filtered[0];
         } else if (filtered.length > 1) {
-            return `Union type error: ${filtered.join(" -or- ")}`;
+            return `(${filtered.join(" -or- ")})`;
         }
     };
 
-    const error: Type["error"] = (...args) => join(types.map(t => t.error(...args)));
+    const error: Type["error"] = (...args) => {
+        const errors: string[] = [];
+        for (const t of types) {
+            const e = t.error(...args);
+            if (e === void(0)) {
+                return e;
+            }
+            errors.push(e);
+        }
+        return join(errors);
+    };
 
     const equals = (first: TypeOf<T[number]>, second: unknown): boolean => (
         types.some(t => t.test(first) && t.equals(first, second))
@@ -36,7 +46,7 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
                 }
             }
         }
-        throw makeError(join(errors) ?? "Unknown union type error");
+        throw makeError(join(errors) ?? "Union type error");
     };
 
     const fromJsonValue: Type<TypeOf<T[number]>>["fromJsonValue"] = (...args) => (

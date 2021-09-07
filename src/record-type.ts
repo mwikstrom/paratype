@@ -140,12 +140,17 @@ export function recordType<T extends Record<string, unknown>>(
             makeRecordType<K & O>(new Set([...optional.keys(), ...keys] as (K & O)[]))
         )) as unknown as M<"withOptional">;
 
-        const pick = (<S extends Partial<T>>(source: S): Pick<S, keyof T> => (
-            Object.assign({}, Object.fromEntries(Object
-                .entries(source)
-                .filter(([key]) => props.has(key)))
-            ) as Pick<S, keyof T>
-        )) as unknown as M<"pick">;
+        const pick = (<S extends Partial<T>>(source: S): Pick<S, keyof T> => {
+            const map = new Map<string, unknown>();
+            if (_isRecord(source)) {
+                for (const [key, value] of Object.entries(source)) {
+                    if (props.has(key)) {
+                        map.set(key, value);
+                    }
+                }
+            }
+            return Object.fromEntries(map) as Pick<S, keyof T>;
+        }) as unknown as M<"pick">;
 
         return Object.freeze({
             ..._makeType<T>({ error, equals, fromJsonValue, toJsonValue }),

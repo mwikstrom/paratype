@@ -126,4 +126,22 @@ describe("Record", () => {
         expect(typeof r.merge).toBe("function");
         expect(r.get("merge")).toBe(true);
     });
+
+    it("can derive from a base class", () => {
+        class B { test() { return 123; } }
+        class R extends RecordClass(recordType({}), B) {}
+        expect(new R({}).test()).toBe(123);
+    });
+
+    it("cannot overwrite base method with prop", () => {
+        class B { test() { return 123; } }
+        class R extends RecordClass(recordType({ test: booleanType }), B) {}
+        expect(typeof new R({ test: true }).test).toBe("function");
+    });
+
+    it("can derive from an abstract base class", () => {
+        abstract class B { abstract test(): number; }
+        class R extends RecordClass(recordType({}), B) { test() { return 456; }}
+        expect(new R({}).test()).toBe(456);
+    });
 });

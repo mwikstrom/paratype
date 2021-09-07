@@ -4,7 +4,8 @@ import { RecordType } from "./record-type";
  * A constructor for record classes
  * @public
  */
-export type RecordConstructor<Props> = {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type RecordConstructor<Props, Base extends object = Object> = {
     /**
      * Constructs a new instance with the specified properties.
      * 
@@ -13,7 +14,7 @@ export type RecordConstructor<Props> = {
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new(props: Props): Readonly<Props> & RecordObject<Props>;
+    new(props: Props): Readonly<Props> & RecordObject<Props> & Base;
 };
 
 /**
@@ -121,19 +122,47 @@ export type OptionalPropsOf<T> = string & Exclude<{
 }[keyof T], undefined>;
 
 /**
+ * A constructor function
+ */
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type Constructor<T> = Function & { prototype: T }
+
+/**
  * Returns a {@link RecordConstructor} for the specified record type
  * 
  * @param propsType - A record type that define properties for the returned class
  * 
  * @public
  */
-export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props> {
-    class Record implements RecordObject<Props> {
-        #ctor: RecordConstructor<Props>;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
+
+/**
+ * Returns a {@link RecordConstructor} for the specified record type
+ * 
+ * @param propsType - A record type that define properties for the returned class
+ * 
+ * @public
+ */
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function RecordClass<Props, Base extends object>(
+    propsType: RecordType<Props>,
+    base: Constructor<Base>,
+): RecordConstructor<Props, Base>;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function RecordClass<Props, Base extends object = Object>(
+    propsType: RecordType<Props>,
+    base: Constructor<Base> = Object as unknown as Constructor<Base>,
+): RecordConstructor<Props, Base> {
+    class Record extends (base as unknown as ObjectConstructor) implements RecordObject<Props> {
+        #ctor: RecordConstructor<Props, Base>;
         #props: Readonly<Props> & { readonly [key: string]: unknown };
         
         constructor(props: Props) {
-            this.#ctor = this.constructor as RecordConstructor<Props>;
+            super();
+
+            this.#ctor = this.constructor as RecordConstructor<Props, Base>;
             this.#props = Object.freeze(propsType.pick(props));
 
             const error = propsType.error(this.#props);
@@ -141,7 +170,11 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
                 throw new TypeError(`new ${this.#ctor.name}(...): Invalid argument: ${error}`);
             }
 
-            const reserved = new Set(Object.getOwnPropertyNames(Record.prototype));
+            const reserved = new Set([
+                ...Object.getOwnPropertyNames(Record.prototype), 
+                ...Object.getOwnPropertyNames(base.prototype)
+            ]);
+
             Object.assign(this, Object.fromEntries(Object.entries(this.#props).filter(([key]) => !reserved.has(key))));
         }
 
@@ -225,5 +258,5 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
         }
     }
 
-    return Record as unknown as RecordConstructor<Props>;
+    return Record as unknown as RecordConstructor<Props, Base>;
 }

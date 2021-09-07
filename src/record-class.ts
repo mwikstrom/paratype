@@ -1,45 +1,32 @@
-import { customClassType, Equatable } from "./class";
-import { lazyType } from "./lazy";
 import { RecordType } from "./record-type";
-import { Type } from "./type";
 
 /**
  * A constructor for record classes
  * @public
  */
-export type RecordConstructor<Props, Data = Props> = {
+export type RecordConstructor<Props> = {
     /**
      * Constructs a new instance with the specified properties.
      * 
-     * @param input - The input that provide the properties to assign.
+     * @param props - The properties to assign.
      * 
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new(input: Props | Data): Readonly<Props> & RecordObject<Props, Data>;
-
-    /**
-     * The run-time type for record properties
-     */
-    readonly propsType: RecordType<Props>;
-
-    /**
-     * The run-time type for record data
-     */
-    readonly dataType: Type<Data>;
+    new(props: Props): Readonly<Props> & RecordObject<Props>;
 };
 
 /**
  * Methods implemented by {@link RecordConstructor} instances
  * @public
  */
-export interface RecordObject<Props, Data = Props> {
+export interface RecordObject<Props> {
     /**
-     * Determines whether the specified value is equal to the current object.
+     * Determines whether the specified object is equal to the current object.
      * 
-     * @param value - The value to test for equality
+     * @param other - The object to test for equality
      */
-    equals(value: Props | Data): boolean;
+    equals(other: Readonly<Props>): boolean;
 
     /**
      * Gets the specified property value
@@ -98,11 +85,6 @@ export interface RecordObject<Props, Data = Props> {
     set<K extends keyof Props>(key: K, value: Props[K]): this;
 
     /**
-     * Extracts data from the current object
-     */
-    toData(): Data;
-
-    /**
      * Returns a copy of the current object with the specified properties merged out
      * 
      * @param props - The properties to unmerge
@@ -139,73 +121,20 @@ export type OptionalPropsOf<T> = string & Exclude<{
 }[keyof T], undefined>;
 
 /**
- * Creates a run-time type for a record class
- * @public
- */
-export function recordClassType<
-    T extends RecordObject<Props, Data> & Equatable & Readonly<Props>, 
-    Props, 
-    Data,
->(
-    lazy: () => RecordConstructor<Props, Data> & { new (input: Props | Data): T }
-): Type<T> {
-    return lazyType<T>(() => {
-        const target = lazy();
-        const { dataType: { fromJsonValue, toJsonValue } } = target;
-        return customClassType<T, [Props | Data]>(
-            target,
-            (...args) => new target(fromJsonValue(...args)) as unknown as T,
-            (value, ...rest) => toJsonValue(value.toData(), ...rest),
-        );
-    });
-}
-
-/**
  * Returns a {@link RecordConstructor} for the specified record type
  * 
  * @param propsType - A record type that define properties for the returned class
  * 
  * @public
  */
-export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props>;
-
-/**
- * Returns a {@link RecordConstructor} for the specified record type and data conversion
- * 
- * @param propsType - A record type that define properties for the returned class
- * @param dataType - Run-time data type
- * @param dataToProps - A function that convert data to properties
- * @param propsToData - A function that convert properties to data
- * 
- * @public
- */
-export function RecordClass<Props, Data>(
-    propsType: RecordType<Props>,
-    dataType: Type<Data>,
-    dataToProps: (data: Data) => Props,
-    propsToData: (props: Props) => Data,
-): RecordConstructor<Props, Data>;
-
-export function RecordClass<Props, Data = Props>(
-    propsType: RecordType<Props>,
-    dataType: Type<Data> = propsType as unknown as Type<Data>,
-    dataToProps: (data: Data) => Props = data => data as unknown as Props,
-    propsToData: (props: Props) => Data = props => props as unknown as Data,
-): RecordConstructor<Props, Data> {
-    class Record implements RecordObject<Props, Data> {
-        static readonly propsType: RecordType<Props> = propsType;
-        static readonly dataType: Type<Data> = dataType;
-
-        #ctor: RecordConstructor<Props, Data>;
+export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstructor<Props> {
+    class Record implements RecordObject<Props> {
+        #ctor: RecordConstructor<Props>;
         #props: Readonly<Props> & { readonly [key: string]: unknown };
         
-        constructor(input: Props | Data) {
-            this.#ctor = this.constructor as RecordConstructor<Props, Data>;
-            this.#props = Object.freeze(
-                !Object.is(propsType, dataType) && dataType.test(input) ?
-                    dataToProps(input) :
-                    propsType.pick(input) as Props
-            );
+        constructor(props: Props) {
+            this.#ctor = this.constructor as RecordConstructor<Props>;
+            this.#props = Object.freeze(propsType.pick(props));
 
             const error = propsType.error(this.#props);
             if (typeof error === "string") {
@@ -224,12 +153,8 @@ export function RecordClass<Props, Data = Props>(
             }
         }
         
-        equals = (value: Props | Data): boolean => {
-            return Object.is(this, value) || propsType.equals(
-                this.#props, propsType.pick(
-                    Object.is(propsType, dataType) || !dataType.test(value) ? value as Props : dataToProps(value)
-                )
-            );
+        equals = (other: Readonly<Props>): boolean => {
+            return Object.is(this, other) || propsType.equals(this.#props, propsType.pick(other));
         }
 
         get = <K extends keyof Props>(key: K): Props[K] => {
@@ -266,8 +191,6 @@ export function RecordClass<Props, Data = Props>(
             return this.#with({ ...this.#props, ...Object.fromEntries([[key, value]])});
         }
 
-        toData = () => propsToData(this.#props);
-
         unmerge = (props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this => {
             const map = new Map(Object.entries(this.#props));
 
@@ -302,5 +225,5 @@ export function RecordClass<Props, Data = Props>(
         }
     }
 
-    return Record as unknown as RecordConstructor<Props, Data>;
+    return Record as unknown as RecordConstructor<Props>;
 }

@@ -1,6 +1,5 @@
 import { 
     booleanType, 
-    recordClassType, 
     RecordClass, 
     recordType, 
     stringType, 
@@ -122,33 +121,6 @@ describe("Record", () => {
         expect(r.italic).toBeDefined();
         expect(r.unset("italic").italic).toBeUndefined();
         expect(() => r.unset("bold" as "italic")).toThrow("Cannot unset required property: bold");
-    });
-
-    it("can be created with data conversion", () => {
-        const propsType = recordType({ chars: stringType, bold: booleanType });
-        const dataType = unionType(stringType, propsType);
-        class R extends RecordClass(
-            propsType,
-            dataType,
-            data => typeof data === "string" ? ({ chars: data, bold: false }) : data,
-            props => props.bold ? props : props.chars,
-        ) {
-            constructor (input: TypeOf<typeof dataType> = "") {
-                super(input);
-            }
-        }
-        expect(new R().toData()).toBe("");
-        const complex = { chars: "abc", bold: true };
-        expect(new R(complex)).toMatchObject(complex);
-        expect(R.propsType).toBe(propsType);
-        expect(R.dataType).toBe(dataType);
-    });
-
-    it("can assign class type", () => {
-        class R extends RecordClass(recordType({ myProp: booleanType})) {
-            static readonly classType = recordClassType(() => R);
-        }
-        expect(R.classType.test(new R({ myProp: true }))).toBe(true);
     });
 
     it("cannot overwrite method with prop", () => {

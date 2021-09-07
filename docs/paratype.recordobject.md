@@ -9,7 +9,7 @@ Methods implemented by [RecordConstructor](./paratype.recordconstructor.md) inst
 <b>Signature:</b>
 
 ```typescript
-export interface RecordObject<Props> 
+export interface RecordObject<Props, Data = Props> 
 ```
 
 ## Methods
@@ -23,6 +23,7 @@ export interface RecordObject<Props>
 |  [has(key, value)](./paratype.recordobject.has_1.md) | Determines whether the current object has the specified property |
 |  [merge(props)](./paratype.recordobject.merge.md) | Returns a copy of the current object with the specified properties merged in |
 |  [set(key, value)](./paratype.recordobject.set.md) | Returns a copy of the current object with the specified property merged in |
+|  [toData()](./paratype.recordobject.todata.md) | Extracts data from the current object |
 |  [unmerge(props)](./paratype.recordobject.unmerge.md) | Returns a copy of the current object with the specified properties merged out |
 |  [unset(keys)](./paratype.recordobject.unset.md) | Returns a copy of the current object without the specified properties |
 

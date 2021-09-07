@@ -22,6 +22,8 @@ Basic run-time type information for typescript and javascript.
 |  [mapType(valueType)](./paratype.maptype.md) | Constructs a [Type](./paratype.type.md) that represents a map with string keys and uniform values |
 |  [RecordClass(propsType)](./paratype.recordclass.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
 |  [RecordClass(propsType, base)](./paratype.recordclass_1.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
+|  [RecordClass(propsType, base, dataType, propsToData)](./paratype.recordclass_2.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
+|  [recordClassType(lazy)](./paratype.recordclasstype.md) | Creates a run-time type for a record class |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
 |  [restType(type)](./paratype.resttype.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the each rest parameter matches the specified run-time type. |
 |  [tupleType(itemTypes)](./paratype.tupletype.md) | Constructs a [Type](./paratype.type.md) that represents a tuple with the specified item types. |
@@ -34,6 +36,7 @@ Basic run-time type information for typescript and javascript.
 |  Interface | Description |
 |  --- | --- |
 |  [Equatable](./paratype.equatable.md) | Implements equality |
+|  [FromData](./paratype.fromdata.md) | The static data conversion interface that must be implemented by record classes with implic data conversion |
 |  [JsonObject](./paratype.jsonobject.md) | An object where keys are strings and values are JSON values |
 |  [RecordObject](./paratype.recordobject.md) | Methods implemented by [RecordConstructor](./paratype.recordconstructor.md) instances |
 |  [RecordOptions](./paratype.recordoptions.md) | Specifies behavior for a record type |
@@ -69,6 +72,7 @@ Basic run-time type information for typescript and javascript.
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
+|  [MaybeFromData](./paratype.maybefromdata.md) | Optional or required data conversion |
 |  [OptionalPropsOf](./paratype.optionalpropsof.md) | Extracts optional properties from a type |
 |  [ParameterTypeDecorator](./paratype.parametertypedecorator.md) | Signature for a parameter type decorator |
 |  [PathArray](./paratype.patharray.md) | An array of string and/or numbers that represents the path of a value |

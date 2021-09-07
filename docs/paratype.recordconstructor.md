@@ -9,9 +9,11 @@ A constructor for record classes
 <b>Signature:</b>
 
 ```typescript
-export declare type RecordConstructor<Props, Base extends object = Object> = {
-    new (props: Props): Readonly<Props> & RecordObject<Props> & Base;
+export declare type RecordConstructor<Props, Base extends object = Object, Data = Props> = {
+    new (props: Props): Readonly<Props> & RecordObject<Props, Data> & Base;
+    readonly propsType: RecordType<Props>;
+    readonly dataType: Type<Data>;
 };
 ```
-<b>References:</b> [RecordObject](./paratype.recordobject.md)
+<b>References:</b> [RecordObject](./paratype.recordobject.md)<!-- -->, [RecordType](./paratype.recordtype.md)<!-- -->, [Type](./paratype.type.md)
 

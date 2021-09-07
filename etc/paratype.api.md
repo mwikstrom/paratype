@@ -51,6 +51,12 @@ export type ErrorCallback = (message: string) => Error;
 export function formatPath(path: PathArray): string;
 
 // @public
+export interface FromData<T, Data> {
+    // (undocumented)
+    fromData(data: Data): T;
+}
+
+// @public
 export const frozen: <T extends new (...args: any[]) => any>(constructor: T) => T;
 
 // @public
@@ -80,6 +86,9 @@ export function lazyType<T>(init: () => Type<T>): Type<T>;
 
 // @public
 export function mapType<T>(valueType: Type<T>): Type<Map<string, T>>;
+
+// @public
+export type MaybeFromData<T, Data, Props> = Data extends Props ? Partial<FromData<T, Data>> : FromData<T, Data>;
 
 // @public
 export const nonNegativeIntegerType: Type<number>;
@@ -119,12 +128,20 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
 export function RecordClass<Props, Base extends object>(propsType: RecordType<Props>, base: Constructor<Base>): RecordConstructor<Props, Base>;
 
 // @public
-export type RecordConstructor<Props, Base extends object = Object> = {
-    new (props: Props): Readonly<Props> & RecordObject<Props> & Base;
+export function RecordClass<Props, Base extends object, Data>(propsType: RecordType<Props>, base: Constructor<Base>, dataType: Type<Data>, propsToData: (props: Props) => Data): RecordConstructor<Props, Base, Data>;
+
+// @public
+export function recordClassType<T extends RecordObject<Props, Data> & Equatable & Readonly<Props> & Base, Props, Base extends object, Data = Props>(lazy: () => RecordConstructor<Props, Base, Data> & MaybeFromData<T, Data, Props>): Type<T>;
+
+// @public
+export type RecordConstructor<Props, Base extends object = Object, Data = Props> = {
+    new (props: Props): Readonly<Props> & RecordObject<Props, Data> & Base;
+    readonly propsType: RecordType<Props>;
+    readonly dataType: Type<Data>;
 };
 
 // @public
-export interface RecordObject<Props> {
+export interface RecordObject<Props, Data = Props> {
     equals(other: Readonly<Props>): boolean;
     get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;
@@ -132,6 +149,7 @@ export interface RecordObject<Props> {
     has(key: string, value?: unknown): boolean;
     merge(props: Partial<Props>): this;
     set<K extends keyof Props>(key: K, value: Props[K]): this;
+    toData(): Data;
     unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;
     unset(...keys: OptionalPropsOf<Props>[]): this;
 }

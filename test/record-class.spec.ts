@@ -1,7 +1,9 @@
 import { 
     booleanType, 
     RecordClass, 
-    recordType, 
+    recordClassType, 
+    recordType,
+    stringType,
 } from "../src";
 
 describe("Record", () => {
@@ -143,5 +145,45 @@ describe("Record", () => {
         abstract class B { abstract test(): number; }
         class R extends RecordClass(recordType({}), B) { test() { return 456; }}
         expect(new R({}).test()).toBe(456);
+    });
+
+    it("can be created with data conversion", () => {
+        const propsType = recordType({ text: stringType });
+        class R extends RecordClass(
+            propsType,
+            Object,
+            stringType,
+            props => props.text,
+        ) {
+            static fromData(data: string) {
+                return new R({ text: data });
+            }
+        }
+        const r = R.fromData("abc");
+        expect(r.equals(new R({ text: "abc" }))).toBe(true);
+        expect(r.toData()).toBe("abc");
+    });
+
+    it("can assign class type", () => {
+        class R extends RecordClass(recordType({ myProp: booleanType})) {
+            static readonly classType = recordClassType(() => R);
+        }
+        const r = R.classType.fromJsonValue({ myProp: true });
+        expect(R.classType.test(r)).toBe(true);
+        expect(R.classType.toJsonValue(r)).toMatchObject({ myProp: true });
+    });
+
+    it("can assign class type with data conversion", () => {
+        const props = recordType({ myProp: booleanType});
+        const data = booleanType;
+        class R extends RecordClass(props, Object, data, props => props.myProp) {
+            static readonly classType = recordClassType(() => R);
+            static fromData(data: boolean) {
+                return new R({ myProp: data });
+            }
+        }
+        const r = R.classType.fromJsonValue(true);
+        expect(R.classType.test(r)).toBe(true);
+        expect(R.classType.toJsonValue(r)).toBe(true);
     });
 });

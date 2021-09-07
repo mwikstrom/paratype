@@ -1,11 +1,14 @@
+import { customClassType, Equatable } from "./class";
+import { lazyType } from "./lazy";
 import { RecordType } from "./record-type";
+import { Type } from "./type";
 
 /**
  * A constructor for record classes
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type RecordConstructor<Props, Base extends object = Object> = {
+export type RecordConstructor<Props, Base extends object = Object, Data = Props> = {
     /**
      * Constructs a new instance with the specified properties.
      * 
@@ -14,14 +17,24 @@ export type RecordConstructor<Props, Base extends object = Object> = {
      * @remarks
      * Only supported properties are assigned, other properties are ignored.
      */
-    new(props: Props): Readonly<Props> & RecordObject<Props> & Base;
+    new(props: Props): Readonly<Props> & RecordObject<Props, Data> & Base;
+
+    /**
+     * The run-time type for record properties
+     */
+    readonly propsType: RecordType<Props>;
+
+     /**
+      * The run-time type for record data
+      */
+    readonly dataType: Type<Data>;
 };
 
 /**
  * Methods implemented by {@link RecordConstructor} instances
  * @public
  */
-export interface RecordObject<Props> {
+export interface RecordObject<Props, Data = Props> {
     /**
      * Determines whether the specified object is equal to the current object.
      * 
@@ -86,6 +99,11 @@ export interface RecordObject<Props> {
     set<K extends keyof Props>(key: K, value: Props[K]): this;
 
     /**
+     * Extracts data from the current object
+     */
+    toData(): Data;
+    
+    /**
      * Returns a copy of the current object with the specified properties merged out
      * 
      * @param props - The properties to unmerge
@@ -129,6 +147,48 @@ export type OptionalPropsOf<T> = string & Exclude<{
 export type Constructor<T> = Function & { prototype: T }
 
 /**
+ * Creates a run-time type for a record class
+ * @public
+ */
+export function recordClassType<
+    T extends RecordObject<Props, Data> & Equatable & Readonly<Props> & Base, 
+    Props, 
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    Base extends object,
+    Data = Props,
+>(
+    lazy: () => RecordConstructor<Props, Base, Data> & MaybeFromData<T, Data, Props>
+): Type<T> {
+    return lazyType<T>(() => {
+        const target = lazy();
+        const { 
+            dataType: { fromJsonValue, toJsonValue }, 
+            fromData = (data: Data) => new target(data as unknown as Props),
+        } = target;
+        return customClassType<T, [Props]>(
+            target as unknown as { new (props: Props): T },
+            (...args) => fromData(fromJsonValue(...args)) as unknown as T,
+            (value, ...rest) => toJsonValue(value.toData(), ...rest),
+        );
+    });
+}
+
+/**
+ * The static data conversion interface that must be implemented by record classes
+ * with implic data conversion
+ * @public
+ */
+export interface FromData<T, Data> {
+    fromData(data: Data): T;
+}
+
+/**
+ * Optional or required data conversion
+ * @public
+ */
+export type MaybeFromData<T, Data, Props> = Data extends Props ? Partial<FromData<T, Data>> : FromData<T, Data>;
+
+/**
  * Returns a {@link RecordConstructor} for the specified record type
  * 
  * @param propsType - A record type that define properties for the returned class
@@ -142,6 +202,7 @@ export function RecordClass<Props>(propsType: RecordType<Props>): RecordConstruc
  * Returns a {@link RecordConstructor} for the specified record type
  * 
  * @param propsType - A record type that define properties for the returned class
+ * @param base - The record base class
  * 
  * @public
  */
@@ -151,19 +212,41 @@ export function RecordClass<Props, Base extends object>(
     base: Constructor<Base>,
 ): RecordConstructor<Props, Base>;
 
+/**
+ * Returns a {@link RecordConstructor} for the specified record type
+ * 
+ * @param propsType - A record type that define properties for the returned class
+ * @param base - The record base class
+ * @param dataType - Run-time data type
+ * @param propsToData - A function that convert properties to data 
+ * @public
+ */
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function RecordClass<Props, Base extends object = Object>(
+export function RecordClass<Props, Base extends object, Data>(
+    propsType: RecordType<Props>,
+    base: Constructor<Base>,
+    dataType: Type<Data>,
+    propsToData: (props: Props) => Data,
+): RecordConstructor<Props, Base, Data>;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function RecordClass<Props, Base extends object = Object, Data = Props>(
     propsType: RecordType<Props>,
     base: Constructor<Base> = Object as unknown as Constructor<Base>,
-): RecordConstructor<Props, Base> {
-    class Record extends (base as unknown as ObjectConstructor) implements RecordObject<Props> {
-        #ctor: RecordConstructor<Props, Base>;
+    dataType: Type<Data> = propsType as unknown as Type<Data>,
+    propsToData: (props: Props) => Data = props => props as unknown as Data,
+): RecordConstructor<Props, Base, Data> {
+    class Record extends (base as unknown as ObjectConstructor) implements RecordObject<Props, Data> {
+        static readonly propsType: RecordType<Props> = propsType;
+        static readonly dataType: Type<Data> = dataType;
+        
+        #ctor: RecordConstructor<Props, Base, Data>;
         #props: Readonly<Props> & { readonly [key: string]: unknown };
         
         constructor(props: Props) {
             super();
 
-            this.#ctor = this.constructor as RecordConstructor<Props, Base>;
+            this.#ctor = this.constructor as RecordConstructor<Props, Base, Data>;
             this.#props = Object.freeze(propsType.pick(props));
 
             const error = propsType.error(this.#props);
@@ -225,6 +308,10 @@ export function RecordClass<Props, Base extends object = Object>(
             return this.#with({ ...this.#props, ...Object.fromEntries([[key, value]])});
         }
 
+        toData(): Data {
+            return propsToData(this.#props);
+        }
+
         unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this {
             const map = new Map(Object.entries(this.#props));
 
@@ -259,5 +346,5 @@ export function RecordClass<Props, Base extends object = Object>(
         }
     }
 
-    return Record as unknown as RecordConstructor<Props, Base>;
+    return Record as unknown as RecordConstructor<Props, Base, Data>;
 }

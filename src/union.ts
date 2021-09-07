@@ -8,11 +8,11 @@ import { ErrorCallback, Type, TypeOf } from "./type";
  **/
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>> {
     const join = (errors: (string | undefined)[]): string | undefined => {
-        const filtered = errors.filter(msg => msg !== void(0));
+        const filtered = Array.from(new Set(errors.filter(msg => msg !== void(0))));
         if (filtered.length === 1) {
             return filtered[0];
         } else if (filtered.length > 1) {
-            return `(${filtered.join(" -or- ")})`;
+            return filtered.join(" -or- ");
         }
     };
 

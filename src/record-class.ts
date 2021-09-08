@@ -36,6 +36,11 @@ export type RecordConstructor<Props, Base extends object = Object, Data = Props>
  */
 export interface RecordObject<Props, Data = Props> {
     /**
+     * Gets the assigned properties
+     */
+    readonly assigned: (keyof Props)[];
+
+    /**
      * Determines whether the specified object is equal to the current object.
      * 
      * @param other - The object to test for equality
@@ -268,6 +273,10 @@ export function RecordClass<Props, Base extends object = Object, Data = Props>(
             } else {
                 return new this.#ctor(props) as unknown as this;
             }
+        }
+
+        get assigned(): (keyof Props)[] {
+            return Object.keys(this.#props) as (keyof Props)[];
         }
         
         equals(other: Readonly<Props>): boolean {

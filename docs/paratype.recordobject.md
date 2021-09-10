@@ -12,6 +12,12 @@ Methods implemented by [RecordConstructor](./paratype.recordconstructor.md) inst
 export interface RecordObject<Props, Data = Props> 
 ```
 
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [assigned](./paratype.recordobject.assigned.md) | (keyof Props)\[\] | Gets the assigned properties |
+
 ## Methods
 
 |  Method | Description |

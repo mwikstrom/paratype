@@ -26,7 +26,9 @@ export default [
             ...Object.keys(pkg.devDependencies || {}),
         ],
         plugins: [
-            pluginTypescript(),
+            pluginTypescript({
+                target: "ES2019"
+            }),
             pluginCommonjs({
                 extensions: [".js", ".ts"],
             }),

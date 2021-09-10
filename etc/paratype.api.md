@@ -142,6 +142,7 @@ export type RecordConstructor<Props, Base extends object = Object, Data = Props>
 
 // @public
 export interface RecordObject<Props, Data = Props> {
+    readonly assigned: (keyof Props)[];
     equals(other: Readonly<Props>): boolean;
     get<K extends keyof Props>(key: K): Props[K];
     get(key: string): unknown | undefined;

@@ -9,14 +9,14 @@ Constructs a [Type](./paratype.type.md) that represents an enumeration of the sp
 <b>Signature:</b>
 
 ```typescript
-export declare function enumType<V extends string>(values: V[]): Type<V>;
+export declare function enumType<V extends string>(values: readonly V[]): Type<V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  values | V\[\] | Allowed values of the new enum type |
+|  values | readonly V\[\] | Allowed values of the new enum type |
 
 <b>Returns:</b>
 

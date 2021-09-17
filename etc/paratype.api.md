@@ -36,7 +36,7 @@ export function customClassType<T extends Partial<Equatable>, Args extends [...u
 export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof Union]>, Union extends Record<string, Type>>(key: Key, union: Union): Type<TypeOf<Union[keyof Union]>>;
 
 // @public
-export function enumType<V extends string>(values: V[]): Type<V>;
+export function enumType<V extends string>(values: readonly V[]): Type<V>;
 
 // @public
 export interface Equatable {
@@ -148,7 +148,7 @@ export interface RecordObject<Props, Data = Props> {
     get(key: string): unknown | undefined;
     has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
     has(key: string, value?: unknown): boolean;
-    merge(props: Partial<Props>): this;
+    merge(props: Partial<Props>, diff?: Set<keyof Props>): this;
     set<K extends keyof Props>(key: K, value: Props[K]): this;
     toData(): Data;
     unmerge(props: Partial<Pick<Props, OptionalPropsOf<Props>>>): this;

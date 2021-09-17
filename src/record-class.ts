@@ -81,6 +81,7 @@ export interface RecordObject<Props, Data = Props> {
      * Returns a copy of the current object with the specified properties merged in
      * 
      * @param props - The properties to merge
+     * @param diff - An optional set that is populated with differentiating keys.
      * 
      * @remarks
      * Only properties that are supported by the current object are merged in, other
@@ -88,8 +89,12 @@ export interface RecordObject<Props, Data = Props> {
      * 
      * If the resulting object would be equal to the current instance, then the current
      * instance is returned instead.
+     * 
+     * When `diff` is defined then it is populated with those keys that are assigned
+     * in both the current object and the specified `props`. In addition, after 
+     * populating, keys in `diff` are unset from the result.
      */
-    merge(props: Partial<Props>): this;
+    merge(props: Partial<Props>, diff?: Set<keyof Props>): this;
 
     /**
      * Returns a copy of the current object with the specified property merged in
@@ -299,8 +304,41 @@ export function RecordClass<Props, Base extends object = Object, Data = Props>(
             return !!propsType.getPropertyType(key)?.equals(this.#props[key], value);
         }
 
-        merge(props: Partial<Props>): this {
-            return this.#with({ ...this.#props, ...propsType.pick(props) });
+        merge(props: Partial<Props>, diff?: Set<keyof Props>): this {
+            if (!diff) {
+                return this.#with({ ...this.#props, ...propsType.pick(props) });
+            }
+
+            const mergeIn = new Map(
+                Object.entries(propsType.pick(props)) as [keyof Props, unknown][]
+            );
+            const assigned = new Set<keyof Props>([...this.assigned, ...mergeIn.keys()]);
+
+            for (const key of assigned) {
+                if (diff.has(key)) {
+                    mergeIn.delete(key);
+                    continue;
+                }
+
+                const thisVal = this.get(key);
+                const mergeVal = mergeIn.get(key);
+
+                if (thisVal === void(0) || mergeVal === void(0)) {
+                    continue;
+                }
+
+                if (!propsType.getPropertyType(key)?.equals(thisVal, mergeVal)) {
+                    diff.add(key);
+                    mergeIn.delete(key);
+                }
+            }
+
+            const newProps = Object.fromEntries([
+                ...Object.entries(this.#props) as [keyof Props, unknown][],
+                ...mergeIn.entries(),
+            ].filter(([key]) => !diff.has(key))) as unknown as Props;
+
+            return this.#with(newProps);
         }
 
         set<K extends keyof Props>(key: K, value: Props[K]): this {

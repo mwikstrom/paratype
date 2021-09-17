@@ -9,7 +9,7 @@ Returns a copy of the current object with the specified properties merged in
 <b>Signature:</b>
 
 ```typescript
-merge(props: Partial<Props>): this;
+merge(props: Partial<Props>, diff?: Set<keyof Props>): this;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ merge(props: Partial<Props>): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  props | Partial&lt;Props&gt; | The properties to merge |
+|  diff | Set&lt;keyof Props&gt; | An optional set that is populated with differentiating keys. |
 
 <b>Returns:</b>
 
@@ -27,4 +28,6 @@ this
 Only properties that are supported by the current object are merged in, other properties are ignored.
 
 If the resulting object would be equal to the current instance, then the current instance is returned instead.
+
+When `diff` is defined then it is populated with those keys that are assigned in both the current object and the specified `props`<!-- -->. In addition, after populating, keys in `diff` are unset from the result.
 

@@ -49,12 +49,12 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
         throw makeError(join(errors) ?? "Union type error");
     };
 
-    const fromJsonValue: Type<TypeOf<T[number]>>["fromJsonValue"] = (...args) => (
-        firstSuccessful(t => t.fromJsonValue(...args), args[1])
+    const fromJsonValue: Type<TypeOf<T[number]>>["fromJsonValue"] = (value, makeError, path = []) => (
+        firstSuccessful(t => t.fromJsonValue(value, makeError, [...path]), makeError)
     );
 
-    const toJsonValue: Type<TypeOf<T[number]>>["toJsonValue"] = (...args) => (
-        firstSuccessful(t => t.toJsonValue(...args), args[1])
+    const toJsonValue: Type<TypeOf<T[number]>>["toJsonValue"] = (value, makeError, path = []) => (
+        firstSuccessful(t => t.toJsonValue(value, makeError, [...path]), makeError)
     );
 
     return _makeType({ error, equals, fromJsonValue, toJsonValue });

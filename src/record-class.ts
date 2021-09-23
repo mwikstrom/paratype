@@ -1,4 +1,6 @@
 import { customClassType, Equatable } from "./class";
+import { _formatError } from "./internal/format-error";
+import { _makeTypeError } from "./internal/make-type-error";
 import { lazyType } from "./lazy";
 import { RecordType } from "./record-type";
 import { Type } from "./type";
@@ -178,7 +180,14 @@ export function recordClassType<
         return customClassType<T, [Props]>(
             target as unknown as { new (props: Props): T },
             (...args) => fromData(fromJsonValue(...args)) as unknown as T,
-            (value, ...rest) => toJsonValue(value.toData(), ...rest),
+            (value, error, path) => {
+                if (value instanceof target) {
+                    return toJsonValue(value.toData(), error, path);
+                } else {
+                    const message = _formatError(`Must be an instance of ${target.name}`, path);
+                    throw (error || _makeTypeError)(message);
+                }
+            },
         );
     });
 }

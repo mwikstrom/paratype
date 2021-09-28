@@ -1,3 +1,4 @@
+import { _formatError } from "./internal/format-error";
 import { _makeType } from "./internal/make-type";
 import { _makeTypeError } from "./internal/make-type-error";
 import { ErrorCallback, Type, TypeOf } from "./type";
@@ -53,9 +54,13 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
         firstSuccessful(t => t.fromJsonValue(value, makeError, [...path]), makeError)
     );
 
-    const toJsonValue: Type<TypeOf<T[number]>>["toJsonValue"] = (value, makeError, path = []) => (
-        firstSuccessful(t => t.toJsonValue(value, makeError, [...path]), makeError)
-    );
+    const toJsonValue: Type<TypeOf<T[number]>>["toJsonValue"] = (value, makeError = _makeTypeError, path = []) => {
+        const found = types.find(t => t.test(value));
+        if (!found) {
+            throw makeError(_formatError("Must match one of the union types", path));
+        }
+        return found.toJsonValue(value, makeError, path);
+    };
 
     return _makeType({ error, equals, fromJsonValue, toJsonValue });
 }

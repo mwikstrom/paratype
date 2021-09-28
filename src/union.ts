@@ -29,9 +29,10 @@ export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T
         return join(errors);
     };
 
-    const equals = (first: TypeOf<T[number]>, second: unknown): boolean => (
-        types.some(t => t.test(first) && t.equals(first, second))
-    );
+    const equals = (first: TypeOf<T[number]>, second: unknown): boolean => {
+        const found = types.find(t => t.test(first));
+        return !!found && found.equals(first, second);
+    };
 
     const firstSuccessful = <Result>(
         func: (t: Type<TypeOf<T[number]>>) => Result,

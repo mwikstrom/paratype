@@ -16,15 +16,23 @@ export const frozen = <T extends { new (...args: any[]): any }>(constructor: T):
     Object.defineProperty(freezing, "name", { value: constructor.name });
     
     for (const proto of prototypeChain(freezing)) {
-        Object.freeze(proto);
+        if (!dontFreeze.has(proto)) {
+            Object.freeze(proto);
+        }
     }
 
     return freezing;
 };
 
-function *prototypeChain(ctor: unknown) {
+function *prototypeChain(ctor: { new (...args: any[]): any }) {
     while (ctor) {
         yield ctor;
+        yield ctor.prototype;
         ctor = Object.getPrototypeOf(ctor);
     }
 }
+
+const dontFreeze = new Set([
+    Object,
+    Object.prototype,
+]);

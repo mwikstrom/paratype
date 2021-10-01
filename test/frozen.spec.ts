@@ -11,8 +11,19 @@ describe("frozen", () => {
         class Derived extends Root {}
         @frozen class Frozen extends Derived {}
         expect(Object.isFrozen(Root)).toBe(true);
+        expect(Object.isFrozen(Root.prototype)).toBe(true);
         expect(Object.isFrozen(Derived)).toBe(true);
+        expect(Object.isFrozen(Derived.prototype)).toBe(true);
         expect(Object.isFrozen(Frozen)).toBe(true);
+        expect(Object.isFrozen(Frozen.prototype)).toBe(true);
+    });
+
+    it("doesn't freeze Object", () => {
+        @frozen class Frozen {}
+        expect(Object.isFrozen(Frozen)).toBe(true);
+        expect(Object.isFrozen(Frozen.prototype)).toBe(true);
+        expect(Object.isFrozen(Object)).toBe(false);
+        expect(Object.isFrozen(Object.prototype)).toBe(false);
     });
 
     it("freezes instances", () => {

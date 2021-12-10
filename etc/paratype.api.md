@@ -59,6 +59,11 @@ export interface FromData<T, Data> {
 // @public
 export const frozen: <T extends new (...args: any[]) => any>(constructor: T) => T;
 
+// Warning: (ae-internal-missing-underscore) The name "FROZEN_DISABLED" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const FROZEN_DISABLED = true;
+
 // @public
 export const integerType: Type<number>;
 

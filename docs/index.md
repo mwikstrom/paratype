@@ -8,5 +8,5 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [paratype](./paratype.md) | Basic run-time type information for typescript and javascript. |
+|  [paratype](./paratype.md) | Basic type validation and serialization |
 

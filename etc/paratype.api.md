@@ -30,7 +30,7 @@ export function constType<T extends string>(fixed: T): Type<T>;
 // @public
 export function customClassType<T extends Partial<Equatable>, Args extends [...unknown[]] = unknown[]>(ctor: {
     new (...args: Args): T;
-}, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback, path?: PathArray) => JsonValue): Type<T>;
+}, fromJsonValue: (this: void, value: JsonValue, error?: ErrorCallback_2, path?: PathArray) => T, toJsonValue: (this: void, value: T, error?: ErrorCallback_2, path?: PathArray) => JsonValue): Type<T>;
 
 // @public
 export function discriminatorType<Key extends string & keyof TypeOf<Union[keyof Union]>, Union extends Record<string, Type>>(key: Key, union: Union): Type<TypeOf<Union[keyof Union]>>;
@@ -45,7 +45,8 @@ export interface Equatable {
 }
 
 // @public
-export type ErrorCallback = (message: string) => Error;
+type ErrorCallback_2 = (message: string) => Error;
+export { ErrorCallback_2 as ErrorCallback }
 
 // @public
 export function formatPath(path: PathArray): string;
@@ -55,14 +56,6 @@ export interface FromData<T, Data> {
     // (undocumented)
     fromData(data: Data): T;
 }
-
-// @public
-export const frozen: <T extends new (...args: any[]) => any>(constructor: T) => T;
-
-// Warning: (ae-internal-missing-underscore) The name "FROZEN_DISABLED" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const FROZEN_DISABLED = true;
 
 // @public
 export const integerType: Type<number>;
@@ -108,9 +101,6 @@ export const numberType: Type<number>;
 export type OptionalPropsOf<T> = string & Exclude<{
     [K in keyof T]: T extends Record<K, T[K]> ? never : K;
 }[keyof T], undefined>;
-
-// @public
-export type ParameterTypeDecorator = (target: ValidationTarget, propertyKey: string | symbol | undefined, parameterIndex: number) => void;
 
 // @public
 export type PathArray = Array<string | number>;
@@ -181,9 +171,6 @@ export interface RecordType<T> extends Type<T> {
 export function recordType<T extends Record<string, unknown>>(properties: PropertyTypes<T>): RecordType<T>;
 
 // @public
-export function restType(type: Type<unknown>): ParameterTypeDecorator;
-
-// @public
 export const stringType: Type<string>;
 
 // @public
@@ -196,31 +183,27 @@ export function tupleType<T extends [...unknown[]]>(...itemTypes: {
 
 // @public
 export interface Type<T = unknown> {
-    assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): asserts value is T;
+    assert(this: void, value: unknown, error?: ErrorCallback_2, path?: PathArray): asserts value is T;
     equals(this: void, first: T, second: unknown): second is T;
     error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string | undefined;
-    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): T;
-    frozen(this: void): Type<Readonly<T>>;
+    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback_2, path?: PathArray): T;
     restrict(this: void, message: string, predicate: Predicate<T>): Type<T>;
     test(this: void, value: unknown, path?: PathArray): value is T;
-    toJsonValue(this: void, value: T, error?: ErrorCallback, path?: PathArray): JsonValue;
+    toJsonValue(this: void, value: T, error?: ErrorCallback_2, path?: PathArray): JsonValue;
 }
-
-// @public
-export function type(type: Type<unknown>): ParameterTypeDecorator;
 
 // @public
 export interface TypeClass<I extends TypeInstance, Args extends [...unknown[]]> {
     // (undocumented)
     new (...args: Args): I;
     // (undocumented)
-    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback, path?: PathArray): I;
+    fromJsonValue(this: void, value: JsonValue, error?: ErrorCallback_2, path?: PathArray): I;
 }
 
 // @public
 export interface TypeInstance extends Partial<Equatable> {
     // (undocumented)
-    toJsonValue(error?: ErrorCallback, path?: PathArray): JsonValue;
+    toJsonValue(error?: ErrorCallback_2, path?: PathArray): JsonValue;
 }
 
 // @public
@@ -228,14 +211,6 @@ export type TypeOf<T extends Type<unknown> | undefined> = T extends Type<infer V
 
 // @public
 export function unionType<T extends Type<unknown>[]>(...types: T): Type<TypeOf<T[number]>>;
-
-// @public
-export function validating<T extends ValidationTarget>(constructor: T): T;
-
-// @public
-export type ValidationTarget = {
-    new (...args: any[]): any;
-};
 
 // @public
 export const voidType: Type<void>;

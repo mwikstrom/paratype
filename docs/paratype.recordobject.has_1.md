@@ -17,7 +17,7 @@ has(key: string, value?: unknown): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string | Name of the property to test |
-|  value | unknown | Optionally specifies a value that shall be tested for equality |
+|  value | unknown | <i>(Optional)</i> Optionally specifies a value that shall be tested for equality |
 
 <b>Returns:</b>
 

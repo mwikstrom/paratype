@@ -4,7 +4,7 @@
 
 ## paratype package
 
-Basic run-time type information for typescript and javascript.
+Basic type validation and serialization
 
 ## Functions
 
@@ -25,11 +25,8 @@ Basic run-time type information for typescript and javascript.
 |  [RecordClass(propsType, base, dataType, propsToData)](./paratype.recordclass_2.md) | Returns a [RecordConstructor](./paratype.recordconstructor.md) for the specified record type |
 |  [recordClassType(lazy)](./paratype.recordclasstype.md) | Creates a run-time type for a record class |
 |  [recordType(properties)](./paratype.recordtype.md) | Constructs a [Type](./paratype.type.md) that represents a record with the specified properties |
-|  [restType(type)](./paratype.resttype.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the each rest parameter matches the specified run-time type. |
 |  [tupleType(itemTypes)](./paratype.tupletype.md) | Constructs a [Type](./paratype.type.md) that represents a tuple with the specified item types. |
-|  [type(type)](./paratype.type.md) | A parameter decorator to be used in combination with the [validating()](./paratype.validating.md) class decorator to automatically validate that the parameter matches the specified run-time type. |
 |  [unionType(types)](./paratype.uniontype.md) | Constructs a [Type](./paratype.type.md) that represents a union of other types. |
-|  [validating(constructor)](./paratype.validating.md) | A class decorator that enables parameter validation and this bindings in all functions. |
 
 ## Interfaces
 
@@ -52,7 +49,6 @@ Basic run-time type information for typescript and javascript.
 |  [anyType](./paratype.anytype.md) | Matches any value |
 |  [binaryType](./paratype.binarytype.md) | Matches <code>ArrayBuffer</code> values |
 |  [booleanType](./paratype.booleantype.md) | Matches boolean values |
-|  [frozen](./paratype.frozen.md) | Freezes the decorated class, its base classes, and all instances of the class. |
 |  [integerType](./paratype.integertype.md) | Matches safe integer values |
 |  [jsonValueType](./paratype.jsonvaluetype.md) | Matches JSON values |
 |  [nonNegativeIntegerType](./paratype.nonnegativeintegertype.md) | Matches safe integer values that are greater than or equal to zero |
@@ -68,17 +64,15 @@ Basic run-time type information for typescript and javascript.
 |  Type Alias | Description |
 |  --- | --- |
 |  [Constructor](./paratype.constructor.md) | A constructor function |
-|  [ErrorCallback](./paratype.errorcallback.md) | A callback that, given a message, creates an error |
+|  [ErrorCallback\_2](./paratype.errorcallback_2.md) | A callback that, given a message, creates an error |
 |  [JsonArray](./paratype.jsonarray.md) | An array of JSON values |
 |  [JsonPrimitive](./paratype.jsonprimitive.md) | One of the JSON primitive types |
 |  [JsonValue](./paratype.jsonvalue.md) | A JSON value |
 |  [MaybeFromData](./paratype.maybefromdata.md) | Optional or required data conversion |
 |  [OptionalPropsOf](./paratype.optionalpropsof.md) | Extracts optional properties from a type |
-|  [ParameterTypeDecorator](./paratype.parametertypedecorator.md) | Signature for a parameter type decorator |
 |  [PathArray](./paratype.patharray.md) | An array of string and/or numbers that represents the path of a value |
 |  [Predicate](./paratype.predicate.md) | Returns <code>true</code> if the specified value matches a predicate |
 |  [PropertyTypes](./paratype.propertytypes.md) | Maps properties to their corresponding run-time types |
 |  [RecordConstructor](./paratype.recordconstructor.md) | A constructor for record classes |
 |  [TypeOf](./paratype.typeof.md) | Extracts the underlying type from a [Type](./paratype.type.md) (it gets the <code>T</code> from <code>Type&lt;T&gt;</code>) |
-|  [ValidationTarget](./paratype.validationtarget.md) | Alias for a class to be decorated |
 

@@ -11,7 +11,7 @@ The interface of type class instances
 ```typescript
 export interface TypeInstance extends Partial<Equatable> 
 ```
-<b>Extends:</b> Partial&lt;[Equatable](./paratype.equatable.md)<!-- -->&gt;
+<b>Extends:</b> Partial&lt;[Equatable](./paratype.equatable.md)
 
 ## Methods
 

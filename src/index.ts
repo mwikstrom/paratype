@@ -1,5 +1,5 @@
 /**
- * Basic run-time type information for typescript and javascript.
+ * Basic type validation and serialization
  * @packageDocumentation
  */
 
@@ -12,7 +12,6 @@ export * from "./class";
 export * from "./const";
 export * from "./discriminator";
 export * from "./enum";
-export * from "./frozen";
 export * from "./lazy";
 export * from "./map";
 export * from "./path";
@@ -23,4 +22,3 @@ export * from "./timestamp";
 export * from "./tuple";
 export * from "./type";
 export * from "./union";
-export * from "./validating";

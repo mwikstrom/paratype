@@ -17,7 +17,7 @@ has<K extends keyof Props>(key: K, value?: Props[K]): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K | Name of the property to test |
-|  value | Props\[K\] | Optionally specifies a value that shall be tested for equality |
+|  value | Props\[K\] | <i>(Optional)</i> Optionally specifies a value that shall be tested for equality |
 
 <b>Returns:</b>
 

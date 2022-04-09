@@ -19,8 +19,8 @@ export declare function customClassType<T extends Partial<Equatable>, Args exten
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  ctor | { new (...args: Args): T; } |  |
-|  fromJsonValue | (this: void, value: [JsonValue](./paratype.jsonvalue.md)<!-- -->, error?: [ErrorCallback](./paratype.errorcallback.md)<!-- -->, path?: [PathArray](./paratype.patharray.md)<!-- -->) =&gt; T |  |
-|  toJsonValue | (this: void, value: T, error?: [ErrorCallback](./paratype.errorcallback.md)<!-- -->, path?: [PathArray](./paratype.patharray.md)<!-- -->) =&gt; [JsonValue](./paratype.jsonvalue.md) |  |
+|  fromJsonValue | (this: void, value: [JsonValue](./paratype.jsonvalue.md)<!-- -->, error?: ErrorCallback, path?: [PathArray](./paratype.patharray.md)<!-- -->) =&gt; T |  |
+|  toJsonValue | (this: void, value: T, error?: ErrorCallback, path?: [PathArray](./paratype.patharray.md)<!-- -->) =&gt; [JsonValue](./paratype.jsonvalue.md) |  |
 
 <b>Returns:</b>
 

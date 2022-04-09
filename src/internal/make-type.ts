@@ -1,7 +1,6 @@
 import { jsonValueType } from "../json";
 import { PathArray } from "../path";
 import { Type } from "../type";
-import { _frozenType } from "./frozen";
 import { _makeTypeError } from "./make-type-error";
 import { _restrictType } from "./restrict";
 
@@ -27,8 +26,6 @@ export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
         }
     };
 
-    const frozen: Type<T>["frozen"] = () => _frozenType(type);
-
     function test(value: unknown, path?: PathArray): value is T {
         return error(value, path) === void(0);
     }    
@@ -44,7 +41,6 @@ export const _makeType = <T>(options: TypeOptions<T>): Type<T> => {
         error,
         equals,
         fromJsonValue,
-        frozen,
         restrict,
         test, 
         toJsonValue,

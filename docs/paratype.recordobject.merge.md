@@ -17,7 +17,7 @@ merge(props: Partial<Props>, diff?: Set<keyof Props>): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  props | Partial&lt;Props&gt; | The properties to merge |
-|  diff | Set&lt;keyof Props&gt; | An optional set that is populated with differentiating keys. |
+|  diff | Set&lt;keyof Props&gt; | <i>(Optional)</i> An optional set that is populated with differentiating keys. |
 
 <b>Returns:</b>
 

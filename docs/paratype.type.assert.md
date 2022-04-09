@@ -18,8 +18,8 @@ assert(this: void, value: unknown, error?: ErrorCallback, path?: PathArray): ass
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
-|  error | [ErrorCallback](./paratype.errorcallback.md) | <i>(Optional)</i> A callback that is invoked to construct the error to be thrown when value doesn't match |
-|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
+|  error | ErrorCallback | <i>(Optional)</i> <i>(Optional)</i> A callback that is invoked to construct the error to be thrown when value doesn't match |
+|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>
 

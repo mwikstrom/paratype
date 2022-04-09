@@ -11,5 +11,5 @@ An object where keys are strings and values are JSON values
 ```typescript
 export interface JsonObject extends Record<string, JsonValue> 
 ```
-<b>Extends:</b> Record&lt;string, [JsonValue](./paratype.jsonvalue.md)<!-- -->&gt;
+<b>Extends:</b> Record&lt;string, [JsonValue](./paratype.jsonvalue.md)
 

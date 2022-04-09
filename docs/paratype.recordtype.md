@@ -11,7 +11,7 @@ A run-time record type
 ```typescript
 export interface RecordType<T> extends Type<T> 
 ```
-<b>Extends:</b> [Type](./paratype.type.md)<!-- -->&lt;T&gt;
+<b>Extends:</b> [Type](./paratype.type.md)
 
 ## Methods
 

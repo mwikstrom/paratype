@@ -18,8 +18,8 @@ error(this: void, value: unknown, path?: PathArray, shallow?: boolean): string |
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
-|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
-|  shallow | boolean | <i>(Optiona)</i> When <code>true</code> errors from array items or record properties are ignored |
+|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> <i>(Optional)</i> Path to the value |
+|  shallow | boolean | <i>(Optional)</i> <i>(Optiona)</i> When <code>true</code> errors from array items or record properties are ignored |
 
 <b>Returns:</b>
 

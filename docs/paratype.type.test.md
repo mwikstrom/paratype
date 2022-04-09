@@ -18,7 +18,7 @@ test(this: void, value: unknown, path?: PathArray): value is T;
 |  --- | --- | --- |
 |  this | void | <i>(Ignored)</i> This method uses implicit <code>this</code> binding |
 |  value | unknown | The value to be checked |
-|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> Path to the value |
+|  path | [PathArray](./paratype.patharray.md) | <i>(Optional)</i> <i>(Optional)</i> Path to the value |
 
 <b>Returns:</b>
 

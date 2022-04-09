@@ -4,7 +4,7 @@
         "target": "ESNext",
         "module": "ESNext",
         "strict": true,
-        "experimentalDecorators": true,
+        "experimentalDecorators": false,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "skipLibCheck": true,

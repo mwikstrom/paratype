@@ -1,7 +1,8 @@
 {
   "name": "paratype",
   "version": "0.7.0",
-  "description": "Basic run-time type information for typescript and javascript",
+  "description": "Basic type validation and serialization",
+  "keywords": [ "type-validation", "serialization", "typescript" ],
   "main": "./dist/paratype.js",
   "typings": "./dist/paratype.d.ts",
   "files": [

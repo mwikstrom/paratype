@@ -1,6 +1,6 @@
 {
   "name": "paratype",
-  "version": "1.0.0-preview.1",
+  "version": "1.0.0",
   "description": "Basic type validation and serialization",
   "keywords": [
     "type-validation",

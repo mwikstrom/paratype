@@ -26,7 +26,7 @@ export function arrayType<T>(itemType: Type<T>): Type<T[]> {
 
     const fromJsonValue: Type<T[]>["fromJsonValue"] = (value, makeError = _makeTypeError, path) => {
         if (!Array.isArray(value)) {
-            throw makeError(_formatError("Must a JSON array", path));
+            throw makeError(_formatError("Must be a JSON array", path));
         }
 
         const depth = (path = _assertPath(path)).length;
